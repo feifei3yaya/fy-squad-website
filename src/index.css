@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --fy-amber: #FFD166;
+  --fy-dark: #1A1D1B;
+  --fy-panel: #222826;
+  --fy-surface: #2A302C;
+  --fy-green: #5A7D5E;
+  --fy-orange: #F26419;
+  --fy-red: #C62828;
+  --fy-steel: #A0B0A4;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Sans SC', system-ui, sans-serif;
+    background: var(--fy-dark);
+    color: #D8E0DA;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: rgba(255,209,102,0.25); color: #FFD166; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--fy-dark); }
+  ::-webkit-scrollbar-thumb { background: var(--fy-green); border-radius: 0; }
+}
+
+@layer components {
+  .hud-corners {
+    position: relative;
+  }
+  .hud-corners::before,
+  .hud-corners::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-color: var(--fy-amber);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .hud-corners::before {
+    top: 0; left: 0;
+    border-top: 1px solid;
+    border-left: 1px solid;
+  }
+  .hud-corners::after {
+    bottom: 0; right: 0;
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+  }
+
+  .panel {
+    @apply bg-fy-panel border border-fy-green-dim/30;
+  }
+
+  .btn-amber {
+    @apply bg-fy-amber text-fy-dark font-hud font-semibold tracking-wider
+           px-6 py-2.5 transition-all duration-200
+           hover:bg-white hover:shadow-[0_0_20px_rgba(255,209,102,0.3)]
+           active:scale-[0.97];
+  }
+
+  .btn-outline {
+    @apply border border-fy-amber/40 text-fy-amber font-hud font-medium tracking-wider
+           px-6 py-2.5 transition-all duration-200
+           hover:bg-fy-amber/10 hover:border-fy-amber;
+  }
+
+  .data-label {
+    @apply text-[10px] uppercase tracking-[0.2em] text-fy-steel font-mono;
+  }
+
+  .data-value {
+    @apply font-hud font-bold text-white text-2xl;
+  }
+
+  .divider {
+    @apply border-t border-fy-green-dim/20;
+  }
+
+  .page-title {
+    @apply font-hud font-bold text-4xl md:text-6xl text-white tracking-wide;
+  }
+
+  .section-label {
+    @apply text-[11px] uppercase tracking-[0.3em] text-fy-amber font-hud font-semibold;
+  }
+}
