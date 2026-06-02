@@ -1,0 +1,16 @@
+export interface Vehicle { id: string; name: string; faction: string; factionTag: string; type: string; category: string; crew: string; armament: string; armor: string; description: string }
+
+export const vehicles: Vehicle[] = [
+  { id: 'm1a2', name: 'M1A2 Abrams', faction: '美军', factionTag: 'USA', type: '主战坦克', category: '装甲', crew: '4人（车长/炮手/驾驶员/装填手）', armament: '120mm M256滑膛炮 / .50 M2HB / 7.62 M240', armor: '重型复合装甲', description: '美军主战坦克，120mm主炮毁伤极高，是地面战场绝对霸主。' },
+  { id: 't72', name: 'T-72B3', faction: '俄军', factionTag: 'RUS', type: '主战坦克', category: '装甲', crew: '3人（车长/炮手/驾驶员）', armament: '125mm 2A46M滑膛炮 / 12.7 NSVT / 7.62 PKT', armor: '重型复合装甲 + 爆炸反应装甲', description: '俄军主力坦克，125mm主炮火力强大，自动装弹系统减少乘员需求。' },
+  { id: 'bradley', name: 'M2A3 Bradley', faction: '美军', factionTag: 'USA', type: '步兵战车', category: '装甲', crew: '3人 + 6名乘员', armament: '25mm M242机炮 / TOW反坦克导弹 / 7.62 M240', armor: '中型铝合金装甲', description: '美军步兵战车，兼顾运兵和火力支援，TOW导弹可威胁主战坦克。' },
+  { id: 'btr82a', name: 'BTR-82A', faction: '俄军', factionTag: 'RUS', type: '轮式装甲运兵车', category: '装甲', crew: '3人 + 7名乘员', armament: '30mm 2A72机炮 / 7.62 PKT', armor: '轻型焊接钢装甲', description: '俄军8×8轮式装甲车，机动性强，30mm机炮对步兵和轻装甲威胁大。' },
+  { id: 'fv510', name: 'FV510 Warrior', faction: '英军', factionTag: 'GBR', type: '步兵战车', category: '装甲', crew: '2人 + 7名乘员', armament: '30mm RARDEN机炮 / 7.62 L94A1', armor: '中型铝合金装甲', description: '英军步兵战车，防护能力出色，适合伴随步兵进攻。' },
+  { id: 'zbl09', name: 'ZBL-09', faction: '解放军', factionTag: 'PLA', type: '轮式步兵战车', category: '装甲', crew: '3人 + 7名乘员', armament: '30mm机炮 / 红箭-73反坦克导弹 / 7.62同轴机枪', armor: '中型焊接钢装甲', description: '解放军8×8轮式步兵战车，水上泅渡能力强，机动和火力兼顾。' },
+  { id: 'uh60', name: 'UH-60 Black Hawk', faction: '美军', factionTag: 'USA', type: '运输直升机', category: '空中', crew: '2人（飞行员/副驾驶） + 11名乘员', armament: '可选舱门机枪', armor: '轻型', description: '多用途直升机的标杆，快速部署和补给的生命线，可外挂轻型载具。' },
+  { id: 'mi8', name: 'Mi-8 Hip', faction: '俄军', factionTag: 'RUS', type: '运输直升机', category: '空中', crew: '3人 + 24名乘员', armament: '可选舱门机枪', armor: '轻型', description: '重型运输直升机，载员量大，是俄军空中运输的主力装备。' },
+  { id: 'mrap', name: 'MATV MRAP', faction: '美军', factionTag: 'USA', type: '防雷反伏击车', category: '轻型车辆', crew: '1人 + 4名乘员', armament: '.50 M2HB / MK19榴弹发射器（选配）', armor: '中型防雷装甲', description: '美军防雷车，提供比悍马更强的防护，适合高威胁区域运输。' },
+  { id: 'tigr', name: 'Tigr-M', faction: '俄军', factionTag: 'RUS', type: '轻型装甲车', category: '轻型车辆', crew: '1人 + 4名乘员', armament: '7.62 PKT / AGS-30榴弹发射器（选配）', armor: '轻型钢装甲', description: '俄军轻型装甲车，机动灵活，适合侦察和快速支援。' },
+  { id: 'logi', name: '后勤运输卡车', faction: '通用', factionTag: 'ALL', type: '运输卡车', category: '后勤', crew: '1人 + 若干乘员', armament: '无', armor: '无装甲', description: '通用后勤卡车，运送弹药和建材到前线，是FOB建造和弹药补给的命脉。' },
+  { id: 'mortar', name: '迫击炮单位', faction: '通用', factionTag: 'ALL', type: '固定火力', category: '支援', crew: '2-3人', armament: '81mm迫击炮', armor: '无', description: '可部署的迫击炮阵地，提供远程间接火力支援，需要观察员提供坐标修正。' },
+]
