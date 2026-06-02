@@ -1,0 +1,9 @@
+# 允许所有搜索引擎抓取
+User-agent: *
+Allow: /
+
+# 网站地图位置
+Sitemap: https://www.fy-squad.cn/sitemap.xml
+
+# 主机名(用于处理HTTP重定向)
+Host: www.fy-squad.cn
