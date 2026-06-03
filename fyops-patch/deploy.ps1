@@ -67,10 +67,11 @@ Write-Host "[5/7] 重新生成 Prisma Client..." -ForegroundColor Yellow
 npx prisma generate 2>&1
 Write-Host "  ✓ Prisma Client 已重新生成"
 
-# 6. 构建后端
-Write-Host "[6/7] 构建后端..." -ForegroundColor Yellow
+# 6. 安装依赖和构建后端
+Write-Host "[6/7] 安装依赖和构建后端..." -ForegroundColor Yellow
+npm install nodemailer @types/nodemailer 2>&1
 npm run build 2>&1
-Write-Host "  ✓ 后端构建完成"
+Write-Host "  ✓ 后端依赖安装和构建完成"
 
 # 7. 完成
 Write-Host "[7/7] 完成!" -ForegroundColor Green
