@@ -119,6 +119,7 @@ function Hero() {
       </video>
       <div className="absolute inset-0 bg-gradient-to-t from-fy-dark via-fy-dark/60 to-fy-dark/40" />
 
+
       <div className="hero-ct relative z-10 h-full flex flex-col items-center justify-center text-center px-4 sm:px-6">
         <div className="opacity-0 animate-fade-up" style={{ animationDelay: '0.2s' }}>
           <p className="section-label mb-4 sm:mb-6 text-xs sm:text-sm">TACTICAL SQUAD · 战术小队</p>
@@ -161,10 +162,26 @@ function GameIntro() {
   }, []);
 
   const features = [
-    { icon: Target, title: '50 vs 50 大规模战斗', desc: '两支队伍各50名玩家在16km²的战场上展开激烈对抗，步兵、载具、空中支援协同作战。' },
-    { icon: Radio, title: '真实通信系统', desc: '内置VoIP语音系统，支持小队频道、指挥频道和近距离本地语音，沟通是胜利的关键。' },
-    { icon: Map, title: '战术基地建设', desc: '建造FOB前线基地、部署兵站和防御工事，控制关键据点，制定战略部署。' },
-    { icon: Zap, title: '多兵种协同', desc: '步枪兵、医疗兵、机枪手、反坦克兵、工兵、狙击手等兵种各司其职，团队配合至关重要。' },
+    {
+      icon: Target,
+      title: '50 vs 50 大规模战斗',
+      desc: '两支队伍各50名玩家在16km²的战场上展开激烈对抗，步兵、载具、空中支援协同作战。',
+    },
+    {
+      icon: Radio,
+      title: '真实通信系统',
+      desc: '内置VoIP语音系统，支持小队频道、指挥频道和近距离本地语音，沟通是胜利的关键。',
+    },
+    {
+      icon: Map,
+      title: '战术基地建设',
+      desc: '建造FOB前线基地、部署兵站和防御工事，控制关键据点，制定战略部署。',
+    },
+    {
+      icon: Zap,
+      title: '多兵种协同',
+      desc: '步枪兵、医疗兵、机枪手、反坦克兵、工兵、狙击手等兵种各司其职，团队配合至关重要。',
+    },
   ];
 
   const gameModes = [
@@ -184,6 +201,7 @@ function GameIntro() {
   return (
     <section ref={ref} className="py-16 sm:py-28 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
+        {/* 游戏概述 */}
         <div className={`mb-16 sm:mb-24 transition-all duration-700 ${vis ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <p className="section-label mb-4">ABOUT THE GAME</p>
           <h2 className="font-hud font-bold text-3xl sm:text-4xl md:text-5xl text-white tracking-wider mb-6 sm:mb-8">
@@ -208,16 +226,35 @@ function GameIntro() {
             <div className="bg-fy-panel border border-fy-green-dim/20 p-6 sm:p-8 hud-corners">
               <p className="section-label mb-6">GAME INFO</p>
               <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-3 bg-fy-dark/50"><div className="font-hud font-bold text-xl sm:text-2xl text-fy-amber">100</div><div className="data-label text-[10px] mt-1">同场竞技</div></div>
-                <div className="text-center p-3 bg-fy-dark/50"><div className="font-hud font-bold text-xl sm:text-2xl text-fy-amber">16km²</div><div className="data-label text-[10px] mt-1">战场规模</div></div>
-                <div className="text-center p-3 bg-fy-dark/50"><div className="font-hud font-bold text-xl sm:text-2xl text-fy-amber">9人</div><div className="data-label text-[10px] mt-1">小队编制</div></div>
-                <div className="text-center p-3 bg-fy-dark/50"><div className="font-hud font-bold text-xl sm:text-2xl text-fy-amber">20+</div><div className="data-label text-[10px] mt-1">可选地图</div></div>
-                <div className="text-center p-3 bg-fy-dark/50"><div className="font-hud font-bold text-xl sm:text-2xl text-fy-amber">10+</div><div className="data-label text-[10px] mt-1">可选阵营</div></div>
-                <div className="text-center p-3 bg-fy-dark/50"><div className="font-hud font-bold text-xl sm:text-2xl text-fy-amber">50+</div><div className="data-label text-[10px] mt-1">载具种类</div></div>
+                <div className="text-center p-3 bg-fy-dark/50">
+                  <div className="font-hud font-bold text-xl sm:text-2xl text-fy-amber">100</div>
+                  <div className="data-label text-[10px] mt-1">同场竞技</div>
+                </div>
+                <div className="text-center p-3 bg-fy-dark/50">
+                  <div className="font-hud font-bold text-xl sm:text-2xl text-fy-amber">16km²</div>
+                  <div className="data-label text-[10px] mt-1">战场规模</div>
+                </div>
+                <div className="text-center p-3 bg-fy-dark/50">
+                  <div className="font-hud font-bold text-xl sm:text-2xl text-fy-amber">9人</div>
+                  <div className="data-label text-[10px] mt-1">小队编制</div>
+                </div>
+                <div className="text-center p-3 bg-fy-dark/50">
+                  <div className="font-hud font-bold text-xl sm:text-2xl text-fy-amber">20+</div>
+                  <div className="data-label text-[10px] mt-1">可选地图</div>
+                </div>
+                <div className="text-center p-3 bg-fy-dark/50">
+                  <div className="font-hud font-bold text-xl sm:text-2xl text-fy-amber">10+</div>
+                  <div className="data-label text-[10px] mt-1">可选阵营</div>
+                </div>
+                <div className="text-center p-3 bg-fy-dark/50">
+                  <div className="font-hud font-bold text-xl sm:text-2xl text-fy-amber">50+</div>
+                  <div className="data-label text-[10px] mt-1">载具种类</div>
+                </div>
               </div>
-              <div className="flex flex-col gap-2 w-full mt-6">
+          <div className="flex flex-col gap-2 w-full mt-6">
                 <a href="https://store.steampowered.com/app/393380/Squad/" target="_blank" rel="noopener noreferrer" className="btn-amber w-full flex items-center justify-center gap-2 py-3 text-sm">
-                  <ShoppingBag className="w-4 h-4" />网页版购买 (需代理)
+                  <ShoppingBag className="w-4 h-4" />
+                  网页版购买 (需代理)
                 </a>
                 <a href="steam://store/393380" className="btn-outline w-full flex items-center justify-center gap-2 py-3 text-sm text-fy-amber border-fy-amber/30 hover:bg-fy-amber/10">
                   <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg"><path d="M12 .007c-5.122 0-9.453 3.325-11.025 7.915l6.49 2.618c.504-.37 1.127-.604 1.805-.604.226 0 .442.029.65.081L13.195 7.02c.046-2.115 1.786-3.821 3.916-3.821 2.164 0 3.923 1.76 3.923 3.924 0 2.164-1.759 3.924-3.923 3.924-.654 0-1.267-.161-1.805-.443l-3.21 3.425c.05.21.08.428.08.653 0 1.636-1.325 2.962-2.961 2.962-1.636 0-2.962-1.326-2.962-2.962 0-.256.035-.503.098-.737l-6.104-2.463c-.15 1.13-.231 2.279-.231 3.447 0 6.613 5.373 11.986 11.986 11.986s11.986-5.373 11.986-11.986S18.613.007 12 .007zM7.273 15.003c0 .934-.757 1.691-1.691 1.691-.933 0-1.691-.757-1.691-1.691s.758-1.691 1.691-1.691c.934 0 1.691.757 1.691 1.691zm12.571-7.882c0 1.488-1.206 2.695-2.694 2.695-1.489 0-2.695-1.207-2.695-2.695 0-1.488 1.206-2.694 2.695-2.694 1.488 0 2.694 1.206 2.694 2.694zm-1.815 0c0-.501-.406-.906-.907-.906-.501 0-.907.405-.907.906 0 .502.406.907.907.907.501 0 .907-.405.907-.907z"/></svg>
@@ -228,24 +265,61 @@ function GameIntro() {
           </div>
         </div>
 
+        {/* 核心特色 */}
         <div className={`mb-16 sm:mb-24 transition-all duration-700 delay-200 ${vis ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="flex items-center gap-3 mb-8"><Crosshair className="w-4 h-4 text-fy-amber" /><span className="section-label">CORE FEATURES</span></div>
+          <div className="flex items-center gap-3 mb-8">
+            <Crosshair className="w-4 h-4 text-fy-amber" />
+            <span className="section-label">CORE FEATURES</span>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-fy-green-dim/20">
-            {features.map((f) => (<div key={f.title} className="bg-fy-panel p-6 sm:p-8 hud-corners hover:bg-fy-surface transition-all duration-500"><f.icon className="w-6 h-6 sm:w-8 sm:h-8 text-fy-amber/70 mb-4 sm:mb-5" /><h3 className="font-hud font-semibold text-white text-sm tracking-wider mb-2 sm:mb-3">{f.title}</h3><p className="text-fy-steel/60 text-xs leading-relaxed">{f.desc}</p></div>))}
+            {features.map((f) => (
+              <div
+                key={f.title}
+                className="bg-fy-panel p-6 sm:p-8 hud-corners hover:bg-fy-surface transition-all duration-500"
+              >
+                <f.icon className="w-6 h-6 sm:w-8 sm:h-8 text-fy-amber/70 mb-4 sm:mb-5" />
+                <h3 className="font-hud font-semibold text-white text-sm tracking-wider mb-2 sm:mb-3">{f.title}</h3>
+                <p className="text-fy-steel/60 text-xs leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
 
+        {/* 游戏模式 */}
         <div className={`mb-16 sm:mb-24 transition-all duration-700 delay-300 ${vis ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="flex items-center gap-3 mb-8"><Map className="w-4 h-4 text-fy-amber" /><span className="section-label">GAME MODES</span></div>
+          <div className="flex items-center gap-3 mb-8">
+            <Map className="w-4 h-4 text-fy-amber" />
+            <span className="section-label">GAME MODES</span>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-fy-green-dim/20">
-            {gameModes.map((mode) => (<div key={mode.name} className="bg-fy-panel p-5 sm:p-6 hud-corners hover:bg-fy-surface transition-colors"><div className="flex items-center gap-2 mb-3"><span className="font-hud font-bold text-fy-amber text-lg">{mode.name}</span></div><p className="font-hud text-white text-sm tracking-wider mb-2">{mode.desc}</p><p className="text-fy-steel/60 text-xs leading-relaxed">{mode.detail}</p></div>))}
+            {gameModes.map((mode) => (
+              <div key={mode.name} className="bg-fy-panel p-5 sm:p-6 hud-corners hover:bg-fy-surface transition-colors">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="font-hud font-bold text-fy-amber text-lg">{mode.name}</span>
+                </div>
+                <p className="font-hud text-white text-sm tracking-wider mb-2">{mode.desc}</p>
+                <p className="text-fy-steel/60 text-xs leading-relaxed">{mode.detail}</p>
+              </div>
+            ))}
           </div>
         </div>
 
+        {/* 可选阵营 */}
         <div className={`transition-all duration-700 delay-400 ${vis ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="flex items-center gap-3 mb-8"><Users className="w-4 h-4 text-fy-amber" /><span className="section-label">FACTIONS</span></div>
+          <div className="flex items-center gap-3 mb-8">
+            <Users className="w-4 h-4 text-fy-amber" />
+            <span className="section-label">FACTIONS</span>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-fy-green-dim/20">
-            {factions.map((faction) => (<div key={faction.name} className="bg-fy-panel p-5 sm:p-6 hud-corners hover:bg-fy-surface transition-colors"><div className="flex items-center justify-between mb-3"><span className="font-hud font-bold text-white text-sm tracking-wider">{faction.name}</span><span className="font-mono text-[10px] text-fy-amber border border-fy-amber/30 px-2 py-0.5">{faction.flag}</span></div><p className="text-fy-steel/60 text-xs leading-relaxed">{faction.desc}</p></div>))}
+            {factions.map((faction) => (
+              <div key={faction.name} className="bg-fy-panel p-5 sm:p-6 hud-corners hover:bg-fy-surface transition-colors">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="font-hud font-bold text-white text-sm tracking-wider">{faction.name}</span>
+                  <span className="font-mono text-[10px] text-fy-amber border border-fy-amber/30 px-2 py-0.5">{faction.flag}</span>
+                </div>
+                <p className="text-fy-steel/60 text-xs leading-relaxed">{faction.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -256,8 +330,11 @@ function GameIntro() {
 /* ─── 服务器状态面板 (HUD风格) ─── */
 function ServerPanel() {
   const [countdown, setCountdown] = useState(30);
+
   useEffect(() => {
-    const timer = setInterval(() => { setCountdown((prev) => (prev <= 1 ? 30 : prev - 1)); }, 1000);
+    const timer = setInterval(() => {
+      setCountdown((prev) => (prev <= 1 ? 30 : prev - 1));
+    }, 1000);
     return () => clearInterval(timer);
   }, []);
 
@@ -277,27 +354,37 @@ function ServerPanel() {
     <section className="relative z-10 -mt-16 sm:-mt-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center gap-3 mb-4 px-1">
-          <Server className="w-4 h-4 text-fy-amber" /><span className="section-label">SERVER STATUS</span>
+          <Server className="w-4 h-4 text-fy-amber" />
+          <span className="section-label">SERVER STATUS</span>
           <span className="text-[10px] font-mono text-fy-steel/50 ml-auto hidden sm:block">AUTO-REFRESH {countdown}S</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-fy-green-dim/20">
           {servers.map((s) => {
             const st = statusMap[s.status];
-            return (<div key={s.name} className="bg-fy-panel p-4 sm:p-5 hud-corners hover:bg-fy-surface transition-colors group">
-              <div className="flex items-center justify-between mb-3 sm:mb-4">
-                <span className="font-hud font-semibold text-white text-xs sm:text-sm tracking-wider">{s.name}</span>
-                <div className="flex items-center gap-2"><span className={`w-1.5 h-1.5 ${st.dot} animate-pulse-slow`} /><span className={`font-mono text-[10px] tracking-wider ${st.color}`}>{st.text}</span></div>
+            return (
+              <div key={s.name} className="bg-fy-panel p-4 sm:p-5 hud-corners hover:bg-fy-surface transition-colors group">
+                <div className="flex items-center justify-between mb-3 sm:mb-4">
+                  <span className="font-hud font-semibold text-white text-xs sm:text-sm tracking-wider">{s.name}</span>
+                  <div className="flex items-center gap-2">
+                    <span className={`w-1.5 h-1.5 ${st.dot} animate-pulse-slow`} />
+                    <span className={`font-mono text-[10px] tracking-wider ${st.color}`}>{st.text}</span>
+                  </div>
+                </div>
+                <div className="flex items-end gap-3 mb-3 sm:mb-4">
+                  <span className="font-hud font-bold text-2xl sm:text-3xl text-white leading-none">{s.players}</span>
+                  <span className="font-hud text-fy-steel text-xs sm:text-sm mb-0.5">/100</span>
+                  {s.queue > 0 && <span className="font-mono text-[10px] text-fy-orange ml-auto">QUEUE: {s.queue}</span>}
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] text-fy-steel/60 tracking-wider">{s.map}</span>
+                  <a href={`steam://connect/${s.ip}:${s.port}`}
+                     className={`font-hud text-[10px] tracking-wider px-3 py-1 border transition-colors ${s.status === 'offline' ? 'border-fy-green-dim/20 text-fy-steel/30 cursor-not-allowed' : 'border-fy-amber/30 text-fy-amber hover:bg-fy-amber/10'}`}
+                     onClick={s.status === 'offline' ? (e) => e.preventDefault() : undefined}>
+                    JOIN →
+                  </a>
+                </div>
               </div>
-              <div className="flex items-end gap-3 mb-3 sm:mb-4">
-                <span className="font-hud font-bold text-2xl sm:text-3xl text-white leading-none">{s.players}</span>
-                <span className="font-hud text-fy-steel text-xs sm:text-sm mb-0.5">/100</span>
-                {s.queue > 0 && <span className="font-mono text-[10px] text-fy-orange ml-auto">QUEUE: {s.queue}</span>}
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[10px] text-fy-steel/60 tracking-wider">{s.map}</span>
-                <a href={`steam://connect/${s.ip}:${s.port}`} className={`font-hud text-[10px] tracking-wider px-3 py-1 border transition-colors ${s.status === 'offline' ? 'border-fy-green-dim/20 text-fy-steel/30 cursor-not-allowed' : 'border-fy-amber/30 text-fy-amber hover:bg-fy-amber/10'}`} onClick={s.status === 'offline' ? (e) => e.preventDefault() : undefined}>JOIN →</a>
-              </div>
-            </div>);
+            );
           })}
         </div>
       </div>
@@ -323,6 +410,7 @@ function Stats() {
   ];
 
   const [animatedValues, setAnimatedValues] = useState<number[]>(items.map(() => 0));
+
   useEffect(() => {
     if (!vis) return;
     const duration = 2000;
@@ -347,7 +435,17 @@ function Stats() {
     <section ref={ref} className="py-16 sm:py-28 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-fy-green-dim/10">
-          {items.map((item, i) => (<div key={item.label} className={`bg-fy-dark p-6 sm:p-8 text-center transition-all duration-700 ${vis ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: `${i * 120}ms` }}><item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-fy-amber/60 mx-auto mb-3 sm:mb-4" /><div className="data-value text-xl sm:text-2xl mb-1">{formatValue(item, animatedValues[i])}</div><div className="data-label text-xs">{item.label}</div></div>))}
+          {items.map((item, i) => (
+            <div
+              key={item.label}
+              className={`bg-fy-dark p-6 sm:p-8 text-center transition-all duration-700 ${vis ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              style={{ transitionDelay: `${i * 120}ms` }}
+            >
+              <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-fy-amber/60 mx-auto mb-3 sm:mb-4" />
+              <div className="data-value text-xl sm:text-2xl mb-1">{formatValue(item, animatedValues[i])}</div>
+              <div className="data-label text-xs">{item.label}</div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -359,6 +457,7 @@ function VideoShowcase() {
   const ref = useRef<HTMLDivElement>(null);
   const [vis, setVis] = useState(false);
   const [activeVideo, setActiveVideo] = useState(1);
+
   useEffect(() => {
     const ob = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVis(true); }, { threshold: 0.1 });
     if (ref.current) ob.observe(ref.current);
@@ -373,14 +472,31 @@ function VideoShowcase() {
           <h2 className="font-hud font-bold text-3xl sm:text-4xl text-white tracking-wider mb-4">战场实录</h2>
           <p className="text-fy-steel max-w-lg mx-auto text-sm sm:text-base">真实的战术小队战斗画面，感受百人战场的震撼</p>
         </div>
+
         <div className={`transition-all duration-700 delay-200 ${vis ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="aspect-video bg-fy-dark border border-fy-green-dim/20 overflow-hidden mb-4 sm:mb-6">
-            <video key={activeVideo} className="w-full h-full object-cover" autoPlay muted loop playsInline>
+            <video
+              key={activeVideo}
+              className="w-full h-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
               <source src={`/videos/squad-${activeVideo}.mp4`} type="video/mp4" />
             </video>
           </div>
+
           <div className="flex justify-center gap-2 sm:gap-3 flex-wrap">
-            {Array.from({ length: 8 }, (_, i) => i + 1).map((n) => (<button key={n} onClick={() => setActiveVideo(n)} className={`font-mono text-xs sm:text-sm px-3 py-1.5 sm:px-4 sm:py-2 border transition-all ${activeVideo === n ? 'border-fy-amber text-fy-amber bg-fy-amber/10' : 'border-fy-green-dim/30 text-fy-steel/50 hover:border-fy-steel/50 hover:text-fy-steel'}`}>CAM {String(n).padStart(2, '0')}</button>))}
+            {Array.from({ length: 8 }, (_, i) => i + 1).map((n) => (
+              <button
+                key={n}
+                onClick={() => setActiveVideo(n)}
+                className={`font-mono text-xs sm:text-sm px-3 py-1.5 sm:px-4 sm:py-2 border transition-all ${activeVideo === n ? 'border-fy-amber text-fy-amber bg-fy-amber/10' : 'border-fy-green-dim/30 text-fy-steel/50 hover:border-fy-steel/50 hover:text-fy-steel'}`}
+              >
+                CAM {String(n).padStart(2, '0')}
+              </button>
+            ))}
           </div>
         </div>
       </div>
@@ -399,8 +515,12 @@ function CTA() {
         <h2 className="font-hud font-bold text-3xl sm:text-5xl md:text-7xl text-white tracking-wider mt-4 mb-4 sm:mb-6">准备加入战斗？</h2>
         <p className="text-fy-steel mb-8 sm:mb-10 max-w-md mx-auto text-sm sm:text-base">无论你是新手还是老兵，FY都欢迎你的加入</p>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-          <Link to="/join" className="btn-amber inline-flex items-center justify-center gap-2 text-sm sm:text-base px-6 py-3">立即申请 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" /></Link>
-          <Link to="/about" className="btn-outline inline-flex items-center justify-center text-sm sm:text-base px-6 py-3">了解战队</Link>
+          <Link to="/join" className="btn-amber inline-flex items-center justify-center gap-2 text-sm sm:text-base px-6 py-3">
+            立即申请 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+          </Link>
+          <Link to="/about" className="btn-outline inline-flex items-center justify-center text-sm sm:text-base px-6 py-3">
+            了解战队
+          </Link>
         </div>
       </div>
     </section>
@@ -414,7 +534,9 @@ function SponsorStrip() {
     <section className="py-8 sm:py-10 border-y border-fy-green-dim/10 overflow-hidden">
       <div className="flex animate-marquee whitespace-nowrap">
         {[...names, ...names, ...names, ...names].map((n, i) => (
-          <span key={i} className="mx-6 sm:mx-10 font-hud text-lg sm:text-xl text-fy-steel/15 hover:text-fy-amber/40 transition-colors cursor-default tracking-wider">{n}</span>
+          <span key={i} className="mx-6 sm:mx-10 font-hud text-lg sm:text-xl text-fy-steel/15 hover:text-fy-amber/40 transition-colors cursor-default tracking-wider">
+            {n}
+          </span>
         ))}
       </div>
     </section>
@@ -438,25 +560,43 @@ function Footer() {
   return (
     <footer className="bg-fy-dark border-t border-fy-green-dim/10 py-10 sm:py-16 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12">
+        {/* 左列：Logo + 名称 + 简介 */}
         <div>
-          <div className="flex items-center gap-3 mb-4"><img src="/images/logo.png" alt="FY" className="w-6 h-6 object-contain" /><span className="font-hud text-fy-amber tracking-widest text-lg">FY SQUAD</span></div>
+          <div className="flex items-center gap-3 mb-4">
+            <img src="/images/logo.png" alt="FY" className="w-6 h-6 object-contain" />
+            <span className="font-hud text-fy-amber tracking-widest text-lg">FY SQUAD</span>
+          </div>
           <p className="font-hud text-sm text-white tracking-wider mb-3">肥鸭战队</p>
-          <p className="text-fy-steel/50 text-xs leading-relaxed">专注战术小队(Squad)的华人竞技社区，以公平竞技、团队协作、战术至上为核心，打造最专业的中文战术体验。</p>
+          <p className="text-fy-steel/50 text-xs leading-relaxed">
+            专注战术小队(Squad)的华人竞技社区，以公平竞技、团队协作、战术至上为核心，打造最专业的中文战术体验。
+          </p>
         </div>
+
+        {/* 中列：导航链接 */}
         <div>
           <p className="font-hud text-xs text-fy-steel/30 tracking-widest mb-4">NAVIGATION</p>
           <div className="grid grid-cols-2 gap-x-6 gap-y-2">
-            {footerLinks.map((l) => (<Link key={l.to} to={l.to} className="font-hud text-xs text-fy-steel/50 tracking-wider hover:text-fy-amber transition-colors py-1">{l.label}</Link>))}
-            <a href="https://store.steampowered.com/app/393380/Squad/" target="_blank" rel="noopener noreferrer" className="font-hud text-xs text-fy-amber tracking-wider hover:text-white transition-colors py-1 flex items-center gap-1.5"><ShoppingBag className="w-3 h-3" /> 购买游戏</a>
+            {footerLinks.map((l) => (
+              <Link key={l.to} to={l.to} className="font-hud text-xs text-fy-steel/50 tracking-wider hover:text-fy-amber transition-colors py-1">
+                {l.label}
+              </Link>
+            ))}
+            <a href="https://store.steampowered.com/app/393380/Squad/" target="_blank" rel="noopener noreferrer" className="font-hud text-xs text-fy-amber tracking-wider hover:text-white transition-colors py-1 flex items-center gap-1.5">
+              <ShoppingBag className="w-3 h-3" /> 购买游戏
+            </a>
           </div>
         </div>
+
+        {/* 右列：联系方式 + 版权 */}
         <div>
           <p className="font-hud text-xs text-fy-steel/30 tracking-widest mb-4">CONTACT</p>
           <div className="space-y-2 mb-6">
-            <p className="text-fy-steel/50 text-xs">QQ群: <span className="text-fy-steel/70">123456789</span></p>
-            <p className="text-fy-steel/50 text-xs">邮箱: <span className="text-fy-steel/70">contact@fy-squad.com</span></p>
+            <p className="text-fy-steel/50 text-xs">QQ群: <span className="text-fy-steel/70">147724008</span></p>
+            <p className="text-fy-steel/50 text-xs">邮箱: <span className="text-fy-steel/70">fy.squad@qq.com</span></p>
           </div>
-          <div className="border-t border-fy-green-dim/10 pt-4"><p className="text-fy-steel/20 text-xs font-mono">© 2026 FY SQUAD. ALL RIGHTS RESERVED.</p></div>
+          <div className="border-t border-fy-green-dim/10 pt-4">
+            <p className="text-fy-steel/20 text-xs font-mono">© 2026 FY SQUAD. ALL RIGHTS RESERVED.</p>
+          </div>
         </div>
       </div>
     </footer>

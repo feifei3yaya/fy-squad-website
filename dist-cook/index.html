@@ -1,0 +1,3713 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 快乐小厨师 - 六一儿童节特别版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap');
+
+        :root {
+            --macaron-pink: #FFB6C1;
+            --macaron-blue: #87CEEB;
+            --macaron-yellow: #FFFACD;
+            --macaron-purple: #DDA0DD;
+            --macaron-green: #98FB98;
+            --macaron-orange: #FFDAB9;
+            --macaron-red: #FFB5B5;
+            --soft-white: #FFFAF0;
+            --text-dark: #4A4A4A;
+            --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(180deg, 
+                #FFE5EC 0%, 
+                #E3F4FC 50%, 
+                #FFF8E3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 可爱的背景装饰 */
+        .bg-decoration {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        .star {
+            font-size: 40px;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        .heart {
+            font-size: 30px;
+            animation: floatUp 4s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes floatUp {
+            0%, 100% { transform: translateY(0) rotate(-10deg); opacity: 0.6; }
+            50% { transform: translateY(-30px) rotate(10deg); opacity: 1; }
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(255,182,193,0.4) 0%, transparent 70%);
+            top: -120px;
+            right: -120px;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(152,251,152,0.4) 0%, transparent 70%);
+            bottom: -80px;
+            left: -80px;
+            animation: float 9s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            50% { transform: translateY(-25px) rotate(8deg) scale(1.05); }
+        }
+
+        .game-container {
+            width: 100%;
+            max-width: 900px;
+            height: 90vh;
+            max-height: 850px;
+            min-height: 600px;
+            background: var(--soft-white);
+            border-radius: 50px;
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            border: 6px solid white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cloud-decor {
+            position: absolute;
+            width: 120px;
+            height: 60px;
+            background: white;
+            border-radius: 50px;
+            opacity: 0.6;
+            z-index: 0;
+        }
+
+        .cloud-1 { top: 30px; left: 30px; animation: drift 20s linear infinite; }
+        .cloud-2 { top: 80px; right: 50px; animation: drift 25s linear infinite reverse; }
+        .cloud-3 { bottom: 100px; left: 80px; animation: drift 18s linear infinite; }
+
+        .cloud-decor::before,
+        .cloud-decor::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .cloud-decor::before {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            left: 20px;
+        }
+
+        .cloud-decor::after {
+            width: 70px;
+            height: 70px;
+            top: -35px;
+            left: 45px;
+        }
+
+        @keyframes drift {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(30px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* 开始界面 */
+        .start-screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            background: linear-gradient(180deg,
+                #FFF5E6 0%,
+                #FFE4EC 50%,
+                #E3F4FC 100%);
+            z-index: 100;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            overflow-y: auto;
+            padding: 40px 20px;
+        }
+
+        .start-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .start-screen.hidden {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+
+        .chef-hat {
+            font-size: 100px;
+            margin-bottom: 10px;
+            animation: bounce 2s ease-in-out infinite;
+            filter: drop-shadow(0 12px 25px rgba(0,0,0,0.15));
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) scale(1) rotate(-2deg); }
+            25% { transform: translateY(-8px) scale(1.02) rotate(2deg); }
+            50% { transform: translateY(-25px) scale(1.05) rotate(0deg); }
+            75% { transform: translateY(-8px) scale(1.02) rotate(-2deg); }
+        }
+
+        .game-title {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--text-dark);
+            text-shadow: 3px 3px 0 white, 6px 6px 0 var(--macaron-pink);
+            margin-bottom: 6px;
+            letter-spacing: 2px;
+            animation: titleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .game-subtitle {
+            font-size: 18px;
+            color: #FF6B8A;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: white;
+            padding: 8px 24px;
+            border-radius: 35px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            border: 3px solid var(--macaron-yellow);
+        }
+
+        .dream-text {
+            font-size: 15px;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            text-align: center;
+            line-height: 1.8;
+            background: rgba(255,255,255,0.95);
+            padding: 15px 30px;
+            border-radius: 35px;
+            box-shadow: var(--shadow-soft);
+            max-width: 480px;
+            border: 2px dashed var(--macaron-pink);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Noto Sans SC', sans-serif;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid white;
+            margin: 0;
+            min-width: 140px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B8A 0%, #FFA07A 100%);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #87CEEB 0%, #6495ED 100%);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #98FB98 0%, #66BB6A 100%);
+            color: #2E7D32;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #FFE066 0%, #FFB300 100%);
+            color: #E65100;
+        }
+
+        /* 排行榜样式 */
+        .leaderboard-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 500;
+            backdrop-filter: blur(5px);
+        }
+
+        .leaderboard-content {
+            background: linear-gradient(135deg, #FFF8E3 0%, #FFE5EC 100%);
+            padding: 30px;
+            border-radius: 35px;
+            border: 6px solid white;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            max-height: 90%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            animation: popupIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes popupIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .leaderboard-title {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0 var(--macaron-yellow);
+        }
+
+        .leaderboard-list {
+            overflow-y: auto;
+            flex: 1;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            flex-wrap: wrap;
+        }
+
+        .leaderboard-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .leaderboard-item.top-1 {
+            background: linear-gradient(135deg, #FFD700 0%, #FFB300 100%);
+            color: white;
+            border: 3px solid #FFA000;
+        }
+
+        .leaderboard-item.top-2 {
+            background: linear-gradient(135deg, #C0C0C0 0%, #A0A0A0 100%);
+            color: white;
+            border: 3px solid #888;
+        }
+
+        .leaderboard-item.top-3 {
+            background: linear-gradient(135deg, #CD7F32 0%, #A0522D 100%);
+            color: white;
+            border: 3px solid #8B4513;
+        }
+
+        .leaderboard-rank {
+            font-size: 20px;
+            font-weight: 900;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .leaderboard-score {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .leaderboard-level,
+        .leaderboard-date {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .leaderboard-stars {
+            font-size: 16px;
+        }
+
+        .leaderboard-empty {
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+            padding: 40px 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.3);
+        }
+
+        .btn:active {
+            transform: translateY(-3px) scale(0.97);
+        }
+
+        /* 关卡选择界面 */
+        .level-select-screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(180deg, 
+                #E3F4FC 0%, 
+                #FFF8E3 100%);
+            z-index: 90;
+            padding: 40px;
+        }
+
+        .level-select-screen.active {
+            display: flex;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .level-title {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 0 var(--macaron-yellow);
+        }
+
+        .levels-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .level-btn {
+            width: 90px;
+            height: 90px;
+            border-radius: 25px;
+            font-size: 28px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 4px solid white;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .level-btn.unlocked {
+            background: linear-gradient(135deg, #FFB6C1 0%, #FFA07A 100%);
+            color: white;
+        }
+
+        .level-btn.locked {
+            background: linear-gradient(135deg, #E0E0E0 0%, #BDBDBD 100%);
+            color: #9E9E9E;
+            cursor: not-allowed;
+        }
+
+        .level-btn.completed {
+            background: linear-gradient(135deg, #98FB98 0%, #66BB6A 100%);
+            color: #2E7D32;
+        }
+
+        .level-btn.unlocked:hover {
+            transform: translateY(-8px) scale(1.1);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+        }
+
+        .level-btn .level-num {
+            font-size: 28px;
+        }
+
+        .level-btn .level-stars {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .achievement-card {
+            padding: 20px 15px;
+            border-radius: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 4px solid white;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .achievement-card.unlocked {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: white;
+            transform: scale(1);
+        }
+
+        .achievement-card.locked {
+            background: linear-gradient(135deg, #E0E0E0 0%, #BDBDBD 100%);
+            color: #757575;
+            opacity: 0.7;
+        }
+
+        .achievement-card.unlocked:hover {
+            transform: scale(1.05);
+        }
+
+        .achievement-card .achievement-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .achievement-card .achievement-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .achievement-card.locked .achievement-icon {
+            filter: grayscale(100%);
+        }
+
+        .achievement-progress {
+            background: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #FF6B8A;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+            border: 3px solid var(--macaron-yellow);
+        }
+
+        /* 教程提示 */
+        .tutorial-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 400;
+            backdrop-filter: blur(8px);
+        }
+
+        .tutorial-overlay.active {
+            display: flex;
+        }
+
+        .tutorial-box {
+            background: white;
+            padding: 40px 50px;
+            border-radius: 50px;
+            text-align: center;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.3);
+            border: 8px solid var(--macaron-pink);
+            max-width: 90%;
+            animation: tutorialPop 0.5s ease-out;
+        }
+
+        @keyframes tutorialPop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .tutorial-icon {
+            font-size: 100px;
+            margin-bottom: 15px;
+        }
+
+        .tutorial-title {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .tutorial-steps {
+            text-align: left;
+            font-size: 18px;
+            line-height: 2.2;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+        }
+
+        .tutorial-steps li {
+            margin: 10px 0;
+            padding-left: 10px;
+        }
+
+        /* 游戏主界面 */
+        .game-screen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .game-screen.active { display: flex; }
+
+        /* 顶部信息栏 */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: linear-gradient(90deg,
+                #FFE5EC 0%,
+                var(--macaron-yellow) 30%,
+                var(--macaron-pink) 50%,
+                var(--macaron-blue) 70%,
+                #E3F4FC 100%);
+            border-bottom: 5px dashed white;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .stats-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .controls-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .top-bar::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: repeating-linear-gradient(90deg,
+                transparent, transparent 12px,
+                white 12px, white 24px);
+        }
+
+        .stat-box {
+            background: white;
+            padding: 10px 18px;
+            border-radius: 40px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            font-weight: 700;
+            font-size: 16px;
+            border: 3px solid;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex: 1;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .stat-box:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-score { color: #FF6B8A; border-color: var(--macaron-pink); }
+        .stat-level { color: #7EC8E3; border-color: var(--macaron-blue); }
+        .stat-target { color: #DDA0DD; border-color: var(--macaron-purple); }
+        .stat-time { color: #FF6B8A; border-color: var(--macaron-yellow); }
+
+        .stat-time.warning {
+            animation: pulseWarning 0.4s ease-in-out infinite;
+            color: #FF4757;
+            border-color: #FF4757;
+        }
+
+        @keyframes pulseWarning {
+            0%, 100% { transform: scale(1); background: white; }
+            50% { transform: scale(1.12); background: #FFE5E5; }
+        }
+
+        /* 暂停按钮 */
+        .pause-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: white;
+            border: 4px solid var(--macaron-yellow);
+            font-size: 22px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pause-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        }
+
+        /* 顾客区域 */
+        .customer-area {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px 20px;
+            background: linear-gradient(180deg, 
+                rgba(255,250,240,0.95) 0%, 
+                rgba(255,182,193,0.15) 100%);
+            min-height: 150px;
+            align-items: center;
+        }
+
+        .customer {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            animation: customerPopIn 0.55s ease-out;
+        }
+
+        @keyframes customerPopIn {
+            0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+            60% { transform: scale(1.1) rotate(3deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .customer-avatar {
+            font-size: 75px;
+            animation: customerFloat 3.2s ease-in-out infinite;
+            filter: drop-shadow(0 6px 18px rgba(0,0,0,0.12));
+            flex-shrink: 0;
+        }
+
+        @keyframes customerFloat {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+        }
+
+        .customer-order {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            font-size: 14px;
+            min-width: 260px;
+            border: 4px solid var(--macaron-yellow);
+            position: relative;
+        }
+
+        .customer-order .dish-name {
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            font-size: 19px;
+        }
+
+        .customer-order .ingredients-label {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .customer-order .ingredients-needed {
+            font-size: 28px;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 10px;
+            background: var(--soft-white);
+            border-radius: 20px;
+            border: 2px dashed var(--macaron-pink);
+        }
+
+        .customer-order .ingredients-needed .ingredient-item {
+            opacity: 0.3;
+            transition: all 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform: scale(0.85);
+            filter: grayscale(60%);
+        }
+
+        .customer-order .ingredients-needed .ingredient-item.collected {
+            opacity: 1;
+            transform: scale(1.3);
+            filter: grayscale(0%);
+            animation: ingredientCollect 0.6s ease-out;
+        }
+
+        @keyframes ingredientCollect {
+            0% { transform: scale(0.4) rotate(-15deg); }
+            40% { transform: scale(1.5) rotate(8deg); }
+            100% { transform: scale(1.3) rotate(0deg); }
+        }
+
+        .customer.happy { animation: customerHappy 0.7s ease-out; }
+        .customer.angry { animation: customerAngry 0.55s ease-out; }
+
+        @keyframes customerHappy {
+            0% { transform: scale(1) rotate(0deg); }
+            20% { transform: scale(1.15) rotate(-6deg); }
+            40% { transform: scale(1.25) rotate(6deg); }
+            60% { transform: scale(1.15) rotate(-4deg); }
+            80% { transform: scale(1.05) rotate(3deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        @keyframes customerAngry {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            20% { transform: translateX(-18px) rotate(-6deg); }
+            40% { transform: translateX(18px) rotate(6deg); }
+            60% { transform: translateX(-12px) rotate(-4deg); }
+            80% { transform: translateX(12px) rotate(3deg); }
+        }
+
+        /* 厨房操作区 */
+        .kitchen-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 15px 25px 25px;
+            background: var(--soft-white);
+        }
+
+        .cooking-station {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 20px;
+            min-height: 120px;
+        }
+
+        .pot {
+            width: 160px;
+            height: 135px;
+            background: linear-gradient(180deg, #CFD8DC 0%, #90A4AE 100%);
+            border-radius: 0 0 45px 45px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 55px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.22);
+            transition: all 0.3s;
+            border: 4px solid #78909C;
+        }
+
+        .pot::before {
+            content: '';
+            position: absolute;
+            top: -18px;
+            left: -18px;
+            right: -18px;
+            height: 30px;
+            background: #546E7A;
+            border-radius: 25px;
+        }
+
+        .pot::after {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+            height: 45px;
+            background: radial-gradient(ellipse, rgba(255,255,255,0.85) 0%, transparent 70%);
+            animation: steam 2.2s ease-out infinite;
+        }
+
+        @keyframes steam {
+            0% { 
+                opacity: 0; 
+                transform: translateX(-50%) translateY(0) scale(0.4);
+            }
+            35% { 
+                opacity: 1; 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateX(-50%) translateY(-35px) scale(1.6);
+            }
+        }
+
+        .pot.cooking {
+            animation: potShake 0.18s ease-in-out infinite;
+            box-shadow: 0 18px 45px rgba(0,0,0,0.35);
+            background: linear-gradient(180deg, #ECEFF1 0%, #B0BEC5 100%);
+        }
+
+        .pot.cooking::after {
+            animation: steamCooking 0.45s ease-out infinite;
+        }
+
+        @keyframes potShake {
+            0%, 100% { transform: rotate(-4deg); }
+            50% { transform: rotate(4deg); }
+        }
+
+        @keyframes steamCooking {
+            0% { opacity: 0; transform: translateX(-50%) translateY(0) scale(0.4); }
+            25% { opacity: 1; }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-45px) scale(2.2); }
+        }
+
+        .current-ingredients {
+            display: flex;
+            gap: 12px;
+            min-height: 70px;
+            align-items: center;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 35px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            min-width: 230px;
+            border: 4px dashed var(--macaron-blue);
+        }
+
+        .current-ingredients .placeholder {
+            color: #B0BEC5;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .current-ingredients .ingredient {
+            font-size: 38px;
+            animation: ingredientPopIn 0.45s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18));
+        }
+
+        .current-ingredients .ingredient.removable {
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .current-ingredients .ingredient.removable:hover {
+            transform: scale(1.15);
+            filter: drop-shadow(0 6px 15px rgba(0,0,0,0.25)) brightness(1.1);
+        }
+
+        .current-ingredients .ingredient.removable .remove-icon {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%);
+            color: white;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 2px solid white;
+            box-shadow: 0 3px 10px rgba(255, 71, 87, 0.4);
+        }
+
+        .current-ingredients .ingredient.removable:hover .remove-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        @keyframes ingredientPopIn {
+            0% { transform: scale(0) rotate(-25deg); opacity: 0; }
+            50% { transform: scale(1.4) rotate(12deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .cook-btn {
+            padding: 18px 35px;
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #98FB98 0%, #66BB6A 100%);
+            color: #2E7D32;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            font-family: 'Noto Sans SC', sans-serif;
+            box-shadow: 0 10px 30px rgba(152, 251, 152, 0.45);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            border: 4px solid white;
+        }
+
+        .cook-btn:hover:not(:disabled) {
+            transform: translateY(-6px) scale(1.08);
+            box-shadow: 0 15px 40px rgba(152, 251, 152, 0.55);
+        }
+
+        .cook-btn:active:not(:disabled) {
+            transform: translateY(-2px) scale(0.97);
+        }
+
+        .cook-btn:disabled {
+            background: linear-gradient(135deg, #ECEFF1 0%, #CFD8DC 100%);
+            color: #90A4AE;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            border-color: #CFD8DC;
+        }
+
+        /* 食材选择区 */
+        .ingredients-area {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 12px;
+            padding: 15px 18px;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.1);
+            border: 5px solid var(--macaron-pink);
+            max-width: 100%;
+            overflow-y: auto;
+        }
+
+        .ingredient-btn {
+            aspect-ratio: 1;
+            font-size: 36px;
+            background: linear-gradient(135deg, white 0%, #FFF9E6 100%);
+            border: 4px solid var(--macaron-yellow);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .ingredient-btn:hover:not(.used) {
+            transform: translateY(-8px) scale(1.1);
+            border-color: var(--macaron-pink);
+            box-shadow: 0 14px 32px rgba(255, 182, 193, 0.45);
+            background: linear-gradient(135deg, #FFF5F7 0%, #FFE5EC 100%);
+        }
+
+        .ingredient-btn:active:not(.used) {
+            transform: translateY(-2px) scale(0.96);
+        }
+
+        .ingredient-btn.highlighted {
+            border-color: var(--macaron-green);
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+            box-shadow: 0 0 25px rgba(152, 251, 152, 0.55), 0 6px 20px rgba(0,0,0,0.12);
+            animation: highlightPulse 1.8s ease-in-out infinite;
+        }
+
+        @keyframes highlightPulse {
+            0%, 100% { 
+                box-shadow: 0 0 25px rgba(152, 251, 152, 0.55), 0 6px 20px rgba(0,0,0,0.12);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 40px rgba(152, 251, 152, 0.75), 0 6px 20px rgba(0,0,0,0.12);
+                transform: scale(1.05);
+            }
+        }
+
+        .ingredient-btn.used {
+            opacity: 0.35;
+            pointer-events: none;
+            filter: grayscale(65%);
+        }
+
+        .ingredient-btn.used::after {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #81C784 0%, #66BB6A 100%);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: 900;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            border: 2px solid white;
+        }
+
+        /* 结果提示 */
+        .result-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 50px 70px;
+            border-radius: 50px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.28);
+            text-align: center;
+            z-index: 200;
+            transition: all 0.45s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 8px solid;
+        }
+
+        .result-popup.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .result-popup.success {
+            border-color: var(--macaron-green);
+            background: linear-gradient(135deg, white 0%, #E8F5E9 50%, #C8E6C9 100%);
+        }
+
+        .result-popup.fail {
+            border-color: var(--macaron-pink);
+            background: linear-gradient(135deg, white 0%, #FFEBEE 50%, #FFCDD2 100%);
+        }
+
+        .result-popup .result-icon {
+            font-size: 80px;
+            margin-bottom: 15px;
+            animation: iconPop 0.6s ease-out;
+        }
+
+        @keyframes iconPop {
+            0% { transform: scale(0) rotate(-25deg); }
+            50% { transform: scale(1.4) rotate(12deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .result-popup .result-text {
+            font-size: 30px;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .result-popup.success .result-text {
+            color: #2E7D32;
+        }
+
+        .result-popup.fail .result-text {
+            color: #B71C1C;
+        }
+
+        .result-popup .result-score {
+            font-size: 24px;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        /* 连击显示 */
+        .combo-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 75px;
+            font-weight: 900;
+            color: #FF6B8A;
+            text-shadow: 4px 4px 0 white, 8px 8px 0 var(--macaron-yellow);
+            animation: comboPop 0.8s ease-out forwards;
+            pointer-events: none;
+            z-index: 300;
+            display: none;
+        }
+
+        @keyframes comboPop {
+            0% { transform: translate(-50%, -50%) scale(0) rotate(-10deg); opacity: 0; }
+            30% { transform: translate(-50%, -50%) scale(1.4) rotate(5deg); opacity: 1; }
+            70% { transform: translate(-50%, -50%) scale(1.1) rotate(0deg); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 0; }
+        }
+
+        /* 成就提示 */
+        .achievement-popup {
+            position: fixed;
+            top: 20px;
+            right: -450px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            padding: 20px 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 165, 0, 0.4);
+            border: 5px solid white;
+            z-index: 500;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: right 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .achievement-popup.show {
+            right: 20px;
+        }
+
+        .achievement-icon {
+            font-size: 40px;
+        }
+
+        .achievement-text {
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        /* 关卡完成界面 */
+        .level-complete-screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            z-index: 250;
+        }
+
+        .level-complete-screen.active {
+            display: flex;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .level-complete-content {
+            background: white;
+            padding: 50px 70px;
+            border-radius: 50px;
+            text-align: center;
+            animation: slideDown 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+            border: 8px solid var(--macaron-green);
+            position: relative;
+        }
+
+        .level-complete-content::before {
+            content: '🎊';
+            position: absolute;
+            top: -35px;
+            left: 25px;
+            font-size: 55px;
+            animation: confettiFloat 2.2s ease-in-out infinite;
+        }
+
+        .level-complete-content::after {
+            content: '🎉';
+            position: absolute;
+            top: -30px;
+            right: 25px;
+            font-size: 50px;
+            animation: confettiFloat 2.6s ease-in-out infinite reverse;
+        }
+
+        @keyframes confettiFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-18px) rotate(12deg); }
+        }
+
+        @keyframes slideDown {
+            from { 
+                transform: translateY(-90px) scale(0.75); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateY(0) scale(1); 
+                opacity: 1; 
+            }
+        }
+
+        .level-complete-title {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 var(--macaron-green);
+        }
+
+        .level-complete-stars {
+            font-size: 60px;
+            margin: 15px 0;
+            animation: chefWave 1.1s ease-in-out infinite;
+        }
+
+        @keyframes chefWave {
+            0%, 100% { transform: rotate(-6deg); }
+            50% { transform: rotate(6deg); }
+        }
+
+        .level-complete-score {
+            font-size: 52px;
+            font-weight: 900;
+            color: #FF6B8A;
+            margin-bottom: 10px;
+            text-shadow: 4px 4px 0 var(--macaron-yellow);
+        }
+
+        .level-complete-text {
+            font-size: 24px;
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        /* 游戏结束界面 */
+        .game-over-screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(12px);
+            z-index: 150;
+        }
+
+        .game-over-screen.active {
+            display: flex;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .game-over-content {
+            background: white;
+            padding: 50px 70px;
+            border-radius: 50px;
+            text-align: center;
+            animation: slideDown 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+            border: 8px solid var(--macaron-pink);
+            position: relative;
+        }
+
+        .game-over-content::before {
+            content: '🎊';
+            position: absolute;
+            top: -35px;
+            left: 25px;
+            font-size: 55px;
+            animation: confettiFloat 2.2s ease-in-out infinite;
+        }
+
+        .game-over-content::after {
+            content: '🎉';
+            position: absolute;
+            top: -30px;
+            right: 25px;
+            font-size: 50px;
+            animation: confettiFloat 2.6s ease-in-out infinite reverse;
+        }
+
+        .game-over-title {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 var(--macaron-pink);
+        }
+
+        .chef-rating {
+            font-size: 90px;
+            margin: 15px 0;
+            animation: chefWave 1.1s ease-in-out infinite;
+        }
+
+        .final-score {
+            font-size: 58px;
+            font-weight: 900;
+            color: #FF6B8A;
+            margin-bottom: 10px;
+            text-shadow: 4px 4px 0 var(--macaron-yellow);
+        }
+
+        .rating-text {
+            font-size: 26px;
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .high-score-text {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        /* 粒子效果 */
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            font-size: 28px;
+            animation: particleFloating 1s ease-out forwards;
+            z-index: 50;
+        }
+
+        @keyframes particleFloating {
+            0% { 
+                transform: translateY(0) rotate(0deg) scale(1); 
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(-120px) rotate(360deg) scale(0.5); 
+                opacity: 0;
+            }
+        }
+
+        /* 成功庆祝特效 */
+        .celebration-particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 50;
+            animation: celebrate 1.2s ease-out forwards;
+        }
+
+        @keyframes celebrate {
+            0% { 
+                transform: translateY(0) rotate(0deg) scale(0.5);
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(-200px) rotate(720deg) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* 暂停菜单 */
+        .pause-screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            z-index: 300;
+        }
+
+        .pause-screen.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .pause-menu {
+            background: white;
+            padding: 40px 50px;
+            border-radius: 50px;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+            border: 8px solid var(--macaron-yellow);
+            animation: slideDown 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .pause-title {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 0 var(--macaron-pink);
+        }
+
+        .pause-menu .btn {
+            margin: 10px 5px;
+            min-width: 180px;
+        }
+
+        /* 提示按钮 */
+        .hint-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border: 4px solid white;
+            font-size: 22px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hint-btn:hover:not(:disabled) {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 165, 0, 0.4);
+        }
+
+        .hint-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            filter: grayscale(100%);
+        }
+
+        .hint-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: linear-gradient(135deg, #FF6B8A 0%, #FF4757 100%);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 900;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* 提示高亮动画 */
+        .hint-highlight {
+            animation: hintFlash 1.2s ease-in-out 3 !important;
+            border-color: #00E676 !important;
+            box-shadow: 0 0 30px rgba(0, 230, 118, 0.8), 0 6px 20px rgba(0,0,0,0.12) !important;
+        }
+
+        @keyframes hintFlash {
+            0%, 100% { 
+                transform: scale(1);
+                border-color: #00E676;
+                box-shadow: 0 0 30px rgba(0, 230, 118, 0.8), 0 6px 20px rgba(0,0,0,0.12);
+            }
+            50% { 
+                transform: scale(1.15);
+                border-color: #00C853;
+                box-shadow: 0 0 50px rgba(0, 230, 118, 1), 0 6px 20px rgba(0,0,0,0.12);
+            }
+        }
+
+        /* 设置界面 */
+        .settings-screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(180deg, 
+                #FFE5EC 0%, 
+                #E3F4FC 50%, 
+                #FFF8E3 100%);
+            z-index: 200;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .settings-screen.active {
+            display: flex;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .settings-content {
+            background: white;
+            padding: 40px 60px;
+            border-radius: 50px;
+            text-align: center;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.25);
+            border: 8px solid var(--macaron-blue);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .settings-title {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 0 var(--macaron-yellow);
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 2px dashed var(--macaron-pink);
+            gap: 20px;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
+            flex-shrink: 0;
+        }
+
+        .setting-label .emoji {
+            font-size: 28px;
+        }
+
+        .setting-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 70px;
+            height: 36px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 36px;
+            border: 3px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: linear-gradient(135deg, #98FB98 0%, #66BB6A 100%);
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(34px);
+        }
+
+        /* 难度选择按钮组 */
+        .difficulty-selector {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .difficulty-btn {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            border: 3px solid;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Noto Sans SC', sans-serif;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background: white;
+            min-width: 80px;
+        }
+
+        .difficulty-btn.easy {
+            border-color: #98FB98;
+            color: #2E7D32;
+        }
+
+        .difficulty-btn.easy:hover,
+        .difficulty-btn.easy.active {
+            background: linear-gradient(135deg, #98FB98 0%, #66BB6A 100%);
+            color: white;
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .difficulty-btn.normal {
+            border-color: #FFD700;
+            color: #F57F17;
+        }
+
+        .difficulty-btn.normal:hover,
+        .difficulty-btn.normal.active {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: white;
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .difficulty-btn.hard {
+            border-color: #FF6B8A;
+            color: #C62828;
+        }
+
+        .difficulty-btn.hard:hover,
+        .difficulty-btn.hard.active {
+            background: linear-gradient(135deg, #FF6B8A 0%, #FF4757 100%);
+            color: white;
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        /* 语言选择按钮组 */
+        .language-selector {
+            display: flex;
+            gap: 8px;
+        }
+
+        .language-btn {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            border: 3px solid var(--macaron-blue);
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Noto Sans SC', sans-serif;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background: white;
+            color: var(--text-dark);
+            min-width: 80px;
+        }
+
+        .language-btn:hover,
+        .language-btn.active {
+            background: linear-gradient(135deg, #87CEEB 0%, #6495ED 100%);
+            color: white;
+            border-color: #6495ED;
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        /* 设置按钮组 */
+        .settings-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .settings-buttons .btn {
+            margin: 0;
+        }
+
+        /* 数据管理区域 */
+        .data-management {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--macaron-blue);
+        }
+
+        .data-management-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .data-btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            border: 3px solid;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Noto Sans SC', sans-serif;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .data-btn.export {
+            border-color: var(--macaron-green);
+            color: #2E7D32;
+            background: white;
+        }
+
+        .data-btn.export:hover {
+            background: linear-gradient(135deg, #98FB98 0%, #66BB6A 100%);
+            color: white;
+        }
+
+        .data-btn.import {
+            border-color: var(--macaron-blue);
+            color: #1565C0;
+            background: white;
+        }
+
+        .data-btn.import:hover {
+            background: linear-gradient(135deg, #87CEEB 0%, #6495ED 100%);
+            color: white;
+        }
+
+        .data-btn.reset {
+            border-color: var(--macaron-pink);
+            color: #C62828;
+            background: white;
+        }
+
+        .data-btn.reset:hover {
+            background: linear-gradient(135deg, #FF6B8A 0%, #FF4757 100%);
+            color: white;
+        }
+
+        /* 提示弹窗 */
+        .toast-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 30px 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 5px solid var(--macaron-yellow);
+            z-index: 600;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .toast-popup.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* ============================================ */
+        /* 响应式适配 — 平板 (768px ~ 1024px)           */
+        /* ============================================ */
+        @media (max-width: 1024px) {
+            body { padding: 10px; }
+
+            .game-container {
+                max-width: 100%;
+                height: 95vh;
+                border-radius: 35px;
+                border-width: 4px;
+            }
+
+            .game-title { font-size: 42px; }
+            .chef-hat { font-size: 100px; }
+            .game-subtitle { font-size: 18px; padding: 8px 25px; margin-bottom: 20px; }
+
+            .btn { padding: 16px 50px; font-size: 19px; border-width: 3px; }
+            .btn:hover { transform: translateY(-4px) scale(1.04); }
+
+            .level-title { font-size: 34px; margin-bottom: 20px; }
+            .levels-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; padding: 0 20px; }
+            .level-btn { width: 75px; height: 75px; border-radius: 20px; border-width: 3px; }
+            .level-btn .level-num { font-size: 24px; }
+
+            .achievements-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 0 20px; }
+            .achievement-card { padding: 14px 10px; border-radius: 20px; border-width: 3px; }
+            .achievement-card .achievement-icon { font-size: 38px; }
+            .achievement-card .achievement-name { font-size: 14px; }
+
+            .dream-text { font-size: 15px; padding: 15px 30px; max-width: 400px; }
+
+            .top-bar { padding: 10px 18px; gap: 8px; }
+            .stat-box { padding: 8px 14px; font-size: 15px; border-radius: 30px; border-width: 2px; }
+
+            .pause-btn { width: 42px; height: 42px; top: 14px; right: 14px; font-size: 20px; border-width: 3px; }
+
+            .customer-area { gap: 12px; padding: 10px 15px; min-height: 120px; }
+            .customer-avatar { font-size: 55px; }
+            .customer-order { padding: 10px 18px; min-width: 200px; border-width: 3px; }
+            .customer-order .dish-name { font-size: 16px; }
+            .customer-order .ingredients-needed { font-size: 24px; gap: 5px; padding: 8px; }
+
+            .cooking-station { gap: 12px; margin-bottom: 14px; min-height: 90px; }
+            .pot { width: 120px; height: 100px; font-size: 42px; border-width: 3px; border-radius: 0 0 35px 35px; }
+            .pot::before { top: -14px; left: -14px; right: -14px; height: 24px; border-radius: 20px; }
+            .current-ingredients { padding: 10px 18px; border-width: 3px; gap: 8px; min-width: 160px; }
+            .current-ingredients .ingredient { font-size: 30px; }
+            .current-ingredients .ingredient.removable .remove-icon {
+                width: 18px;
+                height: 18px;
+                font-size: 12px;
+                top: -6px;
+                right: -6px;
+            }
+            .cook-btn { padding: 14px 28px; font-size: 17px; border-width: 3px; }
+
+            .ingredients-area { grid-template-columns: repeat(6, 1fr); gap: 8px; padding: 10px 14px; border-width: 4px; }
+            .ingredient-btn { font-size: 30px; border-width: 3px; border-radius: 18px; }
+
+            .tutorial-box { padding: 30px 35px; border-radius: 35px; border-width: 6px; }
+            .tutorial-icon { font-size: 70px; }
+            .tutorial-title { font-size: 26px; }
+            .tutorial-steps { font-size: 15px; line-height: 2; }
+
+            .result-popup { padding: 35px 50px; border-radius: 35px; border-width: 6px; }
+            .result-popup .result-icon { font-size: 60px; }
+            .result-popup .result-text { font-size: 24px; }
+
+            .level-complete-content,
+            .game-over-content { padding: 35px 50px; border-radius: 35px; border-width: 6px; }
+            .level-complete-title,
+            .game-over-title { font-size: 34px; }
+            .level-complete-score,
+            .final-score { font-size: 44px; }
+            .chef-rating { font-size: 70px; }
+            .level-complete-stars { font-size: 48px; }
+
+            .pause-menu { padding: 30px 40px; border-radius: 35px; border-width: 6px; }
+            .pause-title { font-size: 28px; }
+
+            .settings-content { padding: 30px 40px; border-radius: 35px; border-width: 6px; }
+            .settings-title { font-size: 28px; }
+            .setting-label { font-size: 17px; }
+
+            .hint-btn { width: 42px; height: 42px; top: 14px; right: 66px; font-size: 20px; border-width: 3px; }
+            .hint-count { width: 20px; height: 20px; font-size: 10px; top: -6px; right: -6px; }
+
+            .difficulty-btn { padding: 6px 12px; font-size: 12px; min-width: 70px; }
+            .language-btn { padding: 6px 12px; font-size: 12px; min-width: 70px; }
+            .data-btn { padding: 8px 16px; font-size: 12px; }
+        }
+
+        /* ============================================ */
+        /* 响应式适配 — 手机横屏 & 小平板 (481px ~ 767px) */
+        /* ============================================ */
+        @media (max-width: 767px) {
+            body { padding: 4px; }
+
+            .game-container {
+                max-width: 100%;
+                width: 100%;
+                height: 100vh;
+                border-radius: 20px;
+                border-width: 3px;
+            }
+
+            .game-title { font-size: 32px; text-shadow: 2px 2px 0 white, 5px 5px 0 var(--macaron-pink); letter-spacing: 1px; }
+            .chef-hat { font-size: 75px; }
+            .game-subtitle { font-size: 15px; padding: 6px 18px; margin-bottom: 14px; border-width: 2px; }
+
+            .btn { padding: 14px 36px; font-size: 16px; border-radius: 35px; border-width: 3px; margin: 5px; }
+            .btn:hover { transform: translateY(-3px) scale(1.03); }
+
+            .level-title { font-size: 28px; margin-bottom: 16px; }
+            .levels-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 15px; }
+            .level-btn { width: 65px; height: 65px; border-radius: 16px; border-width: 3px; }
+            .level-btn .level-num { font-size: 20px; }
+            .level-btn .level-stars { font-size: 11px; }
+
+            .achievements-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 12px; }
+            .achievement-card { padding: 10px 6px; border-radius: 16px; border-width: 3px; }
+            .achievement-card .achievement-icon { font-size: 30px; }
+            .achievement-card .achievement-name { font-size: 12px; }
+            .achievement-progress { font-size: 15px; padding: 10px 20px; border-radius: 20px; }
+
+            .dream-text { font-size: 13px; padding: 12px 20px; max-width: 300px; border-radius: 25px; line-height: 1.8; }
+
+            .top-bar { padding: 8px 10px; gap: 4px; flex-wrap: wrap; justify-content: center; }
+            .stat-box { padding: 6px 10px; font-size: 12px; border-radius: 25px; border-width: 2px; flex-shrink: 0; }
+
+            .pause-btn { width: 36px; height: 36px; top: 8px; right: 8px; font-size: 17px; border-width: 2px; }
+
+            .customer-area { gap: 8px; padding: 8px 10px; min-height: 100px; flex-wrap: wrap; justify-content: center; }
+            .customer-avatar { font-size: 42px; }
+            .customer-order { padding: 8px 12px; min-width: 160px; border-radius: 20px; border-width: 2px; }
+            .customer-order .dish-name { font-size: 14px; margin-bottom: 6px; }
+            .customer-order .ingredients-label { font-size: 11px; margin-bottom: 4px; }
+            .customer-order .ingredients-needed { font-size: 20px; gap: 4px; padding: 6px; }
+
+            .kitchen-area { padding: 8px 12px 15px; }
+            .cooking-station { gap: 8px; margin-bottom: 10px; min-height: 70px; flex-wrap: wrap; justify-content: center; }
+            .pot { width: 90px; height: 75px; font-size: 32px; border-width: 3px; border-radius: 0 0 28px 28px; }
+            .pot::before { top: -10px; left: -10px; right: -10px; height: 18px; border-radius: 15px; }
+            .pot::after { top: -45px; width: 30px; height: 30px; }
+            .current-ingredients { padding: 8px 12px; border-width: 2px; gap: 6px; min-width: 120px; border-radius: 25px; }
+            .current-ingredients .ingredient { font-size: 24px; }
+            .current-ingredients .ingredient.removable .remove-icon {
+                width: 16px;
+                height: 16px;
+                font-size: 10px;
+                top: -5px;
+                right: -5px;
+            }
+            .current-ingredients .placeholder { font-size: 12px; }
+            .cook-btn { padding: 10px 20px; font-size: 15px; border-radius: 30px; border-width: 3px; }
+
+            .ingredients-area { grid-template-columns: repeat(5, 1fr); gap: 6px; padding: 8px 10px; border-width: 3px; border-radius: 28px; }
+            .ingredient-btn { font-size: 26px; border-width: 2px; border-radius: 14px; }
+            .ingredient-btn.used::after { width: 22px; height: 22px; font-size: 12px; top: 6px; right: 6px; }
+
+            .tutorial-box { padding: 25px 28px; border-radius: 28px; border-width: 5px; max-width: 95%; }
+            .tutorial-icon { font-size: 55px; }
+            .tutorial-title { font-size: 22px; }
+            .tutorial-steps { font-size: 13px; line-height: 1.8; }
+            .tutorial-steps li { margin: 6px 0; }
+
+            .result-popup { padding: 25px 35px; border-radius: 25px; border-width: 5px; }
+            .result-popup .result-icon { font-size: 45px; }
+            .result-popup .result-text { font-size: 20px; margin-bottom: 8px; }
+            .result-popup .result-score { font-size: 18px; }
+
+            .combo-display { font-size: 50px; text-shadow: 3px 3px 0 white, 5px 5px 0 var(--macaron-yellow); }
+
+            .achievement-popup { top: 8px; padding: 12px 18px; border-radius: 20px; border-width: 3px; }
+            .achievement-popup .achievement-icon { font-size: 28px; }
+            .achievement-popup .achievement-text { font-size: 14px; }
+
+            .level-complete-content,
+            .game-over-content { padding: 25px 35px; border-radius: 25px; border-width: 5px; }
+            .level-complete-content::before,
+            .game-over-content::before { font-size: 35px; top: -25px; left: 15px; }
+            .level-complete-content::after,
+            .game-over-content::after { font-size: 32px; top: -22px; right: 15px; }
+            .level-complete-title,
+            .game-over-title { font-size: 26px; margin-bottom: 12px; }
+            .level-complete-score,
+            .final-score { font-size: 36px; }
+            .level-complete-stars { font-size: 38px; margin: 8px 0; }
+            .level-complete-text,
+            .rating-text { font-size: 18px; margin-bottom: 20px; }
+            .chef-rating { font-size: 55px; margin: 8px 0; }
+            .high-score-text { font-size: 14px; margin-bottom: 20px; }
+
+            .pause-menu { padding: 25px 30px; border-radius: 28px; border-width: 5px; }
+            .pause-title { font-size: 24px; margin-bottom: 20px; }
+
+            .settings-content { padding: 25px 30px; border-radius: 28px; border-width: 5px; }
+            .settings-title { font-size: 24px; margin-bottom: 20px; }
+            .setting-item { padding: 14px 0; }
+            .setting-label { font-size: 15px; gap: 6px; }
+            .setting-label .emoji { font-size: 22px; }
+            .toggle-switch { width: 56px; height: 28px; }
+            .toggle-slider:before { height: 20px; width: 20px; bottom: 1px; left: 1px; }
+            .toggle-switch input:checked + .toggle-slider:before { transform: translateX(28px); }
+
+            .hint-btn { width: 36px; height: 36px; font-size: 17px; border-width: 2px; }
+            .pause-btn { width: 36px; height: 36px; font-size: 17px; border-width: 2px; }
+            .hint-count { width: 18px; height: 18px; font-size: 9px; top: -5px; right: -5px; }
+            .controls-group { gap: 8px; }
+            .stats-group { gap: 6px; }
+
+            .difficulty-btn { padding: 5px 10px; font-size: 11px; min-width: 60px; }
+            .language-btn { padding: 5px 10px; font-size: 11px; min-width: 60px; }
+            .data-btn { padding: 6px 12px; font-size: 11px; }
+
+            .bg-decoration.star { font-size: 24px; }
+            .bg-decoration.heart { font-size: 18px; }
+
+            body::before { width: 200px; height: 200px; top: -80px; right: -80px; }
+            body::after { width: 150px; height: 150px; bottom: -50px; left: -50px; }
+
+            .cloud-decor { width: 70px; height: 35px; border-radius: 30px; }
+            .cloud-1 { top: 15px; left: 15px; }
+            .cloud-2 { top: 45px; right: 25px; }
+            .cloud-3 { bottom: 60px; left: 40px; }
+            .cloud-decor::before { width: 30px; height: 30px; top: -15px; left: 10px; }
+            .cloud-decor::after { width: 40px; height: 40px; top: -20px; left: 25px; }
+        }
+
+        /* ============================================ */
+        /* 响应式适配 — 手机竖屏 (≤ 480px)             */
+        /* ============================================ */
+        @media (max-width: 480px) {
+            body { padding: 2px; }
+
+            .game-container {
+                border-radius: 14px;
+                border-width: 2px;
+            }
+
+            .game-title { font-size: 26px; text-shadow: 2px 2px 0 white, 4px 4px 0 var(--macaron-pink); }
+            .chef-hat { font-size: 60px; margin-bottom: 8px; }
+            .game-subtitle { font-size: 13px; padding: 5px 14px; margin-bottom: 10px; }
+
+            .btn { padding: 12px 24px; font-size: 14px; border-radius: 28px; margin: 4px; width: 80%; max-width: 260px; }
+
+            .level-title { font-size: 24px; }
+            .levels-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 0 10px; }
+            .level-btn { width: 55px; height: 55px; border-radius: 14px; }
+            .level-btn .level-num { font-size: 18px; }
+
+            .achievements-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 0 8px; }
+            .achievement-card .achievement-icon { font-size: 26px; }
+
+            .dream-text { font-size: 11px; padding: 10px 14px; max-width: 240px; line-height: 1.6; }
+
+            .top-bar { padding: 6px 6px; gap: 3px; }
+            .stat-box { padding: 4px 8px; font-size: 10px; border-radius: 18px; }
+
+            .pause-btn { width: 30px; height: 30px; top: 6px; right: 6px; font-size: 14px; border-width: 2px; }
+
+            .customer-area { gap: 5px; padding: 6px 6px; min-height: 80px; }
+            .customer-avatar { font-size: 34px; }
+            .customer-order { padding: 6px 8px; min-width: 130px; border-radius: 16px; }
+            .customer-order .dish-name { font-size: 12px; }
+            .customer-order .ingredients-label { font-size: 10px; }
+            .customer-order .ingredients-needed { font-size: 18px; gap: 3px; padding: 5px; }
+
+            .kitchen-area { padding: 6px 8px 10px; }
+            .cooking-station { gap: 5px; margin-bottom: 8px; min-height: 55px; }
+            .pot { width: 70px; height: 58px; font-size: 26px; border-width: 2px; border-radius: 0 0 22px 22px; }
+            .pot::before { top: -8px; left: -8px; right: -8px; height: 14px; border-radius: 12px; }
+            .pot::after { top: -35px; width: 22px; height: 22px; }
+            .current-ingredients { padding: 6px 8px; gap: 4px; min-width: 80px; border-radius: 20px; }
+            .current-ingredients .ingredient { font-size: 20px; }
+            .current-ingredients .ingredient.removable .remove-icon {
+                width: 14px;
+                height: 14px;
+                font-size: 9px;
+                top: -4px;
+                right: -4px;
+            }
+            .cook-btn { padding: 8px 14px; font-size: 13px; border-radius: 22px; }
+
+            .ingredients-area { grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 6px 8px; border-width: 2px; border-radius: 20px; }
+            .ingredient-btn { font-size: 22px; border-width: 2px; border-radius: 10px; }
+            .ingredient-btn.used::after { width: 18px; height: 18px; font-size: 10px; top: 4px; right: 4px; }
+
+            .tutorial-box { padding: 18px 20px; border-radius: 22px; border-width: 4px; }
+            .tutorial-icon { font-size: 40px; margin-bottom: 8px; }
+            .tutorial-title { font-size: 18px; margin-bottom: 12px; }
+            .tutorial-steps { font-size: 11px; line-height: 1.6; }
+            .tutorial-steps li { margin: 4px 0; }
+
+            .result-popup { padding: 18px 22px; border-radius: 20px; border-width: 4px; }
+            .result-popup .result-icon { font-size: 36px; }
+            .result-popup .result-text { font-size: 17px; }
+            .result-popup .result-score { font-size: 15px; }
+
+            .combo-display { font-size: 38px; text-shadow: 2px 2px 0 white, 4px 4px 0 var(--macaron-yellow); }
+
+            .level-complete-content,
+            .game-over-content { padding: 18px 22px; border-radius: 20px; border-width: 4px; }
+            .level-complete-content::before,
+            .game-over-content::before { font-size: 26px; top: -18px; left: 10px; }
+            .level-complete-content::after,
+            .game-over-content::after { font-size: 24px; top: -16px; right: 10px; }
+            .level-complete-title,
+            .game-over-title { font-size: 22px; }
+            .level-complete-score,
+            .final-score { font-size: 30px; }
+            .level-complete-stars { font-size: 30px; }
+            .level-complete-text,
+            .rating-text { font-size: 15px; }
+            .chef-rating { font-size: 44px; }
+            .high-score-text { font-size: 12px; }
+
+            .pause-menu { padding: 18px 22px; border-radius: 22px; border-width: 4px; }
+            .pause-title { font-size: 20px; }
+
+            .settings-content { padding: 18px 22px; border-radius: 22px; border-width: 4px; }
+            .settings-title { font-size: 20px; }
+            .setting-item { padding: 10px 0; }
+            .setting-label { font-size: 13px; }
+            .setting-label .emoji { font-size: 18px; }
+
+            .hint-btn { width: 30px; height: 30px; font-size: 14px; border-width: 2px; }
+            .pause-btn { width: 30px; height: 30px; font-size: 14px; border-width: 2px; }
+            .hint-count { width: 16px; height: 16px; font-size: 8px; top: -4px; right: -4px; }
+            .controls-group { gap: 6px; }
+            .stats-group { gap: 5px; }
+            .top-bar { padding: 10px 12px; }
+
+            .difficulty-btn { padding: 4px 8px; font-size: 10px; min-width: 55px; }
+            .language-btn { padding: 4px 8px; font-size: 10px; min-width: 55px; }
+            .data-btn { padding: 5px 10px; font-size: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 可爱的背景装饰 -->
+    <div class="bg-decoration star" style="top: 8%; left: 5%; animation-delay: 0s;">⭐</div>
+    <div class="bg-decoration star" style="top: 15%; right: 10%; animation-delay: 0.5s;">🌟</div>
+    <div class="bg-decoration heart" style="top: 25%; left: 8%; animation-delay: 1s;">💖</div>
+    <div class="bg-decoration star" style="bottom: 20%; right: 5%; animation-delay: 1.5s;">✨</div>
+    <div class="bg-decoration heart" style="bottom: 30%; left: 12%; animation-delay: 2s;">💕</div>
+    <div class="bg-decoration star" style="top: 40%; right: 15%; animation-delay: 2.5s;">⭐</div>
+    
+    <div class="game-container">
+        <div class="cloud-decor cloud-1"></div>
+        <div class="cloud-decor cloud-2"></div>
+        <div class="cloud-decor cloud-3"></div>
+
+        <!-- 开始界面 -->
+        <div class="start-screen" id="startScreen">
+            <div class="start-content">
+                <div class="chef-hat">👨‍🍳</div>
+                <h1 class="game-title">快乐小厨师</h1>
+                <p class="game-subtitle">🎈 六一儿童节特别版 🎈</p>
+                <div class="dream-text">
+                    ✨ 小时候我想当厨师 👨‍🍳<br>
+                    💫 现在我用 TRAE 做出了这个烹饪小游戏！<br>
+                    🍳 快来一起体验当大厨的快乐吧！
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="showLevelSelect()">选择关卡 🎯</button>
+                    <button class="btn btn-secondary" onclick="showTutorial()">游戏教程 📖</button>
+                    <button class="btn btn-success" onclick="showAchievements()">成就展示 🏆</button>
+                    <button class="btn btn-warning" onclick="showLeaderboard()">排行榜 🏅</button>
+                    <button class="btn btn-secondary" onclick="showSettings()">游戏设置 ⚙️</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 关卡选择界面 -->
+        <div class="level-select-screen" id="levelSelectScreen">
+            <h2 class="level-title">🎯 选择关卡</h2>
+            <div class="levels-grid" id="levelsGrid"></div>
+            <button class="btn btn-primary" onclick="showStartScreen()">返回首页 🏠</button>
+        </div>
+
+        <!-- 成就展示界面 -->
+        <div class="level-select-screen" id="achievementsScreen">
+            <h2 class="level-title">🏆 成就展示</h2>
+            <div class="achievements-grid" id="achievementsGrid"></div>
+            <div class="achievement-progress">
+                <span id="achievementCount">0</span> / 9 成就已解锁
+            </div>
+            <button class="btn btn-primary" onclick="showStartScreen()">返回首页 🏠</button>
+        </div>
+
+        <!-- 教程提示 -->
+        <div class="tutorial-overlay" id="tutorialOverlay">
+            <div class="tutorial-box">
+                <div class="tutorial-icon">📖</div>
+                <h2 class="tutorial-title">游戏教程</h2>
+                <ul class="tutorial-steps">
+                    <li>👀 观察顾客想要点什么菜</li>
+                    <li>👆 点击高亮提示的食材添加到锅中</li>
+                    <li>🍲 食材收集完成后点击"开始烹饪"</li>
+                    <li>⚡ 连续完成可获得连击加分！</li>
+                    <li>🎯 达成目标分数即可通关！</li>
+                </ul>
+                <button class="btn btn-primary" onclick="hideTutorial()">明白了！开始吧 ✨</button>
+            </div>
+        </div>
+
+        <!-- 游戏主界面 -->
+        <div class="game-screen" id="gameScreen">
+            <div class="top-bar">
+                <div class="stats-group">
+                    <div class="stat-box stat-score">⭐ 得分: <span id="score">0</span></div>
+                    <div class="stat-box stat-target">🎯 目标: <span id="targetScore">200</span></div>
+                    <div class="stat-box stat-level">📚 第 <span id="level">1</span> 关</div>
+                    <div class="stat-box stat-time" id="timer">⏰ 60</div>
+                </div>
+                <div class="controls-group">
+                    <button class="hint-btn" id="hintBtn" onclick="useHint()">
+                        💡
+                        <span class="hint-count" id="hintCount">3</span>
+                    </button>
+                    <button class="pause-btn" id="pauseBtn" onclick="togglePause()">⏸️</button>
+                </div>
+            </div>
+
+            <div class="customer-area" id="customerArea"></div>
+
+            <div class="kitchen-area">
+                <div class="cooking-station">
+                    <div class="pot" id="pot">🍲</div>
+                    <div class="current-ingredients" id="currentIngredients">
+                        <span class="placeholder">点击食材开始烹饪吧~</span>
+                    </div>
+                    <button class="cook-btn" id="cookBtn" onclick="cookDish()" disabled>✨ 开始烹饪!</button>
+                </div>
+
+                <div class="ingredients-area" id="ingredientsArea"></div>
+            </div>
+        </div>
+
+        <!-- 结果提示 -->
+        <div class="result-popup" id="resultPopup">
+            <div class="result-icon" id="resultIcon">🎉</div>
+            <div class="result-text" id="resultText">美味完成!</div>
+            <div class="result-score" id="resultScore">+100分</div>
+        </div>
+
+        <!-- 连击显示 -->
+        <div class="combo-display" id="comboDisplay"></div>
+
+        <!-- 成就提示 -->
+        <div class="achievement-popup" id="achievementPopup">
+            <span class="achievement-icon">🏆</span>
+            <span class="achievement-text" id="achievementText">成就解锁!</span>
+        </div>
+
+        <!-- 关卡完成界面 -->
+        <div class="level-complete-screen" id="levelCompleteScreen">
+            <div class="level-complete-content">
+                <div class="level-complete-title">🎉 关卡完成!</div>
+                <div class="level-complete-stars" id="levelStars">⭐⭐⭐</div>
+                <div class="level-complete-score" id="levelCompleteScore">500</div>
+                <div class="level-complete-text" id="levelCompleteText">太棒了！</div>
+                <button class="btn btn-primary" onclick="nextLevel()">下一关 ➡️</button>
+                <button class="btn btn-secondary" onclick="showLevelSelect()">关卡选择 🎯</button>
+            </div>
+        </div>
+
+        <!-- 游戏结束界面 -->
+        <div class="game-over-screen" id="gameOverScreen">
+            <div class="game-over-content">
+                <div class="game-over-title">⏰ 时间到!</div>
+                <div class="chef-rating" id="chefRating">👨‍🍳</div>
+                <div class="final-score" id="finalScore">0</div>
+                <div class="rating-text" id="ratingText">见习厨师</div>
+                <div class="high-score-text">🏅 历史最高: <span id="highScoreDisplay">0</span></div>
+                <button class="btn btn-primary" onclick="restartLevel()">再试一次 🔄</button>
+                <button class="btn btn-secondary" onclick="showLevelSelect()">关卡选择 🎯</button>
+            </div>
+        </div>
+
+        <!-- 暂停菜单 -->
+        <div class="pause-screen" id="pauseScreen">
+            <div class="pause-menu">
+                <div class="pause-title">⏸️ 游戏暂停</div>
+                <button class="btn btn-primary" onclick="resumeGame()">继续游戏 ▶️</button>
+                <button class="btn btn-secondary" onclick="restartLevel()">重新开始 🔄</button>
+                <button class="btn btn-secondary" onclick="showLevelSelectFromPause()">关卡选择 🎯</button>
+                <button class="btn btn-success" onclick="showSettingsFromPause()">游戏设置 ⚙️</button>
+                <button class="btn btn-secondary" onclick="exitGame()">退出游戏 🏠</button>
+            </div>
+        </div>
+
+        <!-- 提示弹窗 -->
+        <div class="toast-popup" id="toastPopup"></div>
+
+        <!-- 设置界面 -->
+        <div class="settings-screen" id="settingsScreen">
+            <div class="settings-content">
+                <div class="settings-title">⚙️ 游戏设置</div>
+                <div class="setting-item">
+                    <span class="setting-label">
+                        <span class="emoji">🔊</span>
+                        <span id="labelSound">音效</span>
+                    </span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="soundToggle" checked onchange="toggleSound()">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">
+                        <span class="emoji">🎵</span>
+                        <span id="labelMusic">音乐</span>
+                    </span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="musicToggle" checked onchange="toggleMusic()">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">
+                        <span class="emoji">💡</span>
+                        <span id="labelHints">提示</span>
+                    </span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="hintsToggle" checked onchange="toggleHints()">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">
+                        <span class="emoji">🎯</span>
+                        <span id="labelDifficulty">难度</span>
+                    </span>
+                    <div class="difficulty-selector">
+                        <button class="difficulty-btn easy active" id="diffEasy" onclick="setDifficulty('easy')">简单</button>
+                        <button class="difficulty-btn normal" id="diffNormal" onclick="setDifficulty('normal')">普通</button>
+                        <button class="difficulty-btn hard" id="diffHard" onclick="setDifficulty('hard')">困难</button>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">
+                        <span class="emoji">🌐</span>
+                        <span id="labelLanguage">语言</span>
+                    </span>
+                    <div class="language-selector">
+                        <button class="language-btn active" id="langZh" onclick="setLanguage('zh')">中文</button>
+                        <button class="language-btn" id="langEn" onclick="setLanguage('en')">English</button>
+                    </div>
+                </div>
+                <div class="settings-buttons">
+                    <button class="btn btn-primary" onclick="hideSettings()" id="btnBack">返回 🔙</button>
+                </div>
+                <div class="data-management">
+                    <div class="data-management-title" id="dataTitle">💾 数据管理</div>
+                    <button class="data-btn export" id="btnExport" onclick="exportData()">导出存档 📤</button>
+                    <button class="data-btn import" id="btnImport" onclick="importData()">导入存档 📥</button>
+                    <button class="data-btn reset" id="btnReset" onclick="resetAllData()">重置数据 🗑️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 食材定义
+        const ingredients = {
+            'bread': { emoji: '🍞', name: '面包' },
+            'meat': { emoji: '🥩', name: '肉' },
+            'cheese': { emoji: '🧀', name: '奶酪' },
+            'tomato': { emoji: '🍅', name: '番茄' },
+            'lettuce': { emoji: '🥬', name: '生菜' },
+            'rice': { emoji: '🍚', name: '米饭' },
+            'fish': { emoji: '🐟', name: '鱼' },
+            'egg': { emoji: '🥚', name: '鸡蛋' },
+            'flour': { emoji: '🌾', name: '面粉' },
+            'milk': { emoji: '🥛', name: '牛奶' },
+            'strawberry': { emoji: '🍓', name: '草莓' },
+            'chocolate': { emoji: '🍫', name: '巧克力' },
+            'noodle': { emoji: '🍜', name: '面条' },
+            'shrimp': { emoji: '🦐', name: '虾' },
+            'carrot': { emoji: '🥕', name: '胡萝卜' },
+            'onion': { emoji: '🧅', name: '洋葱' },
+            'potato': { emoji: '🥔', name: '土豆' },
+            'chicken': { emoji: '🍗', name: '鸡肉' }
+        };
+
+        // 菜品定义
+        const dishes = {
+            'burger': { name: '汉堡包', emoji: '🍔', ingredients: ['bread', 'meat', 'cheese', 'tomato', 'lettuce'], score: 100 },
+            'sushi': { name: '寿司', emoji: '🍣', ingredients: ['rice', 'fish'], score: 80 },
+            'pizza': { name: '披萨', emoji: '🍕', ingredients: ['flour', 'tomato', 'cheese', 'meat'], score: 120 },
+            'cake': { name: '蛋糕', emoji: '🎂', ingredients: ['flour', 'egg', 'milk', 'strawberry'], score: 150 },
+            'sandwich': { name: '三明治', emoji: '🥪', ingredients: ['bread', 'lettuce', 'tomato', 'egg'], score: 90 },
+            'chocolate_cake': { name: '巧克力蛋糕', emoji: '🍰', ingredients: ['flour', 'egg', 'milk', 'chocolate'], score: 180 },
+            'noodle_soup': { name: '面条汤', emoji: '🍜', ingredients: ['noodle', 'egg', 'carrot', 'onion'], score: 130 },
+            'fried_rice': { name: '炒饭', emoji: '🍛', ingredients: ['rice', 'egg', 'carrot', 'meat'], score: 140 },
+            'fried_shrimp': { name: '炸虾', emoji: '🍤', ingredients: ['shrimp', 'flour', 'egg'], score: 110 },
+            'mashed_potato': { name: '土豆泥', emoji: '🥣', ingredients: ['potato', 'milk', 'egg'], score: 100 },
+            'chicken_rice': { name: '鸡肉饭', emoji: '🍚', ingredients: ['rice', 'chicken', 'carrot', 'onion'], score: 160 },
+            'strawberry_milk': { name: '草莓牛奶', emoji: '🥛', ingredients: ['milk', 'strawberry'], score: 70 }
+        };
+
+        // 10个关卡定义
+        const levels = [
+            { id: 1, name: '新手入门', targetScore: 200, timeLimit: 70, dishes: ['burger', 'sushi'], comboBonus: 15 },
+            { id: 2, name: '初级厨师', targetScore: 350, timeLimit: 65, dishes: ['burger', 'sushi', 'sandwich'], comboBonus: 18 },
+            { id: 3, name: '小试牛刀', targetScore: 500, timeLimit: 60, dishes: ['burger', 'sushi', 'sandwich', 'pizza'], comboBonus: 20 },
+            { id: 4, name: '甜点制作', targetScore: 650, timeLimit: 60, dishes: ['cake', 'chocolate_cake', 'strawberry_milk', 'sandwich'], comboBonus: 22 },
+            { id: 5, name: '忙碌午餐', targetScore: 800, timeLimit: 55, dishes: ['burger', 'pizza', 'noodle_soup', 'fried_rice'], comboBonus: 25 },
+            { id: 6, name: '海鲜料理', targetScore: 1000, timeLimit: 55, dishes: ['sushi', 'fried_shrimp', 'noodle_soup', 'fried_rice'], comboBonus: 28 },
+            { id: 7, name: '晚餐派对', targetScore: 1200, timeLimit: 50, dishes: ['pizza', 'chicken_rice', 'mashed_potato', 'cake'], comboBonus: 30 },
+            { id: 8, name: '极速厨房', targetScore: 1500, timeLimit: 45, dishes: ['burger', 'sushi', 'sandwich', 'pizza', 'cake', 'fried_shrimp'], comboBonus: 32 },
+            { id: 9, name: '大厨挑战', targetScore: 2000, timeLimit: 45, dishes: ['burger', 'pizza', 'fried_rice', 'chicken_rice', 'chocolate_cake', 'noodle_soup'], comboBonus: 35 },
+            { id: 10, name: '终极考验', targetScore: 2500, timeLimit: 40, dishes: Object.keys(dishes), comboBonus: 40 }
+        ];
+
+        const customers = ['👦', '👧', '👨', '👩', '👴', '👵', '🧑‍🦰', '🧑‍🦱', '🧒', '👲', '👨‍💼', '👩‍🎨', '🧑‍🚀', '👨‍🔬', '👩‍⚕️'];
+        const celebrationEmojis = ['⭐', '✨', '🎉', '🎊', '💖', '🌟', '💫', '🎈', '🎀', '💝', '🍭', '🍬', '🎁', '🏆', '💎'];
+
+        const achievements = {
+            firstServe: { name: '初次上菜', icon: '🍽️', unlocked: false },
+            combo5: { name: '五连击', icon: '🔥', unlocked: false },
+            combo10: { name: '十连击', icon: '⚡', unlocked: false },
+            combo15: { name: '十五连击', icon: '💥', unlocked: false },
+            score500: { name: '小有成就', icon: '🌟', unlocked: false },
+            score1000: { name: '烹饪大师', icon: '🏆', unlocked: false },
+            score2000: { name: '传奇厨师', icon: '👑', unlocked: false },
+            level5: { name: '过关斩将', icon: '🎯', unlocked: false },
+            level10: { name: '通关达人', icon: '💎', unlocked: false }
+        };
+
+        const translations = {
+            zh: {
+                sound: '音效',
+                music: '音乐',
+                hints: '提示',
+                difficulty: '难度',
+                language: '语言',
+                easy: '简单',
+                normal: '普通',
+                hard: '困难',
+                back: '返回 🔙',
+                dataManagement: '💾 数据管理',
+                export: '导出存档 📤',
+                import: '导入存档 📥',
+                reset: '重置数据 🗑️',
+                continueGame: '继续游戏 ▶️',
+                restart: '重新开始 🔄',
+                levelSelect: '关卡选择 🎯',
+                settings: '游戏设置 ⚙️',
+                exitGame: '退出游戏 🏠',
+                hintUsed: '💡 提示已使用！',
+                noHintsLeft: '💡 本关提示次数已用完！',
+                hintsDisabled: '💡 提示功能已关闭',
+                hintShown: '💡 查看绿色高亮的食材！',
+                dataExported: '📤 存档已导出到控制台',
+                dataImported: '📥 存档导入成功！',
+                dataReset: '🗑️ 数据已重置',
+                confirmReset: '确定要重置所有数据吗？',
+                selectLevel: '选择关卡 🎯',
+                tutorial: '游戏教程 📖',
+                achievements: '成就展示 🏆',
+                leaderboard: '排行榜 🏅',
+                understood: '明白了！开始吧 ✨',
+                tutorialSteps: [
+                    '👀 观察顾客想要点什么菜',
+                    '👆 点击高亮提示的食材添加到锅中',
+                    '🍲 食材收集完成后点击"开始烹饪"',
+                    '⚡ 连续完成可获得连击加分！',
+                    '🎯 达成目标分数即可通关！'
+                ],
+                pauseTitle: '⏸️ 游戏暂停',
+                pauseBtn: '暂停',
+                hintBtn: '提示'
+            },
+            en: {
+                sound: 'Sound',
+                music: 'Music',
+                hints: 'Hints',
+                difficulty: 'Difficulty',
+                language: 'Language',
+                easy: 'Easy',
+                normal: 'Normal',
+                hard: 'Hard',
+                back: 'Back 🔙',
+                dataManagement: '💾 Data Management',
+                export: 'Export 📤',
+                import: 'Import 📥',
+                reset: 'Reset 🗑️',
+                continueGame: 'Resume ▶️',
+                restart: 'Restart 🔄',
+                levelSelect: 'Levels 🎯',
+                settings: 'Settings ⚙️',
+                exitGame: 'Exit 🏠',
+                hintUsed: '💡 Hint used!',
+                noHintsLeft: '💡 No hints left!',
+                hintsDisabled: '💡 Hints disabled',
+                hintShown: '💡 Check green highlights!',
+                dataExported: '📤 Data exported to console',
+                dataImported: '📥 Data imported successfully!',
+                dataReset: '🗑️ Data reset',
+                confirmReset: 'Reset all data?',
+                selectLevel: 'Select Level 🎯',
+                tutorial: 'Tutorial 📖',
+                achievements: 'Achievements 🏆',
+                leaderboard: 'Leaderboard 🏅',
+                understood: 'Got it! Let\'s go ✨',
+                tutorialSteps: [
+                    '👀 Check what customers want to order',
+                    '👆 Click highlighted ingredients to add to pot',
+                    '🍲 Click "Cook" when ingredients are ready',
+                    '⚡ Get combo bonuses for consecutive orders!',
+                    '🎯 Reach target score to win!'
+                ],
+                pauseTitle: '⏸️ Game Paused',
+                pauseBtn: 'Pause',
+                hintBtn: 'Hint'
+            }
+        };
+
+        let gameState = {
+            score: 0,
+            currentLevel: 1,
+            timeLeft: 60,
+            currentIngredients: [],
+            currentCustomer: null,
+            isCooking: false,
+            combo: 0,
+            timer: null,
+            customersServed: 0,
+            isPaused: false,
+            highScore: parseInt(localStorage.getItem('littleChefHighScore')) || 0,
+            unlockedLevels: JSON.parse(localStorage.getItem('littleChefUnlockedLevels')) || [1],
+            levelStars: JSON.parse(localStorage.getItem('littleChefLevelStars')) || {},
+            soundEnabled: localStorage.getItem('littleChefSound') !== 'false',
+            musicEnabled: localStorage.getItem('littleChefMusic') !== 'false',
+            hintsEnabled: localStorage.getItem('littleChefHints') !== 'false',
+            difficulty: localStorage.getItem('littleChefDifficulty') || 'normal',
+            language: localStorage.getItem('littleChefLanguage') || 'zh',
+            hintsLeft: 3,
+            isInGame: false
+        };
+
+        // 获取当前语言翻译
+        function t(key) {
+            return translations[gameState.language]?.[key] || translations['zh'][key] || key;
+        }
+
+        // 应用语言到界面
+        function applyLanguage() {
+            const lang = gameState.language;
+            document.getElementById('labelSound').textContent = t('sound');
+            document.getElementById('labelMusic').textContent = t('music');
+            document.getElementById('labelHints').textContent = t('hints');
+            document.getElementById('labelDifficulty').textContent = t('difficulty');
+            document.getElementById('labelLanguage').textContent = t('language');
+            document.getElementById('btnBack').textContent = t('back');
+            document.getElementById('dataTitle').textContent = t('dataManagement');
+            document.getElementById('btnExport').textContent = t('export');
+            document.getElementById('btnImport').textContent = t('import');
+            document.getElementById('btnReset').textContent = t('reset');
+
+            // 更新暂停菜单按钮文字
+            const pauseButtons = document.querySelectorAll('.pause-menu .btn');
+            if (pauseButtons.length >= 5) {
+                pauseButtons[0].textContent = t('continueGame');
+                pauseButtons[1].textContent = t('restart');
+                pauseButtons[2].textContent = t('levelSelect');
+                pauseButtons[3].textContent = t('settings');
+                pauseButtons[4].textContent = t('exitGame');
+            }
+
+            // 更新暂停标题
+            document.querySelector('.pause-title').textContent = t('pauseTitle');
+
+            // 更新难度按钮文字
+            document.getElementById('diffEasy').textContent = t('easy');
+            document.getElementById('diffNormal').textContent = t('normal');
+            document.getElementById('diffHard').textContent = t('hard');
+
+            // 更新教程
+            const tutorialSteps = document.querySelectorAll('.tutorial-steps li');
+            const steps = t('tutorialSteps');
+            if (Array.isArray(steps)) {
+                tutorialSteps.forEach((li, index) => {
+                    if (steps[index]) li.textContent = steps[index];
+                });
+            }
+            document.querySelector('.tutorial-title').textContent = lang === 'en' ? 'Tutorial' : '游戏教程';
+            document.querySelector('.tutorial-box .btn').textContent = t('understood');
+
+            // 更新关卡选择标题
+            document.querySelector('.level-select-screen .level-title').textContent = t('selectLevel');
+
+            // 更新成就标题
+            const achievementsTitle = document.querySelector('#achievementsScreen .level-title');
+            if (achievementsTitle) achievementsTitle.textContent = t('achievements');
+
+            // 更新开始界面按钮
+            const startButtons = document.querySelectorAll('.start-screen .btn');
+            if (startButtons.length >= 5) {
+                startButtons[0].textContent = t('selectLevel');
+                startButtons[1].textContent = t('tutorial');
+                startButtons[2].textContent = t('achievements');
+                startButtons[3].textContent = t('leaderboard');
+                startButtons[4].textContent = t('settings');
+            }
+
+            // 更新 HTML lang 属性
+            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        }
+
+        // 设置语言
+        function setLanguage(lang) {
+            gameState.language = lang;
+            localStorage.setItem('littleChefLanguage', lang);
+            applyLanguage();
+            updateSettingsUI();
+        }
+
+        // 难度配置
+        const difficultyConfig = {
+            easy: { timeMultiplier: 1.3, scoreMultiplier: 0.8, label: 'easy' },
+            normal: { timeMultiplier: 1.0, scoreMultiplier: 1.0, label: 'normal' },
+            hard: { timeMultiplier: 0.8, scoreMultiplier: 1.3, label: 'hard' }
+        };
+
+        // 设置难度
+        function setDifficulty(diff) {
+            gameState.difficulty = diff;
+            localStorage.setItem('littleChefDifficulty', diff);
+            updateSettingsUI();
+        }
+
+        // 更新设置界面UI
+        function updateSettingsUI() {
+            // 更新难度按钮状态
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const diffBtn = document.getElementById('diff' + gameState.difficulty.charAt(0).toUpperCase() + gameState.difficulty.slice(1));
+            if (diffBtn) diffBtn.classList.add('active');
+
+            // 更新语言按钮状态
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const langBtn = document.getElementById(gameState.language === 'zh' ? 'langZh' : 'langEn');
+            if (langBtn) langBtn.classList.add('active');
+
+            // 更新开关状态
+            document.getElementById('soundToggle').checked = gameState.soundEnabled;
+            document.getElementById('musicToggle').checked = gameState.musicEnabled;
+            document.getElementById('hintsToggle').checked = gameState.hintsEnabled;
+        }
+
+        // 切换提示功能
+        function toggleHints() {
+            gameState.hintsEnabled = document.getElementById('hintsToggle').checked;
+            localStorage.setItem('littleChefHints', gameState.hintsEnabled);
+            if (gameState.hintsEnabled) {
+                highlightIngredients();
+            } else {
+                document.querySelectorAll('.ingredient-btn.highlighted').forEach(btn => {
+                    btn.classList.remove('highlighted');
+                });
+            }
+        }
+
+        // 使用提示
+        function useHint() {
+            if (!gameState.hintsEnabled) {
+                showToast(t('hintsDisabled'));
+                return;
+            }
+            if (gameState.hintsLeft <= 0) {
+                showToast(t('noHintsLeft'));
+                return;
+            }
+            if (!gameState.currentCustomer || gameState.isCooking) return;
+
+            gameState.hintsLeft--;
+            updateHintDisplay();
+
+            // 获取当前需要的食材
+            const needed = gameState.currentCustomer.dish.ingredients.filter(
+                ing => !gameState.currentIngredients.includes(ing)
+            );
+
+            if (needed.length === 0) return;
+
+            // 随机选择一个需要的食材进行高亮
+            const targetIng = needed[Math.floor(Math.random() * needed.length)];
+            const btn = document.querySelector(`[data-ingredient="${targetIng}"]:not(.used)`);
+
+            if (btn) {
+                btn.classList.add('hint-highlight');
+                showToast(t('hintShown'));
+
+                setTimeout(() => {
+                    btn.classList.remove('hint-highlight');
+                }, 3600);
+            }
+        }
+
+        // 更新提示按钮显示
+        function updateHintDisplay() {
+            const hintBtn = document.getElementById('hintBtn');
+            const hintCount = document.getElementById('hintCount');
+            if (hintCount) hintCount.textContent = gameState.hintsLeft;
+            if (hintBtn) hintBtn.disabled = gameState.hintsLeft <= 0 || !gameState.hintsEnabled;
+        }
+
+        // 显示提示弹窗
+        function showToast(message) {
+            const toast = document.getElementById('toastPopup');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 1500);
+        }
+
+        // 导出数据
+        function exportData() {
+            const data = {
+                highScore: gameState.highScore,
+                unlockedLevels: gameState.unlockedLevels,
+                levelStars: gameState.levelStars,
+                achievements: achievements,
+                settings: {
+                    sound: gameState.soundEnabled,
+                    music: gameState.musicEnabled,
+                    hints: gameState.hintsEnabled,
+                    difficulty: gameState.difficulty,
+                    language: gameState.language
+                }
+            };
+            const dataStr = JSON.stringify(data, null, 2);
+            console.log('=== 游戏存档数据 ===');
+            console.log(dataStr);
+            showToast(t('dataExported'));
+        }
+
+        // 导入数据
+        function importData() {
+            const input = prompt('请粘贴存档数据 (JSON格式):');
+            if (!input) return;
+
+            try {
+                const data = JSON.parse(input);
+                if (data.highScore !== undefined) {
+                    gameState.highScore = data.highScore;
+                    localStorage.setItem('littleChefHighScore', data.highScore);
+                }
+                if (data.unlockedLevels) {
+                    gameState.unlockedLevels = data.unlockedLevels;
+                    localStorage.setItem('littleChefUnlockedLevels', JSON.stringify(data.unlockedLevels));
+                }
+                if (data.levelStars) {
+                    gameState.levelStars = data.levelStars;
+                    localStorage.setItem('littleChefLevelStars', JSON.stringify(data.levelStars));
+                }
+                if (data.achievements) {
+                    Object.keys(data.achievements).forEach(key => {
+                        if (achievements[key]) {
+                            achievements[key].unlocked = data.achievements[key].unlocked;
+                        }
+                    });
+                    saveAchievements();
+                }
+                if (data.settings) {
+                    if (data.settings.sound !== undefined) {
+                        gameState.soundEnabled = data.settings.sound;
+                        localStorage.setItem('littleChefSound', data.settings.sound);
+                    }
+                    if (data.settings.music !== undefined) {
+                        gameState.musicEnabled = data.settings.music;
+                        localStorage.setItem('littleChefMusic', data.settings.music);
+                    }
+                    if (data.settings.hints !== undefined) {
+                        gameState.hintsEnabled = data.settings.hints;
+                        localStorage.setItem('littleChefHints', data.settings.hints);
+                    }
+                    if (data.settings.difficulty) {
+                        gameState.difficulty = data.settings.difficulty;
+                        localStorage.setItem('littleChefDifficulty', data.settings.difficulty);
+                    }
+                    if (data.settings.language) {
+                        gameState.language = data.settings.language;
+                        localStorage.setItem('littleChefLanguage', data.settings.language);
+                    }
+                }
+                updateSettingsUI();
+                applyLanguage();
+                showToast(t('dataImported'));
+            } catch (e) {
+                alert('导入失败，请检查数据格式！');
+            }
+        }
+
+        // 重置所有数据
+        function resetAllData() {
+            if (!confirm(t('confirmReset'))) return;
+
+            localStorage.removeItem('littleChefHighScore');
+            localStorage.removeItem('littleChefUnlockedLevels');
+            localStorage.removeItem('littleChefLevelStars');
+            localStorage.removeItem('littleChefAchievements');
+            localStorage.removeItem('littleChefSound');
+            localStorage.removeItem('littleChefMusic');
+            localStorage.removeItem('littleChefHints');
+            localStorage.removeItem('littleChefDifficulty');
+            localStorage.removeItem('littleChefLanguage');
+
+            gameState.highScore = 0;
+            gameState.unlockedLevels = [1];
+            gameState.levelStars = {};
+            gameState.soundEnabled = true;
+            gameState.musicEnabled = true;
+            gameState.hintsEnabled = true;
+            gameState.difficulty = 'normal';
+            gameState.language = 'zh';
+
+            Object.keys(achievements).forEach(key => {
+                achievements[key].unlocked = false;
+            });
+
+            updateSettingsUI();
+            applyLanguage();
+            showToast(t('dataReset'));
+        }
+
+        // 加载存档
+        function loadProgress() {
+            const savedAchievements = localStorage.getItem('littleChefAchievements');
+            if (savedAchievements) {
+                const saved = JSON.parse(savedAchievements);
+                Object.keys(saved).forEach(key => {
+                    if (achievements[key]) {
+                        achievements[key].unlocked = saved[key].unlocked;
+                    }
+                });
+            }
+        }
+
+        // 保存成就
+        function saveAchievements() {
+            localStorage.setItem('littleChefAchievements', JSON.stringify(achievements));
+        }
+
+        // 保存关卡进度
+        function saveLevelProgress() {
+            localStorage.setItem('littleChefUnlockedLevels', JSON.stringify(gameState.unlockedLevels));
+            localStorage.setItem('littleChefLevelStars', JSON.stringify(gameState.levelStars));
+        }
+
+        // 解锁成就
+        function unlockAchievement(key) {
+            if (!achievements[key].unlocked) {
+                achievements[key].unlocked = true;
+                saveAchievements();
+                showAchievement(achievements[key].icon, achievements[key].name);
+            }
+        }
+
+        // 显示成就提示
+        function showAchievement(icon, name) {
+            const popup = document.getElementById('achievementPopup');
+            const text = document.getElementById('achievementText');
+            text.textContent = `成就解锁: ${name}!`;
+            document.querySelector('.achievement-icon').textContent = icon;
+            popup.classList.add('show');
+            
+            setTimeout(() => {
+                popup.classList.remove('show');
+            }, 3000);
+        }
+
+        // 显示连击
+        function showCombo(count) {
+            if (count <= 1) return;
+            const comboDisplay = document.getElementById('comboDisplay');
+            comboDisplay.textContent = `${count}连击!`;
+            comboDisplay.style.display = 'block';
+            
+            setTimeout(() => {
+                comboDisplay.style.display = 'none';
+            }, 800);
+        }
+
+        // 显示开始界面
+        function showStartScreen() {
+            document.getElementById('startScreen').classList.remove('hidden');
+            document.getElementById('levelSelectScreen').classList.remove('active');
+            document.getElementById('achievementsScreen').classList.remove('active');
+            document.getElementById('gameScreen').classList.remove('active');
+            document.getElementById('levelCompleteScreen').classList.remove('active');
+            document.getElementById('gameOverScreen').classList.remove('active');
+            document.getElementById('pauseScreen').classList.remove('active');
+            document.getElementById('settingsScreen').classList.remove('active');
+        }
+
+        // 显示关卡选择
+        function showLevelSelect() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.remove('active');
+            document.getElementById('levelCompleteScreen').classList.remove('active');
+            document.getElementById('gameOverScreen').classList.remove('active');
+            document.getElementById('achievementsScreen').classList.remove('active');
+            document.getElementById('levelSelectScreen').classList.add('active');
+            renderLevelGrid();
+        }
+
+        // 显示成就展示
+        function showAchievements() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('levelSelectScreen').classList.remove('active');
+            document.getElementById('gameScreen').classList.remove('active');
+            document.getElementById('levelCompleteScreen').classList.remove('active');
+            document.getElementById('gameOverScreen').classList.remove('active');
+            document.getElementById('achievementsScreen').classList.add('active');
+            renderAchievementsGrid();
+        }
+
+        // 渲染成就展示
+        function renderAchievementsGrid() {
+            const grid = document.getElementById('achievementsGrid');
+            grid.innerHTML = '';
+            let unlockedCount = 0;
+
+            const achievementList = [
+                { key: 'firstServe', icon: '🍽️', name: '初次上菜' },
+                { key: 'combo5', icon: '🔥', name: '五连击' },
+                { key: 'combo10', icon: '⚡', name: '十连击' },
+                { key: 'combo15', icon: '💥', name: '十五连击' },
+                { key: 'score500', icon: '🌟', name: '小有成就' },
+                { key: 'score1000', icon: '🏆', name: '烹饪大师' },
+                { key: 'score2000', icon: '👑', name: '传奇厨师' },
+                { key: 'level5', icon: '🎯', name: '过关斩将' },
+                { key: 'level10', icon: '💎', name: '通关达人' }
+            ];
+
+            achievementList.forEach(achievement => {
+                const isUnlocked = achievements[achievement.key]?.unlocked || false;
+                if (isUnlocked) unlockedCount++;
+
+                const card = document.createElement('div');
+                card.className = `achievement-card ${isUnlocked ? 'unlocked' : 'locked'}`;
+                card.innerHTML = `
+                    <div class="achievement-icon">${isUnlocked ? achievement.icon : '❓'}</div>
+                    <div class="achievement-name">${isUnlocked ? achievement.name : '???'}</div>
+                `;
+                grid.appendChild(card);
+            });
+
+            document.getElementById('achievementCount').textContent = unlockedCount;
+        }
+
+        // 渲染关卡选择
+        function renderLevelGrid() {
+            const grid = document.getElementById('levelsGrid');
+            grid.innerHTML = '';
+            
+            levels.forEach((level, index) => {
+                const btn = document.createElement('div');
+                const isUnlocked = gameState.unlockedLevels.includes(level.id);
+                const stars = gameState.levelStars[level.id] || 0;
+                
+                btn.className = `level-btn ${isUnlocked ? 'unlocked' : 'locked'} ${stars > 0 ? 'completed' : ''}`;
+                
+                if (isUnlocked) {
+                    btn.innerHTML = `
+                        <span class="level-num">${level.id}</span>
+                        <span class="level-stars">${'⭐'.repeat(stars)}${'☆'.repeat(3-stars)}</span>
+                    `;
+                    btn.onclick = () => startLevel(level.id);
+                } else {
+                    btn.innerHTML = `
+                        <span class="level-num">🔒</span>
+                        <span class="level-stars">${level.name}</span>
+                    `;
+                }
+                grid.appendChild(btn);
+            });
+        }
+
+        // 显示教程
+        function showTutorial() {
+            document.getElementById('tutorialOverlay').classList.add('active');
+        }
+
+        function hideTutorial() {
+            document.getElementById('tutorialOverlay').classList.remove('active');
+        }
+
+        // 开始关卡
+        function startLevel(levelId) {
+            const level = levels.find(l => l.id === levelId);
+            if (!level) return;
+
+            const diff = difficultyConfig[gameState.difficulty] || difficultyConfig.normal;
+            const adjustedTime = Math.round(level.timeLimit * diff.timeMultiplier);
+            const adjustedTarget = Math.round(level.targetScore * diff.scoreMultiplier);
+
+            gameState = {
+                ...gameState,
+                score: 0,
+                currentLevel: levelId,
+                timeLeft: adjustedTime,
+                currentIngredients: [],
+                currentCustomer: null,
+                isCooking: false,
+                combo: 0,
+                customersServed: 0,
+                isPaused: false,
+                hintsLeft: 3,
+                isInGame: true
+            };
+
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('levelSelectScreen').classList.remove('active');
+            document.getElementById('levelCompleteScreen').classList.remove('active');
+            document.getElementById('gameOverScreen').classList.remove('active');
+            document.getElementById('gameScreen').classList.add('active');
+
+            document.getElementById('score').textContent = '0';
+            document.getElementById('targetScore').textContent = adjustedTarget;
+            document.getElementById('level').textContent = levelId;
+            document.getElementById('timer').textContent = adjustedTime;
+
+            updateHintDisplay();
+            initIngredients();
+            spawnCustomer();
+            startTimer();
+            loadProgress();
+        }
+
+        // 初始化食材区
+        function initIngredients() {
+            const area = document.getElementById('ingredientsArea');
+            area.innerHTML = '';
+            
+            // 获取当前关卡需要的食材
+            const level = levels.find(l => l.id === gameState.currentLevel);
+            const neededIngredients = new Set();
+            level.dishes.forEach(dishKey => {
+                dishes[dishKey].ingredients.forEach(ing => neededIngredients.add(ing));
+            });
+
+            neededIngredients.forEach(key => {
+                if (ingredients[key]) {
+                    const btn = document.createElement('div');
+                    btn.className = 'ingredient-btn';
+                    btn.dataset.ingredient = key;
+                    btn.textContent = ingredients[key].emoji;
+                    btn.onclick = () => addIngredient(key);
+                    area.appendChild(btn);
+                }
+            });
+        }
+
+        // 生成顾客
+        function spawnCustomer() {
+            const level = levels.find(l => l.id === gameState.currentLevel);
+            const dishKeys = level.dishes;
+            const randomDishKey = dishKeys[Math.floor(Math.random() * dishKeys.length)];
+            const dish = dishes[randomDishKey];
+            const avatar = customers[Math.floor(Math.random() * customers.length)];
+
+            gameState.currentCustomer = {
+                dishKey: randomDishKey,
+                dish: dish,
+                avatar: avatar
+            };
+
+            renderCustomer();
+        }
+
+        // 渲染顾客
+        function renderCustomer() {
+            const area = document.getElementById('customerArea');
+            area.innerHTML = '';
+
+            if (!gameState.currentCustomer) return;
+
+            const customer = gameState.currentCustomer;
+            const el = document.createElement('div');
+            el.className = 'customer';
+            el.id = 'currentCustomer';
+
+            const ingredientHtml = customer.dish.ingredients.map(ing => {
+                const isCollected = gameState.currentIngredients.includes(ing);
+                return `<span class="ingredient-item ${isCollected ? 'collected' : ''}">${ingredients[ing]?.emoji || '?'}</span>`;
+            }).join('');
+
+            el.innerHTML = `
+                <span class="customer-avatar">${customer.avatar}</span>
+                <div class="customer-order">
+                    <div class="dish-name">${customer.dish.emoji} ${customer.dish.name}</div>
+                    <div class="ingredients-label">需要食材:</div>
+                    <div class="ingredients-needed">${ingredientHtml}</div>
+                </div>
+            `;
+            area.appendChild(el);
+            highlightIngredients();
+        }
+
+        // 高亮需要的食材
+        function highlightIngredients() {
+            if (!gameState.hintsEnabled) return;
+            const buttons = document.querySelectorAll('.ingredient-btn');
+            buttons.forEach(btn => {
+                const key = btn.dataset.ingredient;
+                const isNeeded = gameState.currentCustomer && 
+                    gameState.currentCustomer.dish.ingredients.includes(key) &&
+                    !gameState.currentIngredients.includes(key);
+                
+                btn.classList.toggle('highlighted', isNeeded);
+            });
+        }
+
+        // 添加食材
+        function addIngredient(key) {
+            if (gameState.isCooking) return;
+            
+            gameState.currentIngredients.push(key);
+            
+            const btn = document.querySelector(`[data-ingredient="${key}"]:not(.used)`);
+            if (btn) btn.classList.add('used');
+
+            updateCurrentIngredients();
+            renderCustomer();
+            checkCanCook();
+        }
+
+        // 移除食材
+        function removeIngredient(index) {
+            if (gameState.isCooking) return;
+            
+            const key = gameState.currentIngredients[index];
+            gameState.currentIngredients.splice(index, 1);
+            
+            // 恢复食材按钮的可用状态
+            const btn = document.querySelector(`[data-ingredient="${key}"].used`);
+            if (btn) btn.classList.remove('used');
+            
+            playSound('click');
+            updateCurrentIngredients();
+            renderCustomer();
+            checkCanCook();
+        }
+
+        // 更新当前食材显示
+        function updateCurrentIngredients() {
+            const container = document.getElementById('currentIngredients');
+            
+            if (gameState.currentIngredients.length === 0) {
+                container.innerHTML = '<span class="placeholder">点击食材开始烹饪吧~</span>';
+            } else {
+                container.innerHTML = gameState.currentIngredients.map((key, index) => {
+                    const ing = ingredients[key];
+                    return `<span class="ingredient removable" onclick="removeIngredient(${index})" title="点击移除">
+                        ${ing?.emoji || '?'}
+                        <span class="remove-icon">×</span>
+                    </span>`;
+                }).join('');
+            }
+        }
+
+        // 检查是否可以开始烹饪
+        function checkCanCook() {
+            const btn = document.getElementById('cookBtn');
+            
+            if (!gameState.currentCustomer) {
+                btn.disabled = true;
+                return;
+            }
+
+            const needed = gameState.currentCustomer.dish.ingredients;
+            const hasAll = needed.every(ing => gameState.currentIngredients.includes(ing));
+            
+            btn.disabled = !hasAll;
+        }
+
+        // 开始烹饪
+        function cookDish() {
+            if (gameState.isCooking || !gameState.currentCustomer) return;
+
+            gameState.isCooking = true;
+            const pot = document.getElementById('pot');
+            pot.classList.add('cooking');
+            document.getElementById('cookBtn').disabled = true;
+
+            setTimeout(() => {
+                pot.classList.remove('cooking');
+                finishCooking();
+            }, 1500);
+        }
+
+        // 烹饪完成
+        function finishCooking() {
+            gameState.isCooking = false;
+            
+            const customer = document.getElementById('currentCustomer');
+            if (customer) customer.classList.add('happy');
+
+            const level = levels.find(l => l.id === gameState.currentLevel);
+            const dishScore = gameState.currentCustomer.dish.score;
+            const comboBonus = gameState.combo * level.comboBonus;
+            const totalScore = dishScore + comboBonus;
+
+            gameState.score += totalScore;
+            gameState.combo++;
+            gameState.customersServed++;
+
+            // 更新分数
+            document.getElementById('score').textContent = gameState.score;
+
+            // 显示结果
+            showResult(true, totalScore, '美味完成!', gameState.currentCustomer.dish.emoji);
+
+            // 显示连击
+            showCombo(gameState.combo);
+
+            // 检查成就
+            checkAchievements();
+
+            // 检查是否通关
+            if (gameState.score >= level.targetScore) {
+                setTimeout(() => completeLevel(), 1600);
+                return;
+            }
+
+            // 继续游戏
+            setTimeout(() => {
+                resetPot();
+                spawnCustomer();
+            }, 1600);
+        }
+
+        // 重置锅
+        function resetPot() {
+            gameState.currentIngredients = [];
+            updateCurrentIngredients();
+            
+            document.querySelectorAll('.ingredient-btn.used').forEach(btn => {
+                btn.classList.remove('used');
+            });
+            
+            highlightIngredients();
+        }
+
+        // 显示结果弹窗
+        function showResult(success, score, text, icon) {
+            const popup = document.getElementById('resultPopup');
+            const iconEl = document.getElementById('resultIcon');
+            const textEl = document.getElementById('resultText');
+            const scoreEl = document.getElementById('resultScore');
+
+            popup.className = 'result-popup ' + (success ? 'success' : 'fail');
+            iconEl.textContent = icon;
+            textEl.textContent = text;
+            scoreEl.textContent = score > 0 ? `+${score}分` : '';
+
+            popup.classList.add('show');
+            
+            if (success) {
+                createCelebrationParticles();
+            }
+
+            setTimeout(() => {
+                popup.classList.remove('show');
+            }, 1400);
+        }
+
+        // 创建庆祝粒子
+        function createCelebrationParticles() {
+            const container = document.querySelector('.game-container');
+            
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'celebration-particle';
+                    particle.textContent = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+                    particle.style.left = Math.random() * 80 + 10 + '%';
+                    particle.style.top = '60%';
+                    container.appendChild(particle);
+
+                    setTimeout(() => particle.remove(), 1200);
+                }, i * 100);
+            }
+        }
+
+        // 检查成就
+        function checkAchievements() {
+            if (gameState.customersServed === 1) unlockAchievement('firstServe');
+            if (gameState.combo === 5) unlockAchievement('combo5');
+            if (gameState.combo === 10) unlockAchievement('combo10');
+            if (gameState.combo === 15) unlockAchievement('combo15');
+            if (gameState.score >= 500) unlockAchievement('score500');
+            if (gameState.score >= 1000) unlockAchievement('score1000');
+            if (gameState.score >= 2000) unlockAchievement('score2000');
+        }
+
+        // 关卡完成
+        function completeLevel() {
+            clearInterval(gameState.timer);
+
+            const level = levels.find(l => l.id === gameState.currentLevel);
+            let stars = 1;
+            
+            const scoreRatio = gameState.score / level.targetScore;
+            if (scoreRatio >= 1.5) stars = 3;
+            else if (scoreRatio >= 1.2) stars = 2;
+
+            // 保存星星
+            if (!gameState.levelStars[gameState.currentLevel] || 
+                gameState.levelStars[gameState.currentLevel] < stars) {
+                gameState.levelStars[gameState.currentLevel] = stars;
+            }
+
+            // 解锁下一关
+            const nextLevel = gameState.currentLevel + 1;
+            if (nextLevel <= 10 && !gameState.unlockedLevels.includes(nextLevel)) {
+                gameState.unlockedLevels.push(nextLevel);
+            }
+
+            // 解锁关卡相关成就
+            if (gameState.currentLevel === 5) {
+                unlockAchievement('level5');
+            }
+            if (gameState.currentLevel === 10) {
+                unlockAchievement('level10');
+            }
+
+            saveLevelProgress();
+
+            // 记录到排行榜
+            addToLeaderboard(gameState.score, gameState.currentLevel, stars);
+
+            // 显示完成界面
+            const screen = document.getElementById('levelCompleteScreen');
+            document.getElementById('levelStars').textContent = '⭐'.repeat(stars) + '☆'.repeat(3-stars);
+            document.getElementById('levelCompleteScore').textContent = gameState.score;
+            document.getElementById('levelCompleteText').textContent = stars === 3 ? '完美通关!' : stars === 2 ? '表现不错!' : '刚刚通关!';
+            screen.classList.add('active');
+        }
+
+        // 下一关
+        function nextLevel() {
+            const next = gameState.currentLevel + 1;
+            if (next <= 10) {
+                startLevel(next);
+            } else {
+                showLevelSelect();
+            }
+        }
+
+        // 重新开始关卡
+        function restartLevel() {
+            startLevel(gameState.currentLevel);
+        }
+
+        // 开始计时
+        function startTimer() {
+            if (gameState.timer) clearInterval(gameState.timer);
+
+            gameState.timer = setInterval(() => {
+                if (gameState.isPaused) return;
+
+                gameState.timeLeft--;
+                document.getElementById('timer').textContent = gameState.timeLeft;
+
+                if (gameState.timeLeft <= 10) {
+                    document.getElementById('timer').classList.add('warning');
+                }
+
+                if (gameState.timeLeft <= 0) {
+                    clearInterval(gameState.timer);
+                    gameOver();
+                }
+            }, 1000);
+        }
+
+        // 暂停/继续
+        function togglePause() {
+            if (gameState.isPaused) {
+                resumeGame();
+            } else {
+                pauseGame();
+            }
+        }
+
+        // 暂停游戏
+        function pauseGame() {
+            gameState.isPaused = true;
+            document.getElementById('pauseBtn').textContent = '▶️';
+            document.getElementById('pauseScreen').classList.add('active');
+        }
+
+        // 继续游戏
+        function resumeGame() {
+            gameState.isPaused = false;
+            document.getElementById('pauseBtn').textContent = '⏸️';
+            document.getElementById('pauseScreen').classList.remove('active');
+        }
+
+        // 从暂停菜单显示关卡选择
+        function showLevelSelectFromPause() {
+            clearInterval(gameState.timer);
+            document.getElementById('pauseScreen').classList.remove('active');
+            showLevelSelect();
+        }
+
+        // 退出游戏
+        function exitGame() {
+            clearInterval(gameState.timer);
+            document.getElementById('pauseScreen').classList.remove('active');
+            gameState.isPaused = false;
+            showStartScreen();
+        }
+
+        // 显示设置界面
+        function showSettings() {
+            document.getElementById('settingsScreen').classList.add('active');
+            updateSettingsUI();
+        }
+
+        // 从暂停菜单显示设置
+        function showSettingsFromPause() {
+            document.getElementById('pauseScreen').classList.remove('active');
+            document.getElementById('settingsScreen').classList.add('active');
+            updateSettingsUI();
+        }
+
+        // 隐藏设置界面
+        function hideSettings() {
+            const pauseScreen = document.getElementById('pauseScreen');
+            if (gameState.isPaused && document.getElementById('gameScreen').classList.contains('active')) {
+                pauseScreen.classList.add('active');
+            }
+            document.getElementById('settingsScreen').classList.remove('active');
+        }
+
+        // 切换音效
+        function toggleSound() {
+            gameState.soundEnabled = document.getElementById('soundToggle').checked;
+            localStorage.setItem('littleChefSound', gameState.soundEnabled);
+        }
+
+        // 切换音乐
+        function toggleMusic() {
+            gameState.musicEnabled = document.getElementById('musicToggle').checked;
+            localStorage.setItem('littleChefMusic', gameState.musicEnabled);
+        }
+
+        // 音效系统 - 使用 Web Audio API
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playSound(type) {
+            if (!gameState.soundEnabled) return;
+            
+            try {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                switch(type) {
+                    case 'click':
+                        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                        oscillator.frequency.exponentialRampToValueAtTime(1200, audioContext.currentTime + 0.1);
+                        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                        oscillator.start(audioContext.currentTime);
+                        oscillator.stop(audioContext.currentTime + 0.1);
+                        break;
+                    case 'cook':
+                        oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+                        oscillator.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.3);
+                        gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                        oscillator.start(audioContext.currentTime);
+                        oscillator.stop(audioContext.currentTime + 0.3);
+                        break;
+                    case 'success':
+                        // 播放成功音效（上升音阶）
+                        [523, 659, 784, 1047].forEach((freq, i) => {
+                            const osc = audioContext.createOscillator();
+                            const gain = audioContext.createGain();
+                            osc.connect(gain);
+                            gain.connect(audioContext.destination);
+                            osc.frequency.setValueAtTime(freq, audioContext.currentTime + i * 0.1);
+                            gain.gain.setValueAtTime(0.3, audioContext.currentTime + i * 0.1);
+                            gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + i * 0.1 + 0.2);
+                            osc.start(audioContext.currentTime + i * 0.1);
+                            osc.stop(audioContext.currentTime + i * 0.1 + 0.2);
+                        });
+                        return;
+                    case 'fail':
+                        oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+                        oscillator.frequency.exponentialRampToValueAtTime(150, audioContext.currentTime + 0.3);
+                        gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                        oscillator.start(audioContext.currentTime);
+                        oscillator.stop(audioContext.currentTime + 0.3);
+                        break;
+                    case 'warning':
+                        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                        oscillator.type = 'square';
+                        gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+                        oscillator.start(audioContext.currentTime);
+                        oscillator.stop(audioContext.currentTime + 0.15);
+                        break;
+                    case 'achievement':
+                        // 播放成就解锁音效
+                        [784, 988, 1175, 1568].forEach((freq, i) => {
+                            const osc = audioContext.createOscillator();
+                            const gain = audioContext.createGain();
+                            osc.connect(gain);
+                            gain.connect(audioContext.destination);
+                            osc.frequency.setValueAtTime(freq, audioContext.currentTime + i * 0.08);
+                            gain.gain.setValueAtTime(0.3, audioContext.currentTime + i * 0.08);
+                            gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + i * 0.08 + 0.15);
+                            osc.start(audioContext.currentTime + i * 0.08);
+                            osc.stop(audioContext.currentTime + i * 0.08 + 0.15);
+                        });
+                        return;
+                }
+            } catch (e) {
+                console.log('音效播放失败:', e);
+            }
+        }
+
+        // 排行榜数据
+        let leaderboard = JSON.parse(localStorage.getItem('littleChefLeaderboard')) || [];
+
+        // 添加分数到排行榜
+        function addToLeaderboard(score, level, stars) {
+            const entry = {
+                score: score,
+                level: level,
+                stars: stars,
+                date: new Date().toLocaleDateString(),
+                difficulty: gameState.difficulty
+            };
+            leaderboard.push(entry);
+            leaderboard.sort((a, b) => b.score - a.score);
+            leaderboard = leaderboard.slice(0, 10); // 只保留前10名
+            localStorage.setItem('littleChefLeaderboard', JSON.stringify(leaderboard));
+        }
+
+        // 显示排行榜
+        function showLeaderboard() {
+            const popup = document.createElement('div');
+            popup.className = 'leaderboard-popup';
+            popup.innerHTML = `
+                <div class="leaderboard-content">
+                    <div class="leaderboard-title">🏆 排行榜</div>
+                    <div class="leaderboard-list">
+                        ${leaderboard.length === 0 ? '<div class="leaderboard-empty">暂无记录</div>' : 
+                            leaderboard.map((entry, index) => `
+                                <div class="leaderboard-item ${index < 3 ? 'top-' + (index + 1) : ''}">
+                                    <span class="leaderboard-rank">${index + 1}</span>
+                                    <span class="leaderboard-score">${entry.score}分</span>
+                                    <span class="leaderboard-level">第${entry.level}关</span>
+                                    <span class="leaderboard-stars">${'⭐'.repeat(entry.stars)}</span>
+                                    <span class="leaderboard-date">${entry.date}</span>
+                                </div>
+                            `).join('')
+                        }
+                    </div>
+                    <button class="btn btn-primary" onclick="this.closest('.leaderboard-popup').remove()">关闭</button>
+                </div>
+            `;
+            document.body.appendChild(popup);
+        }
+
+        // 游戏结束
+        function gameOver() {
+            clearInterval(gameState.timer);
+
+            // 更新最高分
+            if (gameState.score > gameState.highScore) {
+                gameState.highScore = gameState.score;
+                localStorage.setItem('littleChefHighScore', gameState.highScore);
+            }
+
+            // 根据分数估算星级 (游戏结束时)
+            let stars = 0;
+            const level = levels[gameState.currentLevel - 1];
+            if (level) {
+                if (gameState.score >= level.targetScore * 1.5) stars = 3;
+                else if (gameState.score >= level.targetScore * 1.2) stars = 2;
+                else if (gameState.score >= level.targetScore * 0.8) stars = 1;
+            }
+
+            // 记录到排行榜
+            if (gameState.score > 0) {
+                addToLeaderboard(gameState.score, gameState.currentLevel, stars);
+            }
+
+            // 显示结束界面
+            let rating = '见习厨师';
+            let ratingEmoji = '👨‍🍳';
+            
+            if (gameState.score >= 2000) { rating = '传奇厨师'; ratingEmoji = '👑'; }
+            else if (gameState.score >= 1000) { rating = '烹饪大师'; ratingEmoji = '🏆'; }
+            else if (gameState.score >= 500) { rating = '熟练厨师'; ratingEmoji = '⭐'; }
+
+            document.getElementById('chefRating').textContent = ratingEmoji;
+            document.getElementById('finalScore').textContent = gameState.score;
+            document.getElementById('ratingText').textContent = rating;
+            document.getElementById('highScoreDisplay').textContent = gameState.highScore;
+
+            document.getElementById('gameOverScreen').classList.add('active');
+        }
+
+        // 初始化游戏
+        loadProgress();
+        // 初始化设置UI
+        updateSettingsUI();
+        // 应用语言设置
+        applyLanguage();
+    </script>
+</body>
+</html>

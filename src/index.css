@@ -30,6 +30,7 @@
 }
 
 @layer components {
+  /* HUD角标装饰 */
   .hud-corners {
     position: relative;
   }
@@ -54,10 +55,12 @@
     border-right: 1px solid;
   }
 
+  /* 面板样式 */
   .panel {
     @apply bg-fy-panel border border-fy-green-dim/30;
   }
 
+  /* 琥珀色按钮 */
   .btn-amber {
     @apply bg-fy-amber text-fy-dark font-hud font-semibold tracking-wider
            px-6 py-2.5 transition-all duration-200
@@ -65,28 +68,34 @@
            active:scale-[0.97];
   }
 
+  /* 轮廓按钮 */
   .btn-outline {
     @apply border border-fy-amber/40 text-fy-amber font-hud font-medium tracking-wider
            px-6 py-2.5 transition-all duration-200
            hover:bg-fy-amber/10 hover:border-fy-amber;
   }
 
+  /* 数据标签 */
   .data-label {
     @apply text-[10px] uppercase tracking-[0.2em] text-fy-steel font-mono;
   }
 
+  /* 数据值 */
   .data-value {
     @apply font-hud font-bold text-white text-2xl;
   }
 
+  /* 分隔线 */
   .divider {
     @apply border-t border-fy-green-dim/20;
   }
 
+  /* 页面标题 */
   .page-title {
     @apply font-hud font-bold text-4xl md:text-6xl text-white tracking-wide;
   }
 
+  /* 小节标题 */
   .section-label {
     @apply text-[11px] uppercase tracking-[0.3em] text-fy-amber font-hud font-semibold;
   }

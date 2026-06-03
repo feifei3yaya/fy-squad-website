@@ -33,6 +33,7 @@ export default function SEO({
       <meta name="author" content="肥鸭战队 FY Squad" />
       <meta name="robots" content="index, follow" />
 
+      {/* Open Graph */}
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:title" content={pageTitle} />
@@ -41,11 +42,13 @@ export default function SEO({
       <meta property="og:url" content={ogUrl} />
       <meta property="og:locale" content="zh_CN" />
 
+      {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={pageTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
 
+      {/* 结构化数据 */}
       {schema && (
         <script type="application/ld+json">
           {JSON.stringify(schema)}

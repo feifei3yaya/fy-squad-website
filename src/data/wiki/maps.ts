@@ -1,4 +1,13 @@
-export interface GameMap { id: string; name: string; nameZh: string; image: string; size: string; biomes: string; layers: string; description: string }
+export interface GameMap {
+  id: string
+  name: string
+  nameZh: string
+  image: string
+  size: string
+  biomes: string
+  layers: string
+  description: string
+}
 
 export const maps: GameMap[] = [
   { id: 'albasrah', name: 'Al Basrah', nameZh: '阿尔巴斯拉', image: 'T_AlBasrah_Minimap.webp', size: '4km', biomes: '沙漠/城区', layers: 'RAAS / Invasion / Insurgency', description: '中东沙漠城市地图，城区建筑密集，机场区域开阔，巷战与空地协同的代表性战场。' },

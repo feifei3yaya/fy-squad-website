@@ -25,6 +25,7 @@
     <meta name="twitter:description" content="肥鸭战队(FY Squad) — 专注战术小队(Squad)的华人竞技社区。" />
     <meta name="twitter:image" content="https://www.fy-squad.cn/images/logo.png" />
 
+    <!-- 结构化数据: Organization -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -50,6 +51,17 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/images/logo.png" />
     <link rel="apple-touch-icon" href="/images/logo.png" />
     <title>肥鸭战队社区官网 — FY Squad | 战术小队华人竞技社区</title>
+    <script type="module">
+      if (import.meta.hot?.on) {
+        import.meta.hot.on('vite:error', (error) => {
+          if (error.err) {
+            console.error(
+              [error.err.message, error.err.frame].filter(Boolean).join('\n'),
+            )
+          }
+        })
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
