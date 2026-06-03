@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Heart, Check, Crown, AlertTriangle, Shield, Trophy, ArrowUpDown, X } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
+import SEO from '../components/SEO';
 
 const tiers = [
   {
@@ -26,13 +27,9 @@ const tiers = [
 ];
 
 const rankings = [
-  { name: 'FY_Sniper', amount: 200, tier: '至尊' },
-  { name: 'FY_Tactical', amount: 100, tier: '至尊' },
-  { name: 'FY_Gamer', amount: 50, tier: '高级' },
-  { name: 'FY_Driver', amount: 30, tier: '标准' },
-  { name: 'FY_Medic', amount: 10, tier: '基础' },
-  { name: 'FY_Commander', amount: 80, tier: '高级' },
-  { name: 'FY_Scout', amount: 15, tier: '基础' },
+  { name: '想在器械上飞', amount: 200, tier: '至尊' },
+  { name: 'Luo Qi', amount: 15, tier: '基础' },
+  { name: '悠闲', amount: 10, tier: '基础' },
 ];
 
 const paymentMethods = [
@@ -66,8 +63,15 @@ export default function Sponsor() {
     setAmount(String(val));
   };
 
+  const totalAmount = rankings.reduce((sum, r) => sum + r.amount, 0);
+
   return (
     <div className="bg-fy-dark min-h-screen">
+      <SEO
+        title="赞助我们"
+        description="支持肥鸭战队服务器运营，赞助获得排队预留位、荣誉标识等权益。已有3位玩家累计赞助¥225。"
+        keywords="肥鸭战队赞助,Squad服务器赞助,战队支持"
+      />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <PageHeader className="mb-6 sm:mb-8" />
 
@@ -76,6 +80,43 @@ export default function Sponsor() {
           <span className="section-label">SPONSOR</span>
         </div>
         <h1 className="page-title text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6">赞助我们</h1>
+
+        {/* 赞助感谢墙 */}
+        <div className="mb-8 sm:mb-12 bg-fy-panel border border-fy-amber/20 hud-corners p-5 sm:p-8">
+          <div className="flex items-center gap-3 mb-6">
+            <Crown className="w-5 h-5 text-fy-amber" />
+            <span className="font-hud font-bold text-lg sm:text-xl text-white tracking-wider">赞助感谢墙</span>
+            <span className="font-mono text-xs text-fy-steel/40 ml-auto">{rankings.length} 位赞助者 · 累计 ¥{totalAmount}</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {rankings.map((r, i) => (
+              <div
+                key={r.name}
+                className={`relative overflow-hidden p-5 flex flex-col items-center text-center transition-all ${
+                  i === 0 ? 'bg-gradient-to-br from-fy-amber/10 to-fy-amber/5 border border-fy-amber/30' : 'bg-fy-dark/50 border border-fy-green-dim/10'
+                }`}
+              >
+                {i === 0 && (
+                  <div className="absolute top-0 right-0">
+                    <div className="bg-fy-amber text-fy-dark text-[10px] font-hud px-3 py-1 tracking-wider">TOP SPONSOR</div>
+                  </div>
+                )}
+                <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mb-3 ${
+                  i === 0 ? 'bg-fy-amber/20 text-fy-amber' : i === 1 ? 'bg-fy-green/10 text-fy-green' : 'bg-fy-steel/10 text-fy-steel/40'
+                }`}>
+                  <span className="font-hud font-bold text-2xl">#{i + 1}</span>
+                </div>
+                <p className="font-hud font-semibold text-white text-sm sm:text-base tracking-wider mb-1">{r.name}</p>
+                <p className={`font-hud text-xl sm:text-2xl font-bold mb-1 ${i === 0 ? 'text-fy-amber' : 'text-fy-steel/60'}`}>¥{r.amount}</p>
+                <span className={`font-hud text-[10px] tracking-wider px-2 py-0.5 ${
+                  r.tier === '至尊' ? 'bg-fy-amber/15 text-fy-amber/80' : r.tier === '高级' ? 'bg-fy-green/15 text-fy-green/80' : 'bg-fy-steel/10 text-fy-steel/50'
+                }`}>
+                  {r.tier}赞助者
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
 
         <div className="panel px-4 sm:px-6 py-3 sm:py-4 mb-8 sm:mb-12 flex items-start gap-3">
           <AlertTriangle className="w-4 h-4 text-fy-amber flex-shrink-0 mt-0.5" />
