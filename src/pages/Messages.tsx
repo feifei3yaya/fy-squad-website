@@ -22,7 +22,7 @@ const typeIcon: Record<string, typeof Shield> = {
 const typeColor: Record<string, string> = {
   '系统': 'text-fy-steel',
   '互动': 'text-fy-amber',
-  '招募': 'text-fy-green',
+  '招募': 'text-fy-info',
 };
 
 export default function Messages() {
@@ -75,7 +75,7 @@ export default function Messages() {
 
         <div className="flex items-center justify-between mb-6 sm:mb-8">
           <div>
-            <p className="section-label mb-3">MESSAGES</p>
+            <p className="section-label mb-3">消息中心</p>
             <h1 className="page-title text-3xl sm:text-4xl md:text-5xl mb-1">消息中心</h1>
             <p className="text-fy-steel text-xs sm:text-sm">
               {unreadCount > 0 ? `${unreadCount} 条未读消息` : '没有未读消息'}
@@ -132,7 +132,7 @@ export default function Messages() {
                 </div>
                 <button
                   onClick={(e) => { e.stopPropagation(); deleteMessage(m.id); }}
-                  className="absolute top-3 right-3 sm:top-4 sm:right-4 opacity-0 group-hover:opacity-100 transition-opacity text-fy-steel/30 hover:text-fy-red"
+                  className="absolute top-3 right-3 sm:top-4 sm:right-4 opacity-0 group-hover:opacity-100 transition-opacity text-fy-steel/30 hover:text-fy-red-hc"
                   title="删除消息"
                 >
                   <Trash2 className="w-3.5 h-3.5" />

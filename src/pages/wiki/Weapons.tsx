@@ -11,7 +11,7 @@ export default function Weapons() {
 
   return (
     <WikiLayout
-      label="WEAPONS"
+      label="武器图鉴"
       pageTitle="武器图鉴"
       pageDesc="Squad 各阵营武器参数与详解"
       sidebarTitle="武器目录"
@@ -37,7 +37,7 @@ export default function Weapons() {
         </div>
 
         <div className="bg-fy-panel border border-fy-green-dim/20 hud-corners p-6 sm:p-8">
-          <p className="section-label mb-4">SPECIFICATIONS</p>
+          <p className="section-label mb-4">武器参数</p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-fy-green-dim/20">
             <div className="bg-fy-dark/50 p-4 text-center">
               <div className="data-value text-lg sm:text-xl">{selected.damage}</div>

@@ -1,32 +1,105 @@
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import '@fontsource/rajdhani/400.css';
+@import '@fontsource/rajdhani/500.css';
+@import '@fontsource/rajdhani/600.css';
+@import '@fontsource/rajdhani/700.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --fy-amber: #FFD166;
-  --fy-dark: #1A1D1B;
-  --fy-panel: #222826;
-  --fy-surface: #2A302C;
-  --fy-green: #5A7D5E;
-  --fy-orange: #F26419;
-  --fy-red: #C62828;
-  --fy-steel: #A0B0A4;
+  /* FY Squad Theme */
+  --fy-amber: #D6A449;
+  --fy-amber-rgb: 214 164 73;
+  --fy-amber-dim: #9B772F;
+  --fy-dark: #1a1f26;
+  --fy-dark-rgb: 26 31 38;
+  --fy-panel: #1f252d;
+  --fy-surface: #2a323c;
+  --fy-green: #6A88A6;
+  --fy-green-dim: #5B4E36;
+  --fy-edge: #7a6338;
+  --fy-orange: #B96F2D;
+  --fy-red: #B4493A;
+  --fy-steel: #AEB5BB;
+  --fy-silver: #D5DBE0;
+
+  /* High Contrast Colors (WCAG 2.1 AA) */
+  --fy-amber-hc: #F4C46A;
+  --fy-green-hc: #8CB0D4;
+  --fy-red-hc: #D66655;
+  --fy-orange-hc: #D98841;
+
+  /* Shadcn UI Default Variables */
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 210 40% 98%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 212.7 26.8% 83.9%;
+  --radius: 0.5rem;
+  --sidebar-background: 240 5.9% 10%;
+  --sidebar-foreground: 240 4.8% 95.9%;
+  --sidebar-primary: 224.3 76.3% 48%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 240 3.7% 15.9%;
+  --sidebar-accent-foreground: 240 4.8% 95.9%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
 }
 
 @layer base {
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth;
+    @apply font-sans; }
+
+  /* 隐藏 Trae IDE 预览标志 */
+  #trae-badge-plugin { display: none !important; }
   body {
-    font-family: 'Noto Sans SC', system-ui, sans-serif;
-    background: var(--fy-dark);
-    color: #D8E0DA;
+    font-family: system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', sans-serif;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background:
+      radial-gradient(circle at top center, rgba(var(--fy-amber-rgb), 0.22), transparent 34%),
+      radial-gradient(circle at 82% 16%, rgba(106, 136, 166, 0.15), transparent 24%),
+      linear-gradient(180deg, #212730 0%, #1d232a 24%, #1a1f26 100%);
+    color: #EFF2F4;
     -webkit-font-smoothing: antialiased;
   }
-  ::selection { background: rgba(255,209,102,0.25); color: #FFD166; }
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--fy-dark); }
-  ::-webkit-scrollbar-thumb { background: var(--fy-green); border-radius: 0; }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 22%, transparent 78%, rgba(0, 0, 0, 0.12)),
+      radial-gradient(circle at center, transparent 48%, rgba(var(--fy-dark-rgb), 0.28) 100%);
+    z-index: -1;
+  }
+  ::selection { background: rgba(var(--fy-amber-rgb), 0.22); color: var(--fy-silver); }
+
+  /* 彻底隐藏全局滚动条，但保留滚动功能 */
+  html {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+  }
+  ::-webkit-scrollbar { 
+    display: none; /* Chrome/Safari/Edge */
+    width: 0;
+    height: 0;
+  }
 }
 
 @layer components {
@@ -57,46 +130,82 @@
 
   /* 面板样式 */
   .panel {
-    @apply bg-fy-panel border border-fy-green-dim/30;
+    @apply border shadow-[0_20px_48px_rgba(0,0,0,0.36)] backdrop-blur-sm;
+    background-color: rgba(23, 28, 33, 0.92);
+    border-color: rgba(91, 74, 43, 0.4);
   }
 
   /* 琥珀色按钮 */
   .btn-amber {
     @apply bg-fy-amber text-fy-dark font-hud font-semibold tracking-wider
            px-6 py-2.5 transition-all duration-200
-           hover:bg-white hover:shadow-[0_0_20px_rgba(255,209,102,0.3)]
+           hover:bg-[#E1B763] hover:shadow-[0_0_24px_rgba(214,164,73,0.22)]
            active:scale-[0.97];
   }
 
   /* 轮廓按钮 */
   .btn-outline {
-    @apply border border-fy-amber/40 text-fy-amber font-hud font-medium tracking-wider
-           px-6 py-2.5 transition-all duration-200
-           hover:bg-fy-amber/10 hover:border-fy-amber;
+    @apply border text-fy-amber font-hud font-medium tracking-wider
+           px-6 py-2.5 transition-all duration-200 hover:border-fy-amber;
+    border-color: rgba(91, 74, 43, 0.8);
+  }
+
+  .btn-outline:hover {
+    background-color: rgba(214, 164, 73, 0.08);
+    color: var(--fy-silver);
   }
 
   /* 数据标签 */
   .data-label {
     @apply text-[10px] uppercase tracking-[0.2em] text-fy-steel font-mono;
+    opacity: 0.8;
   }
 
   /* 数据值 */
   .data-value {
-    @apply font-hud font-bold text-white text-2xl;
+    @apply font-hud font-bold text-fy-silver text-2xl;
   }
 
   /* 分隔线 */
   .divider {
-    @apply border-t border-fy-green-dim/20;
+    @apply border-t;
+    border-color: rgba(91, 74, 43, 0.3);
   }
 
   /* 页面标题 */
   .page-title {
-    @apply font-hud font-bold text-4xl md:text-6xl text-white tracking-wide;
+    @apply font-hud font-bold text-3xl sm:text-4xl md:text-6xl text-fy-silver tracking-wide;
+    text-shadow: 0 12px 28px rgba(0, 0, 0, 0.34);
   }
 
   /* 小节标题 */
   .section-label {
     @apply text-[11px] uppercase tracking-[0.3em] text-fy-amber font-hud font-semibold;
+  }
+
+  .hud-frame {
+    @apply relative overflow-hidden border border-fy-edge bg-fy-panel;
+    box-shadow: inset 0 0 0 1px rgba(214, 164, 73, 0.08);
+    border-color: rgba(91, 74, 43, 0.5);
+    background-color: rgba(23, 28, 33, 0.9);
+  }
+
+  .hud-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(214, 164, 73, 0.08), transparent 24%, transparent 76%, rgba(106, 136, 166, 0.08));
+  }
+
+  .status-chip {
+    @apply inline-flex items-center gap-1 border px-2 py-1 font-mono text-[10px] tracking-[0.2em] uppercase;
+  }
+
+  .theme-grid {
+    background-image:
+      linear-gradient(rgba(214, 164, 73, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(214, 164, 73, 0.06) 1px, transparent 1px);
+    background-size: 22px 22px;
   }
 }

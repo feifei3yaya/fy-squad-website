@@ -9,6 +9,7 @@ function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+
   useEffect(() => {
     let ticking = false;
     const fn = () => {
@@ -35,44 +36,112 @@ function Nav() {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-fy-dark/95 backdrop-blur-md shadow-lg shadow-black/30' : 'bg-transparent'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-        <Logo size={36} textSize="sm" />
+    <nav className="fixed top-0 left-0 right-0 z-50">
+      <div
+        className={`relative transition-all duration-700 ${
+          scrolled
+            ? 'bg-fy-dark/90 backdrop-blur-md shadow-[0_12px_28px_rgba(0,0,0,0.4)]'
+            : 'bg-transparent'
+        }`}
+      >
+        {scrolled && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center">
+            <div className="h-px w-[78%] sm:w-[68%] bg-gradient-to-r from-transparent via-fy-amber/16 to-transparent" />
+          </div>
+        )}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className={`relative z-10 flex items-center justify-between gap-4 transition-all duration-500 ${scrolled ? 'h-12' : 'h-14 sm:h-16'}`}>
+            <div className="min-w-0 shrink-0">
+              <Logo size={34} textSize="sm" />
+            </div>
 
-        <div className="hidden md:flex items-center gap-6">
-          {links.map((l) => (
-            <Link key={l.to} to={l.to} className={`font-hud text-sm tracking-wider transition-colors ${location.pathname === l.to ? 'text-fy-amber' : 'text-fy-steel hover:text-fy-amber'}`}>
-              {l.label}
-            </Link>
-          ))}
-        </div>
+            <div className="hidden md:flex items-center justify-center gap-1 flex-1">
+              {links.map((l) => {
+                const active = location.pathname === l.to;
+                return (
+                  <Link
+                    key={l.to}
+                    to={l.to}
+                    className={`group relative px-3 py-2 font-hud text-sm tracking-[0.16em] transition-all duration-200 ${
+                      active
+                        ? 'text-fy-amber drop-shadow-[0_0_8px_rgba(214,164,73,0.35)]'
+                        : 'text-white/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)] hover:text-fy-amber hover:drop-shadow-[0_0_8px_rgba(214,164,73,0.3)]'
+                    }`}
+                    style={{ textShadow: active ? undefined : '0 1px 3px rgba(0,0,0,0.55)' }}
+                  >
+                    <span className="relative z-10">{l.label}</span>
+                    <span
+                      className={`pointer-events-none absolute inset-x-2 bottom-1 h-px transition-all duration-200 ${
+                        active ? 'bg-fy-amber opacity-100' : 'bg-fy-amber/35 opacity-0 group-hover:opacity-100'
+                      }`}
+                    />
+                  </Link>
+                );
+              })}
+            </div>
 
-        <div className="flex items-center gap-3">
-          <a href="https://store.steampowered.com/app/393380/Squad/" target="_blank" rel="noopener noreferrer" className="btn-amber text-[10px] py-1 px-3 hidden lg:flex items-center gap-1.5">
-            <ShoppingBag className="w-3.5 h-3.5" />
-            购买游戏
-          </a>
-          <Link to="/login" className="btn-outline text-xs py-1.5 px-4 hidden sm:block">登录</Link>
-          <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-fy-steel hover:text-fy-amber p-2">
-            {menuOpen ? <X className="w-5 h-5" /> : (
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect y="3" width="20" height="1.5" fill="currentColor"/><rect y="9" width="14" height="1.5" fill="currentColor"/><rect y="15" width="20" height="1.5" fill="currentColor"/></svg>
-            )}
-          </button>
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              <a
+                href="https://store.steampowered.com/app/393380/Squad/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden lg:flex items-center gap-1.5 border border-fy-amber/25 px-3 py-1.5 font-hud text-[10px] tracking-[0.18em] text-white/85 transition-all duration-200 hover:border-fy-amber/50 hover:text-fy-amber"
+                style={{ textShadow: '0 1px 3px rgba(0,0,0,0.55)' }}
+              >
+                <ShoppingBag className="w-3.5 h-3.5" />
+                购买游戏
+              </a>
+              <Link
+                to="/login"
+                className="hidden sm:flex items-center justify-center border px-4 py-1.5 font-hud text-xs tracking-[0.18em] text-fy-amber transition-all duration-200 hover:bg-fy-amber/12 hover:border-fy-amber/70"
+                style={{
+                  borderColor: 'rgba(214, 164, 73, 0.55)',
+                  background: 'rgba(12, 16, 20, 0.45)',
+                  textShadow: '0 1px 3px rgba(0,0,0,0.55)',
+                }}
+              >
+                登录
+              </Link>
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="md:hidden text-white/85 hover:text-fy-amber p-2 transition-colors"
+                style={{ textShadow: '0 1px 3px rgba(0,0,0,0.55)' }}
+              >
+                {menuOpen ? <X className="w-5 h-5" /> : (
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect y="3" width="20" height="1.5" fill="currentColor"/><rect y="9" width="14" height="1.5" fill="currentColor"/><rect y="15" width="20" height="1.5" fill="currentColor"/></svg>
+                )}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
       {menuOpen && (
-        <div className="md:hidden bg-fy-dark/95 backdrop-blur-md border-t border-fy-green-dim/20 px-6 py-4 space-y-3">
+        <div
+          className="md:hidden border-t-0 px-4 sm:px-6 py-4 space-y-3 shadow-[0_16px_36px_rgba(0,0,0,0.26)]"
+          style={{
+            background: 'linear-gradient(180deg, rgba(12, 16, 20, 0.92) 0%, rgba(12, 16, 20, 0.82) 100%)',
+            backdropFilter: 'blur(14px)',
+            borderTop: '1px solid rgba(214, 164, 73, 0.1)',
+          }}
+        >
           {links.map((l) => (
-            <Link key={l.to} to={l.to} onClick={() => setMenuOpen(false)} className={`block font-hud text-sm tracking-wider py-2 transition-colors ${location.pathname === l.to ? 'text-fy-amber' : 'text-fy-steel hover:text-fy-amber'}`}>
+            <Link key={l.to} to={l.to} onClick={() => setMenuOpen(false)} className={`block font-hud text-sm tracking-[0.16em] py-2.5 transition-colors ${location.pathname === l.to ? 'text-fy-amber' : 'text-white/80 hover:text-fy-amber'}`}>
               {l.label}
             </Link>
           ))}
-          <a href="https://store.steampowered.com/app/393380/Squad/" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} className="block btn-amber text-center text-xs py-2 mt-2 flex items-center justify-center gap-2">
-            <ShoppingBag className="w-4 h-4" />
+          <div className="border-t border-fy-amber/10 pt-3 mt-1" />
+          <a href="https://store.steampowered.com/app/393380/Squad/" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} className="flex items-center justify-center gap-2 py-2.5 border border-fy-amber/30 font-hud text-xs tracking-[0.18em] text-fy-amber hover:bg-fy-amber/10 transition-colors">
+            <ShoppingBag className="w-3.5 h-3.5" />
             购买 Squad 游戏
           </a>
-          <Link to="/login" onClick={() => setMenuOpen(false)} className="block btn-outline text-center text-xs py-2 mt-2">登录</Link>
+          <Link
+            to="/login"
+            onClick={() => setMenuOpen(false)}
+            className="block text-center py-2.5 font-hud text-xs tracking-[0.18em] text-white bg-fy-amber/20 border border-fy-amber/40 hover:bg-fy-amber/30 transition-colors"
+          >
+            登录
+          </Link>
         </div>
       )}
     </nav>
@@ -107,7 +176,8 @@ function Hero() {
   return (
     <section ref={ref} className="relative h-screen w-full overflow-hidden bg-fy-dark">
       <video
-        className="absolute inset-0 w-full h-full object-cover opacity-60"
+        className="absolute inset-0 w-full h-full opacity-90 max-sm:opacity-80"
+        style={{ objectFit: 'cover', transform: 'scale(1.15)' }}
         autoPlay
         muted
         loop
@@ -117,18 +187,17 @@ function Hero() {
         <source src="/videos/squad-1.mp4" type="video/mp4" />
         <source src="/videos/squad-hero.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-gradient-to-t from-fy-dark via-fy-dark/60 to-fy-dark/40" />
+      <div className="absolute inset-0 bg-gradient-to-t from-fy-dark via-fy-dark/45 to-fy-dark/10" />
 
-
-      <div className="hero-ct relative z-10 h-full flex flex-col items-center justify-center text-center px-4 sm:px-6">
+      <div className="hero-ct relative z-10 h-full flex flex-col items-center justify-center pb-8 sm:pb-10 text-center px-4 sm:px-6">
         <div className="opacity-0 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-          <p className="section-label mb-4 sm:mb-6 text-xs sm:text-sm">TACTICAL SQUAD · 战术小队</p>
+          <p className="section-label mb-4 sm:mb-6 text-xs sm:text-sm">战术小队</p>
         </div>
         <h1 className="font-hud font-bold text-4xl sm:text-6xl md:text-8xl lg:text-9xl text-white tracking-[0.1em] sm:tracking-[0.15em] mb-2 opacity-0 animate-fade-up" style={{ animationDelay: '0.5s' }}>
           肥鸭战队
         </h1>
         <p className="font-hud text-fy-amber text-lg sm:text-xl md:text-2xl tracking-[0.3em] sm:tracking-[0.4em] mb-6 sm:mb-8 opacity-0 animate-fade-up" style={{ animationDelay: '0.7s' }}>
-          FEI YA SQUAD
+          战术小队竞技社区
         </p>
         <p className="text-fy-steel text-xs sm:text-sm md:text-base max-w-md mb-8 sm:mb-10 opacity-0 animate-fade-up" style={{ animationDelay: '0.9s' }}>
           公平竞技 · 团队协作 · 战术至上
@@ -203,7 +272,7 @@ function GameIntro() {
       <div className="max-w-6xl mx-auto">
         {/* 游戏概述 */}
         <div className={`mb-16 sm:mb-24 transition-all duration-700 ${vis ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <p className="section-label mb-4">ABOUT THE GAME</p>
+          <p className="section-label mb-4">关于游戏</p>
           <h2 className="font-hud font-bold text-3xl sm:text-4xl md:text-5xl text-white tracking-wider mb-6 sm:mb-8">
             什么是<span className="text-fy-amber">战术小队</span>？
           </h2>
@@ -224,7 +293,7 @@ function GameIntro() {
               </p>
             </div>
             <div className="bg-fy-panel border border-fy-green-dim/20 p-6 sm:p-8 hud-corners">
-              <p className="section-label mb-6">GAME INFO</p>
+              <p className="section-label mb-6">游戏信息</p>
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-3 bg-fy-dark/50">
                   <div className="font-hud font-bold text-xl sm:text-2xl text-fy-amber">100</div>
@@ -269,7 +338,7 @@ function GameIntro() {
         <div className={`mb-16 sm:mb-24 transition-all duration-700 delay-200 ${vis ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="flex items-center gap-3 mb-8">
             <Crosshair className="w-4 h-4 text-fy-amber" />
-            <span className="section-label">CORE FEATURES</span>
+            <span className="section-label">核心特色</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-fy-green-dim/20">
             {features.map((f) => (
@@ -289,7 +358,7 @@ function GameIntro() {
         <div className={`mb-16 sm:mb-24 transition-all duration-700 delay-300 ${vis ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="flex items-center gap-3 mb-8">
             <Map className="w-4 h-4 text-fy-amber" />
-            <span className="section-label">GAME MODES</span>
+            <span className="section-label">游戏模式</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-fy-green-dim/20">
             {gameModes.map((mode) => (
@@ -308,7 +377,7 @@ function GameIntro() {
         <div className={`transition-all duration-700 delay-400 ${vis ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="flex items-center gap-3 mb-8">
             <Users className="w-4 h-4 text-fy-amber" />
-            <span className="section-label">FACTIONS</span>
+            <span className="section-label">阵营</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-fy-green-dim/20">
             {factions.map((faction) => (
@@ -345,18 +414,18 @@ function ServerPanel() {
   ];
 
   const statusMap = {
-    online: { dot: 'bg-green-500', text: 'ONLINE', color: 'text-green-400' },
-    full: { dot: 'bg-yellow-500', text: 'HIGH LOAD', color: 'text-yellow-400' },
-    offline: { dot: 'bg-red-500', text: 'OFFLINE', color: 'text-red-400' },
+    online: { dot: 'bg-fy-info', text: '在线', color: 'text-fy-info' },
+    full: { dot: 'bg-fy-orange', text: '高负载', color: 'text-fy-orange-hc' },
+    offline: { dot: 'bg-fy-red', text: '离线', color: 'text-fy-red-hc' },
   };
 
   return (
-    <section className="relative z-10 -mt-16 sm:-mt-24 px-4 sm:px-6">
+    <section className="relative z-10 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center gap-3 mb-4 px-1">
           <Server className="w-4 h-4 text-fy-amber" />
-          <span className="section-label">SERVER STATUS</span>
-          <span className="text-[10px] font-mono text-fy-steel/50 ml-auto hidden sm:block">AUTO-REFRESH {countdown}S</span>
+          <span className="section-label">服务器状态</span>
+          <span className="text-[10px] font-mono text-fy-steel/50 ml-auto hidden sm:block">自动刷新 {countdown}秒</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-fy-green-dim/20">
           {servers.map((s) => {
@@ -373,14 +442,14 @@ function ServerPanel() {
                 <div className="flex items-end gap-3 mb-3 sm:mb-4">
                   <span className="font-hud font-bold text-2xl sm:text-3xl text-white leading-none">{s.players}</span>
                   <span className="font-hud text-fy-steel text-xs sm:text-sm mb-0.5">/100</span>
-                  {s.queue > 0 && <span className="font-mono text-[10px] text-fy-orange ml-auto">QUEUE: {s.queue}</span>}
+                  {s.queue > 0 && <span className="font-mono text-[10px] text-fy-orange-hc ml-auto">排队: {s.queue}</span>}
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[10px] text-fy-steel/60 tracking-wider">{s.map}</span>
                   <a href={`steam://connect/${s.ip}:${s.port}`}
-                     className={`font-hud text-[10px] tracking-wider px-3 py-1 border transition-colors ${s.status === 'offline' ? 'border-fy-green-dim/20 text-fy-steel/30 cursor-not-allowed' : 'border-fy-amber/30 text-fy-amber hover:bg-fy-amber/10'}`}
+                     className={`font-hud text-[10px] tracking-wider px-2.5 py-1 sm:px-3 sm:py-1 border transition-colors ${s.status === 'offline' ? 'border-fy-edge/30 text-fy-steel/30 cursor-not-allowed' : 'border-fy-amber/30 text-fy-amber hover:bg-fy-amber/10'}`}
                      onClick={s.status === 'offline' ? (e) => e.preventDefault() : undefined}>
-                    JOIN →
+                    {s.status === 'offline' ? '离线' : '加入 →'}
                   </a>
                 </div>
               </div>
@@ -468,7 +537,7 @@ function VideoShowcase() {
     <section ref={ref} className="py-16 sm:py-28 px-4 sm:px-6 bg-fy-panel/30">
       <div className="max-w-6xl mx-auto">
         <div className={`text-center mb-8 sm:mb-12 transition-all duration-700 ${vis ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <p className="section-label mb-4">GAMEPLAY FOOTAGE</p>
+          <p className="section-label mb-4">实战录像</p>
           <h2 className="font-hud font-bold text-3xl sm:text-4xl text-white tracking-wider mb-4">战场实录</h2>
           <p className="text-fy-steel max-w-lg mx-auto text-sm sm:text-base">真实的战术小队战斗画面，感受百人战场的震撼</p>
         </div>
@@ -492,7 +561,7 @@ function VideoShowcase() {
               <button
                 key={n}
                 onClick={() => setActiveVideo(n)}
-                className={`font-mono text-xs sm:text-sm px-3 py-1.5 sm:px-4 sm:py-2 border transition-all ${activeVideo === n ? 'border-fy-amber text-fy-amber bg-fy-amber/10' : 'border-fy-green-dim/30 text-fy-steel/50 hover:border-fy-steel/50 hover:text-fy-steel'}`}
+                className={`font-mono text-xs sm:text-sm px-3 py-1.5 sm:px-4 sm:py-2 border transition-all ${activeVideo === n ? 'border-fy-amber text-fy-amber bg-fy-amber/10' : 'border-fy-edge/35 text-fy-steel/50 hover:border-fy-steel/50 hover:text-fy-steel'}`}
               >
                 CAM {String(n).padStart(2, '0')}
               </button>
@@ -509,9 +578,9 @@ function CTA() {
   return (
     <section className="relative py-20 sm:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url(/images/team.jpg)' }} />
-      <div className="absolute inset-0 bg-fy-dark/85" />
+      <div className="absolute inset-0 bg-fy-dark/60" />
       <div className="relative z-10 max-w-3xl mx-auto text-center px-4 sm:px-6">
-        <span className="section-label">JOIN THE SQUAD</span>
+        <span className="section-label">加入战队</span>
         <h2 className="font-hud font-bold text-3xl sm:text-5xl md:text-7xl text-white tracking-wider mt-4 mb-4 sm:mb-6">准备加入战斗？</h2>
         <p className="text-fy-steel mb-8 sm:mb-10 max-w-md mx-auto text-sm sm:text-base">无论你是新手还是老兵，FY都欢迎你的加入</p>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -540,66 +609,6 @@ function SponsorStrip() {
         ))}
       </div>
     </section>
-  );
-}
-
-/* ─── Footer ─── */
-function Footer() {
-  const footerLinks = [
-    { to: '/', label: '首页' },
-    { to: '/about', label: '关于' },
-    { to: '/wiki', label: '百科' },
-    { to: '/forum', label: '论坛' },
-    { to: '/server', label: '服务器' },
-    { to: '/sponsor', label: '赞助' },
-    { to: '/join', label: '加入' },
-    { to: '/guide', label: '指南' },
-    { to: '/contact', label: '联系' },
-  ];
-
-  return (
-    <footer className="bg-fy-dark border-t border-fy-green-dim/10 py-10 sm:py-16 px-4 sm:px-6">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12">
-        {/* 左列：Logo + 名称 + 简介 */}
-        <div>
-          <div className="flex items-center gap-3 mb-4">
-            <img src="/images/logo.png" alt="FY" className="w-6 h-6 object-contain" />
-            <span className="font-hud text-fy-amber tracking-widest text-lg">FY SQUAD</span>
-          </div>
-          <p className="font-hud text-sm text-white tracking-wider mb-3">肥鸭战队</p>
-          <p className="text-fy-steel/50 text-xs leading-relaxed">
-            专注战术小队(Squad)的华人竞技社区，以公平竞技、团队协作、战术至上为核心，打造最专业的中文战术体验。
-          </p>
-        </div>
-
-        {/* 中列：导航链接 */}
-        <div>
-          <p className="font-hud text-xs text-fy-steel/30 tracking-widest mb-4">NAVIGATION</p>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-2">
-            {footerLinks.map((l) => (
-              <Link key={l.to} to={l.to} className="font-hud text-xs text-fy-steel/50 tracking-wider hover:text-fy-amber transition-colors py-1">
-                {l.label}
-              </Link>
-            ))}
-            <a href="https://store.steampowered.com/app/393380/Squad/" target="_blank" rel="noopener noreferrer" className="font-hud text-xs text-fy-amber tracking-wider hover:text-white transition-colors py-1 flex items-center gap-1.5">
-              <ShoppingBag className="w-3 h-3" /> 购买游戏
-            </a>
-          </div>
-        </div>
-
-        {/* 右列：联系方式 + 版权 */}
-        <div>
-          <p className="font-hud text-xs text-fy-steel/30 tracking-widest mb-4">CONTACT</p>
-          <div className="space-y-2 mb-6">
-            <p className="text-fy-steel/50 text-xs">QQ群: <span className="text-fy-steel/70">147724008</span></p>
-            <p className="text-fy-steel/50 text-xs">邮箱: <span className="text-fy-steel/70">fy.squad@qq.com</span></p>
-          </div>
-          <div className="border-t border-fy-green-dim/10 pt-4">
-            <p className="text-fy-steel/20 text-xs font-mono">© 2026 FY SQUAD. ALL RIGHTS RESERVED.</p>
-          </div>
-        </div>
-      </div>
-    </footer>
   );
 }
 
@@ -633,7 +642,6 @@ export default function Home() {
       <VideoShowcase />
       <CTA />
       <SponsorStrip />
-      <Footer />
     </div>
   );
 }

@@ -9,9 +9,9 @@ const initialServers = [
 ];
 
 const statusMap = {
-  online: { dot: 'bg-green-500', text: 'ONLINE', color: 'text-green-400' },
-  full: { dot: 'bg-yellow-500', text: 'HIGH LOAD', color: 'text-yellow-400' },
-  offline: { dot: 'bg-red-500', text: 'OFFLINE', color: 'text-red-400' },
+  online: { dot: 'bg-fy-info', text: '在线', color: 'text-fy-info' },
+  full: { dot: 'bg-fy-orange', text: '高负载', color: 'text-fy-orange-hc' },
+  offline: { dot: 'bg-fy-red', text: '离线', color: 'text-fy-red-hc' },
 };
 
 const bans = [
@@ -113,13 +113,13 @@ export default function ServerPage() {
     <div className="bg-fy-dark min-h-screen">
       <div className="relative h-[45vh] sm:h-[50vh] overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url(/images/server.jpg)' }} />
-        <div className="absolute inset-0 bg-gradient-to-t from-fy-dark via-fy-dark/70 to-fy-dark/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-fy-dark via-fy-dark/50 to-fy-dark/10" />
         <div className="absolute inset-0 bg-grid-overlay bg-grid-overlay" />
         <div className="relative z-10 h-full flex flex-col justify-center px-4 sm:px-6 max-w-6xl mx-auto">
           <PageHeader className="mb-6 sm:mb-8" />
-          <p className="section-label mb-3 sm:mb-4">REAL-TIME MONITOR</p>
+          <p className="section-label mb-3 sm:mb-4">实时监控</p>
           <h1 className="page-title text-3xl sm:text-4xl md:text-5xl">FY 服务器</h1>
-          <p className="font-mono text-fy-steel/40 text-[10px] sm:text-xs tracking-wider mt-2 sm:mt-3">AUTO-REFRESH 30S · EAC PROTECTED</p>
+          <p className="font-mono text-fy-steel/40 text-[10px] sm:text-xs tracking-wider mt-2 sm:mt-3">自动刷新 30秒 · EAC 防护中</p>
         </div>
       </div>
 
@@ -127,7 +127,7 @@ export default function ServerPage() {
         <div className="flex items-center justify-between mb-4 px-1">
           <div className="flex items-center gap-3">
             <Server className="w-4 h-4 text-fy-amber" />
-            <span className="section-label">SERVER STATUS</span>
+            <span className="section-label">服务器状态</span>
           </div>
           <span className="font-mono text-fy-steel/50 text-[10px] sm:text-xs tracking-wider">
             刷新倒计时: {countdown}s
@@ -153,23 +153,22 @@ export default function ServerPage() {
                 </div>
 
                 {/* 玩家进度条 */}
-                <div className="w-full h-1.5 bg-fy-green-dim/20 mb-2 overflow-hidden">
+                <div className="w-full h-1.5 bg-fy-green-dim/20 overflow-hidden">
                   <div
                     className="h-full transition-all duration-1000 ease-out"
                     style={{
                       width: `${playerPercent}%`,
-                      backgroundColor: playerPercent > 90 ? '#f59e0b' : playerPercent > 70 ? '#22c55e' : '#22c55e',
-                      opacity: playerPercent > 90 ? 0.8 : 0.6,
+                      backgroundColor: playerPercent > 90 ? '#B96F2D' : playerPercent > 70 ? '#D6A449' : '#6A88A6',
+                      opacity: playerPercent > 90 ? 0.88 : playerPercent > 70 ? 0.8 : 0.72,
                     }}
                   />
                 </div>
 
                 {s.queue > 0 && (
-                  <p className="font-mono text-[10px] text-fy-orange tracking-wider mb-3 sm:mb-4">QUEUE: {s.queue}</p>
+                  <p className="font-mono text-[10px] text-fy-orange-hc tracking-wider mt-1.5">排队: {s.queue}</p>
                 )}
-                {s.queue === 0 && <div className="mb-3 sm:mb-4" />}
 
-                <div className="space-y-2 mb-4 sm:mb-6">
+                <div className="space-y-2 mt-3 mb-4 sm:mb-6">
                   <div className="flex items-center gap-2">
                     <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-fy-steel/40" />
                     <span className="font-mono text-[10px] sm:text-[11px] text-fy-steel/60 tracking-wider">{s.map}</span>
@@ -182,10 +181,10 @@ export default function ServerPage() {
 
                 <a
                   href={s.status === 'offline' ? undefined : `steam://connect/${s.ip}:${s.port}`}
-                  className={`block text-center font-hud text-xs tracking-wider py-2 sm:py-2.5 border transition-colors ${s.status === 'offline' ? 'border-fy-green-dim/20 text-fy-steel/30 cursor-not-allowed' : 'border-fy-amber/30 text-fy-amber hover:bg-fy-amber/10'}`}
+                  className={`block text-center font-hud text-xs tracking-wider py-2 sm:py-2.5 border transition-colors ${s.status === 'offline' ? 'border-fy-edge/30 text-fy-steel/30 cursor-not-allowed' : 'border-fy-amber/30 text-fy-amber hover:bg-fy-amber/10'}`}
                   onClick={s.status === 'offline' ? (e) => e.preventDefault() : undefined}
                 >
-                  {s.status === 'offline' ? 'OFFLINE' : 'JOIN →'}
+                  {s.status === 'offline' ? '离线' : '加入 →'}
                 </a>
               </div>
             );
@@ -196,7 +195,7 @@ export default function ServerPage() {
           <div className="panel p-0">
             <div className="flex items-center gap-2 px-6 py-4 border-b border-fy-green-dim/20">
               <AlertTriangle className="w-4 h-4 text-fy-amber" />
-              <span className="section-label">MAINTENANCE</span>
+              <span className="section-label">维护</span>
             </div>
             <div className="px-6 py-5">
               <div className="border-l-2 border-fy-amber/60 pl-4 py-1">
@@ -213,7 +212,7 @@ export default function ServerPage() {
                   </div>
                 )}
                 {maintenanceStatus === 'after' && (
-                  <p className="font-mono text-green-400/60 text-xs mt-3">维护已完成</p>
+                  <p className="font-mono text-fy-info/80 text-xs mt-3">维护已完成</p>
                 )}
               </div>
             </div>
@@ -222,8 +221,8 @@ export default function ServerPage() {
           <div className="panel p-0">
             <div className="flex items-center justify-between px-6 py-4 border-b border-fy-green-dim/20">
               <div className="flex items-center gap-2">
-                <Ban className="w-4 h-4 text-fy-red" />
-                <span className="section-label">BAN LIST</span>
+                <Ban className="w-4 h-4 text-fy-red-hc" />
+                <span className="section-label">封禁列表</span>
               </div>
               {/* Ban列表筛选 */}
               <div className="flex gap-1">
@@ -256,8 +255,8 @@ export default function ServerPage() {
                     <p className="font-mono text-white/80 text-xs">{b.name}</p>
                     <p className="text-fy-steel/40 text-[10px] mt-0.5">{b.reason}</p>
                   </div>
-                  <span className={`font-hud text-[10px] tracking-wider px-2 py-0.5 ${b.type === 'permanent' ? 'bg-fy-red/20 text-fy-red' : 'bg-fy-amber/10 text-fy-amber/70'}`}>
-                    {b.type === 'permanent' ? 'PERMANENT' : b.expire}
+                  <span className={`font-hud text-[10px] tracking-wider px-2 py-0.5 ${b.type === 'permanent' ? 'bg-fy-red/20 text-fy-red-hc' : 'bg-fy-amber/10 text-fy-amber/70'}`}>
+                    {b.type === 'permanent' ? '永久' : b.expire}
                   </span>
                 </div>
               ))}
@@ -267,7 +266,7 @@ export default function ServerPage() {
 
         <div className="flex items-center gap-3 mb-4 px-1">
           <Users className="w-4 h-4 text-fy-amber" />
-          <span className="section-label">FUN STATS</span>
+          <span className="section-label">趣味数据</span>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-fy-green-dim/10">
           {funStats.map((s) => (

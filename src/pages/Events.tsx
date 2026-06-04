@@ -18,9 +18,9 @@ const pastEvents = [
 ];
 
 const statusStyle: Record<string, string> = {
-  '报名中': 'text-fy-green border-fy-green/30',
-  '即将满员': 'text-fy-orange border-fy-orange/30',
-  '已满': 'text-fy-red border-fy-red/30',
+  '报名中': 'text-fy-info border-fy-info/30',
+  '即将满员': 'text-fy-orange-hc border-fy-orange/30',
+  '已满': 'text-fy-red-hc border-fy-red/30',
   '已结束': 'text-fy-steel/40 border-fy-steel/20',
 };
 
@@ -88,7 +88,7 @@ export default function Events() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
         <PageHeader className="mb-8 sm:mb-12" />
 
-        <p className="section-label mb-3">OPERATIONS</p>
+        <p className="section-label mb-3">行动</p>
         <h1 className="page-title text-3xl sm:text-4xl md:text-5xl mb-3">战队活动</h1>
         <p className="text-fy-steel text-xs sm:text-sm mb-6 sm:mb-8">参与战队训练、对抗赛与社区活动</p>
 

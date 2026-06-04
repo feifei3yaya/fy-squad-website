@@ -11,7 +11,7 @@ export default function Classes() {
 
   return (
     <WikiLayout
-      label="KIT ROLES"
+      label="兵种手册"
       pageTitle="兵种手册"
       pageDesc="Squad 各兵种详细说明与战术指南"
       sidebarTitle="兵种目录"
@@ -35,7 +35,7 @@ export default function Classes() {
         <div className="bg-fy-panel border border-fy-green-dim/20 hud-corners p-6 sm:p-8">
           <div className="flex items-center gap-2 mb-4">
             <Crosshair className="w-4 h-4 text-fy-amber" />
-            <span className="section-label">LOADOUT</span>
+            <span className="section-label">装备配置</span>
           </div>
           <div className="divider mb-4" />
           <div className="space-y-2">
@@ -60,7 +60,7 @@ export default function Classes() {
         <div className="bg-fy-panel border border-fy-green-dim/20 hud-corners p-6 sm:p-8">
           <div className="flex items-center gap-2 mb-4">
             <Lightbulb className="w-4 h-4 text-fy-amber" />
-            <span className="section-label">TACTICAL TIPS</span>
+            <span className="section-label">战术提示</span>
           </div>
           <div className="divider mb-4" />
           <ul className="space-y-3">

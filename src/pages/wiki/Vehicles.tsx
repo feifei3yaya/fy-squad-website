@@ -11,7 +11,7 @@ export default function Vehicles() {
 
   return (
     <WikiLayout
-      label="VEHICLES"
+      label="载具百科"
       pageTitle="载具百科"
       pageDesc="Squad 各阵营载具数据与使用指南"
       sidebarTitle="载具目录"
@@ -37,7 +37,7 @@ export default function Vehicles() {
         </div>
 
         <div className="bg-fy-panel border border-fy-green-dim/20 hud-corners p-6 sm:p-8">
-          <p className="section-label mb-4">SPECIFICATIONS</p>
+          <p className="section-label mb-4">技术规格</p>
           <div className="grid grid-cols-2 gap-px bg-fy-green-dim/20">
             <div className="bg-fy-dark/50 p-4">
               <div className="data-label mb-1">分类</div>

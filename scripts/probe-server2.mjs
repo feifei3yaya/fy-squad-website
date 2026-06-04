@@ -43,7 +43,7 @@ async function runCmd(script, label, waitSec = 15) {
 
 async function main() {
   await runCmd(
-    `Write-Host "Node 4828:"; Get-WmiObject Win32_Process -Filter "ProcessId=4828" | Select-Object CommandLine | Format-List; Write-Host "Node 9384:"; Get-WmiObject Win32_Process -Filter "ProcessId=9384" | Select-Object CommandLine | Format-List; Write-Host ""; Write-Host "C:\\项目资源文件夹:"; Get-ChildItem "C:\\项目资源文件夹" -Recurse -Depth 1 -ErrorAction SilentlyContinue | Select-Object FullName | Format-Table -AutoSize; Write-Host ""; Write-Host "C:\\FYops:"; Get-ChildItem "C:\\FYops*" -Directory -ErrorAction SilentlyContinue | Format-Table Name; Write-Host ""; Write-Host "C:\\xmwj:"; Get-ChildItem "C:\\xmwj" -ErrorAction SilentlyContinue | Select-Object Name`,
+    `Write-Host "IP Config:"; ipconfig | Write-Host; Write-Host "Public IP:"; Invoke-RestMethod -Uri "https://api.ipify.org" | Write-Host`,
     '详细探查'
   );
 }

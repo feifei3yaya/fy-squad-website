@@ -11,7 +11,7 @@ export default function Factions() {
 
   return (
     <WikiLayout
-      label="FACTIONS"
+      label="阵营档案"
       pageTitle="阵营档案"
       pageDesc="Squad 各阵营装备特色与战术风格"
       sidebarTitle="阵营目录"
@@ -36,7 +36,7 @@ export default function Factions() {
         </div>
 
         <div className="bg-fy-panel border border-fy-green-dim/20 hud-corners p-6 sm:p-8">
-          <p className="section-label mb-4">FORCE COMPOSITION</p>
+          <p className="section-label mb-4">编制组成</p>
           <div className="grid grid-cols-2 gap-px bg-fy-green-dim/20">
             <div className="bg-fy-dark/50 p-4">
               <div className="data-label mb-1">代表武器</div>

@@ -10,7 +10,7 @@ export default function Maps() {
 
   return (
     <WikiLayout
-      label="MAPS"
+      label="地图图鉴"
       pageTitle="地图图鉴"
       pageDesc="Squad 全部战场地图详情与攻略要点"
       sidebarTitle="地图目录"

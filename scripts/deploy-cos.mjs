@@ -92,7 +92,8 @@ if (command === 'list-buckets') {
       Key: file.key,
       Body: content,
       ContentType: contentType,
-      CacheControl: 'max-age=86400',
+      // HTML 不缓存（确保用户每次访问最新版本），静态资源缓存 24 小时
+      CacheControl: file.key.endsWith('.html') ? 'no-cache, no-store, must-revalidate' : 'public, max-age=86400, immutable',
     }, (err, data) => {
       if (err) {
         console.error(`  ✗ ${file.key}: ${err.message}`);

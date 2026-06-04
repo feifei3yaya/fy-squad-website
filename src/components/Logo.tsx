@@ -35,7 +35,7 @@ export default function Logo({
           alt="肥鸭战队 Logo"
           className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
           style={{
-            filter: 'drop-shadow(0 0 8px rgba(255, 209, 102, 0.25))',
+            filter: 'drop-shadow(0 0 10px rgba(214, 164, 73, 0.32))',
           }}
         />
       </div>
@@ -45,13 +45,19 @@ export default function Logo({
             肥鸭战队
           </span>
           {!showTextVertical && (
-            <span className="hidden sm:block text-xs text-fy-steel tracking-wider font-hud">
-              FEI YA SQUAD
+            <span
+              className="hidden sm:block text-xs tracking-wider font-hud text-white/85"
+              style={{ textShadow: '0 1px 3px rgba(0,0,0,0.55)' }}
+            >
+              战术小队竞技社区
             </span>
           )}
           {showTextVertical && (
-            <span className="text-[10px] text-fy-steel tracking-[0.3em] font-hud">
-              FEI YA SQUAD
+            <span
+              className="text-[10px] tracking-[0.3em] font-hud text-white/85"
+              style={{ textShadow: '0 1px 3px rgba(0,0,0,0.55)' }}
+            >
+              战术小队竞技社区
             </span>
           )}
         </div>

@@ -10,10 +10,10 @@ const clanLinks = [
 ];
 
 const resourceLinks = [
-  { name: 'Squad Wiki', desc: '官方百科，包含兵种、武器、地图等详细数据', url: '#' },
-  { name: 'Offworld Industries', desc: '游戏开发商官方网站与开发日志', url: '#' },
+  { name: 'Squad 官方百科', desc: '官方百科，包含兵种、武器、地图等详细数据', url: '#' },
+  { name: 'Offworld 工作室', desc: '游戏开发商官方网站与开发日志', url: '#' },
   { name: 'Squad Steam商店', desc: '游戏购买页面与版本更新日志', url: '#' },
-  { name: 'Squad Mod Hub', desc: '社区MOD资源与安装指南', url: '#' },
+  { name: 'Squad MOD 中心', desc: '社区 MOD 资源与安装指南', url: '#' },
 ];
 
 export default function Links() {
@@ -56,7 +56,7 @@ export default function Links() {
 
         <div className="flex items-center justify-between mb-8 sm:mb-12">
           <div>
-            <p className="section-label mb-3">ALLIED NETWORK</p>
+            <p className="section-label mb-3">友军网络</p>
             <h1 className="page-title text-3xl sm:text-4xl md:text-5xl mb-3">友情链接</h1>
             <p className="text-fy-steel text-xs sm:text-sm">合作战队与社区资源</p>
           </div>
@@ -72,7 +72,7 @@ export default function Links() {
           <div className="bg-fy-panel p-4 sm:p-6">
             <div className="flex items-center gap-2 mb-4">
               <Shield className="w-4 h-4 text-fy-amber" />
-              <span className="section-label">CLANS</span>
+              <span className="section-label">战队</span>
             </div>
             <div className="divider mb-4" />
             <ul className="space-y-px bg-fy-green-dim/10">
@@ -93,7 +93,7 @@ export default function Links() {
           <div className="bg-fy-panel p-4 sm:p-6">
             <div className="flex items-center gap-2 mb-4">
               <BookOpen className="w-4 h-4 text-fy-amber" />
-              <span className="section-label">RESOURCES</span>
+              <span className="section-label">资源</span>
             </div>
             <div className="divider mb-4" />
             <ul className="space-y-px bg-fy-green-dim/10">

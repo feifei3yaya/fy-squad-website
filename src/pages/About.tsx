@@ -94,13 +94,13 @@ export default function About() {
     <div className="bg-fy-dark min-h-screen">
       <div className="relative h-[50vh] sm:h-[60vh] overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url(/images/team.jpg)' }} />
-        <div className="absolute inset-0 bg-gradient-to-t from-fy-dark via-fy-dark/70 to-fy-dark/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-fy-dark via-fy-dark/50 to-fy-dark/10" />
         <div className="absolute inset-0 bg-grid-overlay bg-grid-overlay" />
         <div className="relative z-10 h-full flex flex-col justify-center px-4 sm:px-6 max-w-6xl mx-auto">
           <PageHeader className="mb-6 sm:mb-8" />
-          <p className="section-label mb-3 sm:mb-4">ABOUT US</p>
+          <p className="section-label mb-3 sm:mb-4">关于我们</p>
           <h1 className="page-title text-3xl sm:text-4xl md:text-5xl">肥鸭战队</h1>
-          <p className="font-hud text-fy-amber text-base sm:text-xl tracking-[0.2em] sm:tracking-[0.3em] mt-2">FEI YA SQUAD</p>
+          <p className="font-hud text-fy-amber text-base sm:text-xl tracking-[0.2em] sm:tracking-[0.3em] mt-2">肥鸭战队</p>
         </div>
       </div>
 
@@ -124,7 +124,7 @@ export default function About() {
 
         <div className="flex items-center gap-3 mb-6 px-1">
           <Shield className="w-4 h-4 text-fy-amber" />
-          <span className="section-label">CORE VALUES</span>
+          <span className="section-label">核心价值观</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-fy-green-dim/20 mb-16 sm:mb-24">
           {values.map((v, i) => (
@@ -156,7 +156,7 @@ export default function About() {
 
         <div className="flex items-center gap-3 mb-6 px-1">
           <Crosshair className="w-4 h-4 text-fy-amber" />
-          <span className="section-label">MILESTONES</span>
+          <span className="section-label">里程碑</span>
         </div>
         <div className="panel p-0 mb-16 sm:mb-24">
           {milestones.map((m, i) => (
@@ -166,7 +166,7 @@ export default function About() {
 
         <div className="flex items-center gap-3 mb-6 px-1">
           <Star className="w-4 h-4 text-fy-amber" />
-          <span className="section-label">MANAGEMENT</span>
+          <span className="section-label">管理层</span>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-fy-green-dim/20 mb-16 sm:mb-24">
           {management.map((m) => (
@@ -187,7 +187,7 @@ export default function About() {
 
         <div className="flex items-center gap-3 mb-6 px-1">
           <Trophy className="w-4 h-4 text-fy-amber" />
-          <span className="section-label">HONOR WALL</span>
+          <span className="section-label">荣誉墙</span>
         </div>
         <div className="panel p-0">
           {honors.map((h, i) => (

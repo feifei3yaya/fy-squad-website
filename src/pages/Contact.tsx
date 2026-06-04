@@ -49,7 +49,7 @@ export default function Contact() {
       <div className="bg-fy-dark min-h-screen flex items-center justify-center px-6">
         <div className="text-center panel p-12 hud-corners max-w-md w-full">
           <CheckCircle
-            className="w-14 h-14 text-fy-green mx-auto mb-6"
+            className="w-14 h-14 text-fy-amber mx-auto mb-6"
             style={{
               animation: 'bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55)',
             }}
@@ -75,13 +75,13 @@ export default function Contact() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
         <PageHeader className="mb-8 sm:mb-12" />
 
-        <p className="section-label mb-3">COMMUNICATIONS</p>
+        <p className="section-label mb-3">通讯方式</p>
         <h1 className="page-title text-3xl sm:text-4xl md:text-5xl mb-3">联系我们</h1>
         <p className="text-fy-steel text-xs sm:text-sm mb-8 sm:mb-12">问题反馈与建议</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-fy-green-dim/20">
           <div className="bg-fy-panel p-4 sm:p-6">
-            <p className="section-label mb-4 sm:mb-6">CONTACT INFO</p>
+            <p className="section-label mb-4 sm:mb-6">联系方式</p>
             <div className="space-y-4 sm:space-y-6">
               {infoItems.map((item) => (
                 <div key={item.label}>
@@ -96,7 +96,7 @@ export default function Contact() {
           </div>
 
           <div className="md:col-span-2 bg-fy-panel p-4 sm:p-6">
-            <p className="section-label mb-4 sm:mb-6">FEEDBACK FORM</p>
+            <p className="section-label mb-4 sm:mb-6">反馈表单</p>
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                 <div>
@@ -114,7 +114,7 @@ export default function Contact() {
                     placeholder="QQ或邮箱"
                   />
                   {touched.contact && errors.contact && (
-                    <p className="text-fy-red text-xs mt-1">{errors.contact}</p>
+                    <p className="text-fy-red-hc text-xs mt-1">{errors.contact}</p>
                   )}
                 </div>
               </div>
@@ -137,7 +137,7 @@ export default function Contact() {
                   placeholder="详细描述你的反馈..."
                 />
                 {touched.content && errors.content && (
-                  <p className="text-fy-red text-xs mt-1">{errors.content}</p>
+                  <p className="text-fy-red-hc text-xs mt-1">{errors.content}</p>
                 )}
               </div>
               <button type="submit" className="btn-amber text-xs sm:text-sm">提交反馈</button>

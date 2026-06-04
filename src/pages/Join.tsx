@@ -56,7 +56,7 @@ export default function Join() {
       <div className="bg-fy-dark min-h-screen flex items-center justify-center px-6">
         <div className="text-center panel p-12 hud-corners max-w-md w-full">
           <CheckCircle
-            className="w-14 h-14 text-fy-green mx-auto mb-6"
+            className="w-14 h-14 text-fy-green-hc mx-auto mb-6"
             style={{
               animation: 'bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55)',
             }}
@@ -88,7 +88,7 @@ export default function Join() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
         <PageHeader className="mb-8 sm:mb-12" />
 
-        <p className="section-label mb-3">ENLISTMENT</p>
+        <p className="section-label mb-3">入伍</p>
         <h1 className="page-title text-3xl sm:text-4xl md:text-5xl mb-3">加入肥鸭</h1>
         <p className="text-fy-steel text-xs sm:text-sm mb-8 sm:mb-12">填写以下信息，申请加入FY战队</p>
 
@@ -103,7 +103,7 @@ export default function Join() {
         </div>
 
         <div className="panel p-5 sm:p-8 hud-corners">
-          <p className="section-label mb-6">APPLICATION FORM</p>
+          <p className="section-label mb-6">申请表</p>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -117,7 +117,7 @@ export default function Join() {
                   placeholder="Steam游戏ID"
                 />
                 {touched.gameId && errors.gameId && (
-                  <p className="text-fy-red text-xs mt-1">{errors.gameId}</p>
+                  <p className="text-fy-red-hc text-xs mt-1">{errors.gameId}</p>
                 )}
               </div>
               <div>
@@ -131,7 +131,7 @@ export default function Join() {
                   placeholder="用于联系"
                 />
                 {touched.qq && errors.qq && (
-                  <p className="text-fy-red text-xs mt-1">{errors.qq}</p>
+                  <p className="text-fy-red-hc text-xs mt-1">{errors.qq}</p>
                 )}
               </div>
             </div>
@@ -147,7 +147,7 @@ export default function Join() {
                   placeholder="累计时长"
                 />
                 {touched.hours && errors.hours && (
-                  <p className="text-fy-red text-xs mt-1">{errors.hours}</p>
+                  <p className="text-fy-red-hc text-xs mt-1">{errors.hours}</p>
                 )}
               </div>
               <div>

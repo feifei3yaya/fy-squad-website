@@ -21,7 +21,7 @@ const initialResources = [
 ];
 
 const typeIcon = { '图文': Image, '视频': Video };
-const typeColor = { '图文': 'text-fy-amber border-fy-amber/30', '视频': 'text-fy-orange border-fy-orange/30' };
+const typeColor = { '图文': 'text-fy-amber border-fy-amber/30', '视频': 'text-fy-orange-hc border-fy-orange/30' };
 
 export default function Tactics() {
   const [filter, setFilter] = useState<Filter>('全部');
@@ -62,7 +62,7 @@ export default function Tactics() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
         <PageHeader className="mb-8 sm:mb-12" />
 
-        <p className="section-label mb-3">TACTICS LIBRARY</p>
+        <p className="section-label mb-3">战术资料库</p>
         <h1 className="page-title text-3xl sm:text-4xl md:text-5xl mb-3">战术库</h1>
         <p className="text-fy-steel text-xs sm:text-sm mb-6 sm:mb-8">战队战术分析与教学资源</p>
 
@@ -117,8 +117,8 @@ export default function Tactics() {
                       onClick={() => toggleFavorite(t.id)}
                       className="flex items-center gap-1 text-xs transition-colors"
                     >
-                      <Bookmark className={`w-3 h-3 transition-colors ${isFav ? 'text-fy-red fill-fy-red' : 'text-fy-steel/50'}`} />
-                      <span className={isFav ? 'text-fy-red' : 'text-fy-steel/50'}>{favCounts[t.id] || 0}</span>
+                      <Bookmark className={`w-3 h-3 transition-colors ${isFav ? 'text-fy-red-hc fill-fy-red' : 'text-fy-steel/50'}`} />
+                      <span className={isFav ? 'text-fy-red-hc' : 'text-fy-steel/50'}>{favCounts[t.id] || 0}</span>
                     </button>
                   </div>
                 </div>
@@ -131,7 +131,7 @@ export default function Tactics() {
           <div className="md:col-span-2 bg-fy-panel p-4 sm:p-6">
             <div className="flex items-center gap-2 mb-4">
               <Download className="w-4 h-4 text-fy-amber" />
-              <span className="section-label">RESOURCES</span>
+              <span className="section-label">外部资源</span>
             </div>
             <div className="divider mb-4" />
             <ul className="space-y-3">

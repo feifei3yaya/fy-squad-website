@@ -11,7 +11,7 @@ export default function Modes() {
 
   return (
     <WikiLayout
-      label="GAME MODES"
+      label="模式规则"
       pageTitle="模式规则"
       pageDesc="Squad 全部游戏模式详解与制胜策略"
       sidebarTitle="模式目录"
@@ -35,14 +35,14 @@ export default function Modes() {
         <div className="bg-fy-panel border border-fy-green-dim/20 hud-corners p-6 sm:p-8">
           <div className="flex items-center gap-2 mb-4">
             <List className="w-4 h-4 text-fy-amber" />
-            <span className="section-label">WIN CONDITION</span>
+            <span className="section-label">胜利条件</span>
           </div>
           <div className="divider mb-4" />
           <p className="text-fy-steel text-xs leading-relaxed">{selected.winCondition}</p>
         </div>
 
         <div className="bg-fy-panel border border-fy-green-dim/20 hud-corners p-6 sm:p-8">
-          <p className="section-label mb-4">FEATURES</p>
+          <p className="section-label mb-4">模式特色</p>
           <div className="divider mb-4" />
           <ul className="space-y-2">
             {selected.features.map((f, i) => (
@@ -57,7 +57,7 @@ export default function Modes() {
         <div className="bg-fy-panel border border-fy-green-dim/20 hud-corners p-6 sm:p-8">
           <div className="flex items-center gap-2 mb-4">
             <Lightbulb className="w-4 h-4 text-fy-amber" />
-            <span className="section-label">TACTICAL TIPS</span>
+            <span className="section-label">战术提示</span>
           </div>
           <div className="divider mb-4" />
           <ul className="space-y-3">

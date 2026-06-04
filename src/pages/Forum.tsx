@@ -86,7 +86,7 @@ export default function Forum() {
 
         <div className="flex items-center gap-3 mb-2 px-1">
           <MessageSquare className="w-4 h-4 text-fy-amber" />
-          <span className="section-label">FORUM</span>
+          <span className="section-label">论坛</span>
         </div>
         <h1 className="page-title text-3xl sm:text-4xl md:text-5xl mb-6 sm:mb-8">肥鸭论坛</h1>
 
@@ -142,9 +142,9 @@ export default function Forum() {
                   className={`flex items-center gap-3 sm:gap-4 px-3 sm:px-5 py-3 sm:py-4 hover:bg-fy-surface/50 transition-colors cursor-pointer group ${i < paginatedPosts.length - 1 ? 'divider' : ''}`}
                 >
                   <div className="flex gap-1.5 sm:gap-2 w-8 sm:w-10 flex-shrink-0">
-                    {post.pinned && <Pin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-fy-orange" />}
+                    {post.pinned && <Pin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-fy-orange-hc" />}
                     {post.essence && <Flame className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-fy-amber" />}
-                    {!post.pinned && !post.essence && <Hash className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-fy-green-dim" />}
+                    {!post.pinned && !post.essence && <Hash className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-fy-green-hc-dim" />}
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="text-white/90 text-xs sm:text-sm group-hover:text-fy-amber transition-colors truncate">{post.title}</h4>
@@ -192,7 +192,7 @@ export default function Forum() {
           <div className="w-full lg:w-72 space-y-4">
             <div className="panel p-0">
               <div className="px-4 sm:px-5 py-3 border-b border-fy-green-dim/20">
-                <span className="section-label">HOT POSTS</span>
+                <span className="section-label">热门帖子</span>
               </div>
               {hotPosts.map((p, i) => (
                 <div key={i} className={`flex items-start gap-2 sm:gap-3 px-4 sm:px-5 py-2.5 sm:py-3 hover:bg-fy-surface/50 transition-colors cursor-pointer ${i < hotPosts.length - 1 ? 'divider' : ''}`}>

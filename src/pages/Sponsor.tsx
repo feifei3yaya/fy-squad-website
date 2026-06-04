@@ -77,7 +77,7 @@ export default function Sponsor() {
 
         <div className="flex items-center gap-3 mb-2 px-1">
           <Heart className="w-4 h-4 text-fy-amber" />
-          <span className="section-label">SPONSOR</span>
+          <span className="section-label">赞助</span>
         </div>
         <h1 className="page-title text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6">赞助我们</h1>
 
@@ -98,18 +98,18 @@ export default function Sponsor() {
               >
                 {i === 0 && (
                   <div className="absolute top-0 right-0">
-                    <div className="bg-fy-amber text-fy-dark text-[10px] font-hud px-3 py-1 tracking-wider">TOP SPONSOR</div>
+                    <div className="bg-fy-amber text-fy-dark text-[10px] font-hud px-3 py-1 tracking-wider">顶级赞助</div>
                   </div>
                 )}
                 <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mb-3 ${
-                  i === 0 ? 'bg-fy-amber/20 text-fy-amber' : i === 1 ? 'bg-fy-green/10 text-fy-green' : 'bg-fy-steel/10 text-fy-steel/40'
+                  i === 0 ? 'bg-fy-amber/20 text-fy-amber' : i === 1 ? 'bg-fy-silver/10 text-fy-silver' : 'bg-fy-steel/10 text-fy-steel/40'
                 }`}>
                   <span className="font-hud font-bold text-2xl">#{i + 1}</span>
                 </div>
                 <p className="font-hud font-semibold text-white text-sm sm:text-base tracking-wider mb-1">{r.name}</p>
                 <p className={`font-hud text-xl sm:text-2xl font-bold mb-1 ${i === 0 ? 'text-fy-amber' : 'text-fy-steel/60'}`}>¥{r.amount}</p>
                 <span className={`font-hud text-[10px] tracking-wider px-2 py-0.5 ${
-                  r.tier === '至尊' ? 'bg-fy-amber/15 text-fy-amber/80' : r.tier === '高级' ? 'bg-fy-green/15 text-fy-green/80' : 'bg-fy-steel/10 text-fy-steel/50'
+                  r.tier === '至尊' ? 'bg-fy-amber/15 text-fy-amber/80' : r.tier === '高级' ? 'bg-fy-silver/15 text-fy-silver/80' : 'bg-fy-steel/10 text-fy-steel/50'
                 }`}>
                   {r.tier}赞助者
                 </span>
@@ -130,13 +130,13 @@ export default function Sponsor() {
 
         <div className="flex items-center gap-3 mb-4 px-1">
           <Crown className="w-4 h-4 text-fy-amber" />
-          <span className="section-label">TIERS</span>
+          <span className="section-label">赞助等级</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-fy-green-dim/20 mb-10 sm:mb-16">
           {tiers.map((t, ti) => (
             <div key={t.name} className="bg-fy-panel p-4 sm:p-6 hud-corners hover:bg-fy-surface transition-colors">
               <div className="flex items-center gap-2 mb-1">
-                <span className={`font-mono text-[10px] tracking-wider px-1.5 py-0.5 ${ti === 3 ? 'bg-fy-amber/20 text-fy-amber' : ti === 2 ? 'bg-fy-green/20 text-fy-green' : 'bg-fy-steel/10 text-fy-steel/60'}`}>
+                <span className={`font-mono text-[10px] tracking-wider px-1.5 py-0.5 ${ti === 3 ? 'bg-fy-amber/20 text-fy-amber' : ti === 2 ? 'bg-fy-silver/20 text-fy-silver' : 'bg-fy-steel/10 text-fy-steel/60'}`}>
                   T{ti + 1}
                 </span>
               </div>
@@ -158,7 +158,7 @@ export default function Sponsor() {
           <div className="panel p-0">
             <div className="flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-4 border-b border-fy-green-dim/20">
               <Shield className="w-4 h-4 text-fy-amber" />
-              <span className="section-label">DONATE</span>
+              <span className="section-label">捐助</span>
             </div>
             <div className="px-4 sm:px-6 py-4 sm:py-6">
               {/* 快捷金额选择 */}
@@ -219,7 +219,7 @@ export default function Sponsor() {
             <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-fy-green-dim/20">
               <div className="flex items-center gap-2">
                 <Trophy className="w-4 h-4 text-fy-amber" />
-                <span className="section-label">RANKING</span>
+                <span className="section-label">排行榜</span>
               </div>
               <button
                 onClick={() => setSortDesc(!sortDesc)}
@@ -239,7 +239,7 @@ export default function Sponsor() {
                     <p className="font-mono text-white/80 text-xs truncate">{r.name}</p>
                   </div>
                   <span className="font-hud font-semibold text-fy-amber text-xs sm:text-sm">¥{r.amount}</span>
-                  <span className={`font-hud text-[10px] tracking-wider px-1.5 py-0.5 ${r.tier === '至尊' ? 'bg-fy-amber/15 text-fy-amber/80' : r.tier === '高级' ? 'bg-fy-green/15 text-fy-green/80' : 'bg-fy-steel/10 text-fy-steel/50'}`}>
+                  <span className={`font-hud text-[10px] tracking-wider px-1.5 py-0.5 ${r.tier === '至尊' ? 'bg-fy-amber/15 text-fy-amber/80' : r.tier === '高级' ? 'bg-fy-silver/15 text-fy-silver/80' : 'bg-fy-steel/10 text-fy-steel/50'}`}>
                     {r.tier}
                   </span>
                 </div>
